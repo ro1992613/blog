@@ -1,0 +1,360 @@
+<!DOCTYPE html> <html><head>
+<title>【Liquibase】基础概念 + demo实战-CSDN博客</title>
+<base href="../../..">
+<meta id="root-path" root-path="../../..">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+<meta charset="UTF-8">
+<meta name="description" content="笔记 - 【Liquibase】基础概念 + demo实战-CSDN博客">
+<meta property="og:title" content="【Liquibase】基础概念 + demo实战-CSDN博客">
+<meta property="og:description" content="笔记 - 【Liquibase】基础概念 + demo实战-CSDN博客">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pages-9hu.pages.dev/知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html">
+<meta property="og:image" content="https://pages-9hu.pages.dev/attachments/83f18d42164435d63072f0a7ea1a524a_md5.png">
+<meta property="og:site_name" content="笔记">
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://pages-9hu.pages.dev/lib/rss.xml"><script async="" id="webpage-script" src="lib/scripts/webpage.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script type="module" async="" id="graph-view-script" src="lib/scripts/graph-view.js"></script><script async="" id="graph-wasm-script" src="lib/scripts/graph-wasm.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-render-worker-script" src="lib/scripts/graph-render-worker.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="tinycolor-script" src="lib/scripts/tinycolor.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="pixi-script" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.0/pixi.min.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="minisearch-script" src="https://cdn.jsdelivr.net/npm/minisearch@6.3.0/dist/umd/index.min.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="icon" href="lib/media/favicon.png"><script async="" id="graph-data-script" src="lib/scripts/graph-data.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="stylesheet" href="lib/styles/obsidian.css"><link rel="stylesheet" href="lib/styles/theme.css"><link rel="preload" href="lib/styles/global-variable-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/global-variable-styles.css"></noscript><link rel="preload" href="lib/styles/supported-plugins.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/supported-plugins.css"></noscript><link rel="preload" href="lib/styles/main-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/main-styles.css"></noscript><style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-horizontal-spacing:0.6em;--tree-vertical-spacing:0.6em;--sidebar-margin:12px}.sidebar{height:100%;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));font-size:14px;z-index:10;position:relative;overflow:hidden;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}.sidebar-left{left:0}.sidebar-right{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}body.floating-sidebars .sidebar{position:absolute}.sidebar-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .sidebar-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}.sidebar-left .sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}.sidebar-right .sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar:has(.sidebar-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:2em;width:var(--sidebar-width);top:var(--sidebar-margin);padding-inline:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}.sidebar-left .sidebar-topbar{left:0}.sidebar-right .sidebar-topbar{right:0}.topbar-content{overflow:hidden;overflow:clip;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:0!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}.sidebar-left .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}.sidebar-right .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.sidebar-section-header{margin:0 0 1em 0;text-transform:uppercase;letter-spacing:.06em}body{transition:background-color var(--color-fade-speed) ease-in-out}.webpage-container{display:flex;flex-direction:row;height:100%;width:100%;align-items:stretch;justify-content:center}.document-container{opacity:1;flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0;transition:opacity .2s ease-in-out}.document-container>.markdown-preview-view{margin:var(--sidebar-margin);margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;background-color:var(--background-primary);transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}.document-container>.markdown-preview-view>.markdown-preview-sizer{padding-bottom:80vh!important;width:100%!important;max-width:var(--line-width)!important;flex-basis:var(--line-width)!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}.markdown-rendered img:not([width]),.view-content img:not([width]){max-width:100%;outline:0}.document-container>.view-content.embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}.document-container>.view-content.embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6):has(> :is(.math,table)){overflow-x:auto!important}.document-container>.view-content{overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style><script defer="">async function loadIncludes(){if("file:"!=location.protocol){let e=document.querySelectorAll("include");for(const t of e){let e=t.getAttribute("src");try{const o=await fetch(e);if(!o.ok){console.log("Could not include file: "+e),t?.remove();continue}let l=await o.text(),n=document.createRange().createContextualFragment(l),c=Array.from(n.children);for(let e of c)e.classList.add("hide"),e.style.transition="opacity 0.5s ease-in-out",setTimeout((()=>{e.classList.remove("hide")}),10);t.before(n),t.remove(),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}else{if(document.querySelectorAll("include").length>0){var e=document.createElement("div");e.id="error",e.textContent="Web server exports must be hosted on an http / web server to be viewed correctly.",e.style.position="fixed",e.style.top="50%",e.style.left="50%",e.style.transform="translate(-50%, -50%)",e.style.fontSize="1.5em",e.style.fontWeight="bold",e.style.textAlign="center",document.body.appendChild(e),document.querySelector(".document-container")?.classList.remove("hide")}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script"))),l=0;!function e(){let n=o[l];l++,n&&"true"!=n.getAttribute("loaded")||l<o.length&&e(),l<o.length?n.addEventListener("load",e):t()}()}</script></head><body class="publish css-settings-manager theme-light show-inline-title show-ribbon trim-cols row-lines col-lines table-lines row-hover minimal-notion-light minimal-dracula-dark minimal-readable colorful-headings links-int-on links-ext-on full-width-media is-focused"><script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script><div class="webpage-container workspace"><div class="sidebar-left sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><label class="theme-toggle-container" for="theme_toggle"><input class="theme-toggle-input" type="checkbox" id="theme_toggle"><div class="toggle-background"></div></label></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content"><div class="search-input-container"><div class="search-input-wrapper"><input enterkeyhint="search" type="search" spellcheck="false" placeholder="Search..."><div class="search-input-clear-button" aria-label="Clear search"></div></div></div><include src="lib/html/file-tree.html"></include></div><script defer="">let ls = document.querySelector(".sidebar-left"); ls.classList.add("is-collapsed"); if (window.innerWidth > 768) ls.classList.remove("is-collapsed"); ls.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-left-width"));</script></div><div class="document-container markdown-reading-view hide"><div class="markdown-preview-view markdown-rendered allow-fold-headings allow-fold-lists is-readable-line-width"><style id="MJX-CHTML-styles"></style><div class="markdown-preview-sizer markdown-preview-section"><h1 class="page-title heading inline-title" id="【Liquibase】基础概念 + demo实战-CSDN博客"><p dir="auto">【Liquibase】基础概念 + demo实战-CSDN博客</p></h1><div class="heading-wrapper"><h2 data-heading="1 定义" dir="auto" class="heading" id="1_定义"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>1 定义</h2><div class="heading-children"><div><p dir="auto"><a data-tooltip-position="top" aria-label="https://so.csdn.net/so/search?q=Liquibase&amp;spm=1001.2101.3001.7020" rel="noopener" class="external-link is-unresolved" href="https://so.csdn.net/so/search?q=Liquibase&amp;spm=1001.2101.3001.7020" target="_self">Liquibase</a>是一个用于 <strong>用于跟踪、管理和应用数据库变化的开源工具</strong> ；<br>
+通过日志文件(changelog)的形式记录数据库的变更(changeset)，然后执行日志文件中的修改，将数据库更新或回滚(rollback)到一致的状态。<br>
+它的目标是提供一种<a data-tooltip-position="top" aria-label="https://so.csdn.net/so/search?q=%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B&amp;spm=1001.2101.3001.7020" rel="noopener" class="external-link is-unresolved" href="https://so.csdn.net/so/search?q=%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B&amp;spm=1001.2101.3001.7020" target="_self">数据库类型</a>无关的解决方案，通过执行schema类型的文件来达到迁移。</p></div></div></div><div class="heading-wrapper"><h2 data-heading="2 背景" dir="auto" class="heading" id="2_背景"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>2 背景</h2><div class="heading-children"><div><p dir="auto">在实际上线的应用中，随着版本的迭代，经常会遇到需要变更数据库表和字段，必然会遇到需要对这些变更进行记录和管理，以及回滚等等；<br>
+同时只有脚本化且版本可管理，才能在让数据库实现真正的<a data-tooltip-position="top" aria-label="https://so.csdn.net/so/search?q=DevOps&amp;spm=1001.2101.3001.7020" rel="noopener" class="external-link is-unresolved" href="https://so.csdn.net/so/search?q=DevOps&amp;spm=1001.2101.3001.7020" target="_self">DevOps</a>（自动化执行 + 回滚等）。在这样的场景下Liquibase等工具的出现也就成为了必然。</p></div></div></div><div class="heading-wrapper"><h2 data-heading="3 概念" dir="auto" class="heading" id="3_概念"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>3 概念</h2><div class="heading-children"><div><ol>
+<li data-line="0" dir="auto"><div class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><strong>changelog文件</strong>：需要定义一堆xml文件，这些xml称为changelog文件。
+<ol>
+<li data-line="1" dir="auto">项目启动时，会自动执行 changelog xml文件。</li>
+<li data-line="2" dir="auto">每个文件包含多个变化集合 changeSet，每个changeSet 记录了作者、改变的内容。</li>
+<li data-line="3" dir="auto"><div class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>在执行 changeSet 时，由于改动的内容可以通过 Liquibase 提供的标签编写，所以无关具体的数据库产品（MySQL、Oracle 等），Liquibase 底层会根据实际使用的数据库类型转化为对应的 SQL。
+<ol>
+<li data-line="4" dir="auto"><strong>标签：</strong>例如 createTable、addColumn……等一些changeSet 中要修改的内容，通过标签进行操作。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li data-line="5" dir="auto"><strong>执行锁：</strong>Liquibase 具有执行锁，已经执行过的内容不会重复执行。</li>
+</ol></div></div></div><div class="heading-wrapper"><h2 data-heading="4 工作流程" dir="auto" class="heading" id="4_工作流程"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>4 工作流程</h2><div class="heading-children"><div><p dir="auto">将 <strong>SQL</strong> 变更记录到 <strong>changeset</strong> ，多个changeset变更组成了日志文件( <strong>changelog</strong> )，liquibase将changelog更新日志文件同步到指定的 <strong>RDBMS</strong> 中。<br>
+<span alt="83f18d42164435d63072f0a7ea1a524a_MD5.png" src="83f18d42164435d63072f0a7ea1a524a_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="83f18d42164435d63072f0a7ea1a524a_MD5.png" src="attachments/83f18d42164435d63072f0a7ea1a524a_md5.png" target="_self"></span></p></div></div></div><div class="heading-wrapper"><h2 data-heading="5 SpringBoot集成liquibase" dir="auto" class="heading" id="5_SpringBoot集成liquibase"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5 SpringBoot集成liquibase</h2><div class="heading-children"><div class="heading-wrapper"><h3 data-heading="5.1 maven依赖" dir="auto" class="heading" id="5.1_maven依赖"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.1 maven依赖</h3><div class="heading-children"><div><pre><code> `&lt;!
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.liquibase&lt;/groupId&gt;
+            &lt;artifactId&gt;liquibase-core&lt;/artifactId&gt;
+            &lt;version&gt;4.9.1&lt;/version&gt;
+        &lt;/dependency&gt;` 
+
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h3 data-heading="5.2 添加changelog" dir="auto" class="heading" id="5.2_添加changelog"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.2 添加changelog</h3><div class="heading-children"><div><p dir="auto">在 src/main/resources 创建目录 db， db 目录用来存放 Liquibase 相关的 changelog 文件。<br>
+在 db/changelog 目录下创建 changelog-master.xml 文件，该文件为主配置文件，作用就是引入所有模块的 changelog 文件：<br>
+有更新时新增 include 标签和对应的文件即可。<br>
+指向changelog或文件夹的顺序是非常重要的。它需要告知Liquibase在运行SQL时的顺序。我们最好先运行changelog(其中包含了“create table(…)”)，然后再运行使用该表的编译包。</p></div><div><pre><code>`&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"&gt;
+
+  
+  &lt;include file="/sql/001_create_person_table.sql" relativeToChangelogFile="true"&gt;&lt;/include&gt;
+	
+  &lt;changeSet id="T100-20221009-001" author="txg"&gt;
+      &lt;sqlFile path="/db/changelog/sql/002_create_person1_table.sql"&gt;&lt;/sqlFile&gt;
+  &lt;/changeSet&gt;
+  
+&lt;/databaseChangeLog&gt;` 
+
+![[59ddd7af80665f17c019602d722bf0e2_MD5.png]]
+
+
+
+</code><button class="copy-code-button">复制</button></pre></div><div><p dir="auto"><span alt="fee9edb9c3e949eb81be2889eb5f1c15_MD5.png" src="fee9edb9c3e949eb81be2889eb5f1c15_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="fee9edb9c3e949eb81be2889eb5f1c15_MD5.png" src="attachments/fee9edb9c3e949eb81be2889eb5f1c15_md5.png" target="_self"></span></p></div><div class="heading-wrapper"><h4 data-heading="5.2.1 标签详解" dir="auto" class="heading" id="5.2.1_标签详解"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.2.1 标签详解</h4><div class="heading-children"><div><p dir="auto">因为 liquibase 使用 DATABASECHANGELOG 这个表, 它会从 changelog 中按照顺序读取所有的 changesets, 对于每一个 changeset, 根据 id/author/filetpath 的组合查询这个 changeset 是否被执行过了。<br>
+如果这个 changeset 在数据库中被标记为已经执行了, 那么这个 changeset 就会被跳过, 除非有一个 runAlways 的属性设置为 true, 这个已经执行的 changeset 会被重新执行；changeset 中的所有 change 都执行完成之后，liquibase 将会在 DATABASECHANGELOG 中插入一条新的记录，id/author/filepath 以及这个 changeset 的 MD5Sum。<br>
+filepath 是一个路径， 用于定义 changelog-file 这个属性。 即使是同一个文件可以使用不同的路径引用，除非使用了 logical-file-path，否则还是被认为是不同的文件。<br>
+liquibase 试图在事务中执行每个 changeset，执行成功则提交， 失败则回滚。有些数据库会自动的提交事务，可能导致意想不到的问题。 因此，最佳实践是每个 changeset 中只有一个变更，除非你想在事务中执行一组非自动提交的变更，比如插入多个数据。</p></div><div class="heading-wrapper"><h6 data-heading="属性" dir="auto" class="heading" id="属性"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>属性</h6><div class="heading-children"><div dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th dir="ltr"><strong>属性</strong></th>
+<th dir="ltr"><strong>解释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td dir="ltr">id</td>
+<td dir="ltr">指定一个字母-数字格式的标识符, 这个是必须的.</td>
+</tr>
+<tr>
+<td dir="ltr">注意, 如果 id 中有 0 的话, 最好是用引号将 id 包裹起来, 比如 “1.10”. 这样的话可以保留 id 中所有的字符</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">author</td>
+<td dir="ltr">指定 changeset 的创建人, 这个是必须的</td>
+</tr>
+<tr>
+<td dir="ltr">dbms</td>
+<td dir="ltr">指定要执行 changeset 的数据库的类型.When the migration step is running, it checks the database type against this attribute.</td>
+</tr>
+<tr>
+<td dir="ltr">你可以作如下的事情:</td>
+<td dir="auto"></td>
+</tr>
+</tbody>
+</table></div><div><ol>
+<li data-line="0" dir="auto">列举多个数据库类型并用逗号分隔</li>
+<li data-line="1" dir="auto">在数据库类型前加感叹号可以不在指定的数据库中执行</li>
+<li data-line="2" dir="auto">可以使用关键字 all 和 none |<br>
+| runAlways | 每次运行的时候都执行这个 changeset, 即使之前执行过 |<br>
+| runOnChange | 在第一次的时候会被执行, 然后每次 changeset 有修改的时候会继续执行 |<br>
+| Context | 根据运行时的设置控制 changeset 是否执行. 任何字符串都可以作为 context 的名字, 而且是大小写不敏感的 |<br>
+| Labels | 根据运行时的设置控制 changeset 是否执行. 任何字符串都可以作为 context 的名字, 而且是大小写不敏感的 |<br>
+| runInTransaction | 指定 changeset 是否作为一个单独的事务执行 (如果可能的话). 默认值为 true |<br>
+| failOnError | 如果执行时报错的话这个 migration 是否失败, 默认值为 true |<br>
+| runOrder | 控制 changeset 的执行顺序, 用的也少, 按顺序执行就完了 |<br>
+| created | 存储日期, 版本或者任何字符串的值, 而不是 remarks |<br>
+| ignore | 忽略这个 changeset 的执行 |<br>
+| logical-file-path | 当创建 changesets 的唯一标识符时重写文件名和路径. 当需要移动或者重命名 changelog 时会用到这个值 |</li>
+</ol></div></div></div><div class="heading-wrapper"><h6 data-heading="子标签" dir="auto" class="heading" id="子标签"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>子标签</h6><div class="heading-children"><div dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th dir="ltr"><strong>子标签</strong></th>
+<th dir="ltr"><strong>解释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td dir="ltr">comment</td>
+<td dir="ltr">指定一个字母-数字格式的标识符, 这个是必须的.</td>
+</tr>
+<tr>
+<td dir="ltr">注意, 如果 id 中有 0 的话, 最好是用引号将 id 包裹起来, 比如 “1.10”. 这样的话可以保留 id 中所有的字符</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">preConditions</td>
+<td dir="ltr">指定 changeset 的创建人, 这个是必须的</td>
+</tr>
+<tr>
+<td dir="ltr">validCheckSum</td>
+<td dir="ltr">给这个 changeset 指定一个有效的 changeset, 而不管数据库里面存储的是什么. 主要使用场景是你要修改已经执行的 changeset 又不想报错时使用.1:any 这个特殊的值将匹配任何的 checksum, 不且 changeset 修改时不会执行</td>
+</tr>
+<tr>
+<td dir="ltr">rollback</td>
+<td dir="ltr">指定 sql 语句或者 Change Type 如何回滚这个 changeset</td>
+</tr>
+</tbody>
+</table></div><div><ol>
+<li data-line="0" dir="auto">file：表示要包含的changelog文件的路径，这个文件可以是LiquiBase支持的任意格式。表示将此路径下目录中的 changelog 文件引入；假设 db 目录下还有其他模块（目录），继续通过 或 元素引入即可。</li>
+<li data-line="1" dir="auto">relativeToChangelogFile：如果为true，则表示file属性表示的文件路径是相对于根changelog而不是CLASSPATH的，默认为false。</li>
+</ol></div><div><blockquote dir="auto">
+<p><strong>注意: 目前没有解决重复引用和循环引用的问题，重复引用还好，LiquiBase在执行的时候可以判断重复，而循环引用会导致无限循环，需要注意！</strong></p>
+</blockquote></div><div><p dir="auto">指定的是changelog的目录，而不是为文件</p></div></div></div></div></div></div></div><div class="heading-wrapper"><h3 data-heading="5.3 添加sql文件" dir="auto" class="heading" id="5.3_添加sql文件"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.3 添加sql文件</h3><div class="heading-children"><div><p dir="auto">在 src/main/resources/db 创建目录 <code>changelog/sql</code>，用来存放数据库脚本文件；<br>
+例如，创建 001_create_person_table.sql 文件</p></div><div><ul>
+<li data-line="0" dir="auto">每个sql文件必须以-- liquibase formatted sql注释开头</li>
+<li data-line="1" dir="auto">每个changeset必须以–changeset author:id注释开头</li>
+</ul></div><div><pre><code> `insert into departments values(1, '研发部');
+insert into departments values(2, '销售部');
+
+insert into departments values(3, '后勤部');
+
+DELETE FROM departments WHERE DEPARTMENT_NAME = '研发部'` 
+
+
+</code><button class="copy-code-button">复制</button></pre></div><div><p dir="auto"><span alt="bb0b3218ebb1cbdd5190eed96c385544_MD5.png" src="bb0b3218ebb1cbdd5190eed96c385544_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="bb0b3218ebb1cbdd5190eed96c385544_MD5.png" src="attachments/bb0b3218ebb1cbdd5190eed96c385544_md5.png" target="_self"></span></p></div></div></div><div class="heading-wrapper"><h3 data-heading="5.4 添加liquibase配置" dir="auto" class="heading" id="5.4_添加liquibase配置"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.4 添加liquibase配置</h3><div class="heading-children"><div><p dir="auto">配置开启 liquibase，并指定主文件的路径</p></div><div><pre><code>`spring:
+  datasource:
+    url: jdbc:oracle:thin:@172.20.0.7:1521:ctsdb
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: CTS_DEV
+    password: CTS_DEV
+  liquibase:
+
+    enabled: true
+
+    change-log: classpath:/db/changelog/changelog-master.xml
+
+    drop-first: false
+
+server:
+  port: 8088` 
+
+</code><button class="copy-code-button">复制</button></pre></div><div><p dir="auto"><span alt="b0cc6a5b8bac5bcc9dde39214814e556_MD5.png" src="b0cc6a5b8bac5bcc9dde39214814e556_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="b0cc6a5b8bac5bcc9dde39214814e556_MD5.png" src="attachments/b0cc6a5b8bac5bcc9dde39214814e556_md5.png" target="_self"></span></p></div><div class="heading-wrapper"><h4 data-heading="5.4.1 配置项详解" dir="auto" class="heading" id="5.4.1_配置项详解"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.4.1 配置项详解</h4><div class="heading-children"><div><p dir="auto"><span alt="0330e59189993d289d8562fdf283dc05_MD5.png" src="0330e59189993d289d8562fdf283dc05_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="0330e59189993d289d8562fdf283dc05_MD5.png" src="attachments/0330e59189993d289d8562fdf283dc05_md5.png" target="_self"></span></p></div></div></div></div></div><div class="heading-wrapper"><h3 data-heading="5.5 启动服务" dir="auto" class="heading" id="5.5_启动服务"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.5 启动服务</h3><div class="heading-children"><div class="heading-wrapper"><h4 data-heading="5.5.1 自动创建表" dir="auto" class="heading" id="5.5.1_自动创建表"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.5.1 自动创建表</h4><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">服务启动成功后，会自动创建两张 liquibase 相关的表：DATABASECHANGELOG 和 DATABASECHANGELOGLOCK表。分别记录changelog的执行日志和锁日志。</li>
+<li data-line="1" dir="auto">LiquiBase在执行changelog中的changeSet时，会首先查看DATABASECHANGELOG表，若是已经执行过，则会跳过（除非changeSet的runAlways属性为true），若是没有执行过，则执行并记录changelog日志；</li>
+<li data-line="2" dir="auto">changelog中的一个changeSet对应一个事务，在changeSet执行完后commit，若是出现错误则rollback；</li>
+</ul></div><div class="heading-wrapper"><h5 data-heading="5.5.1.1 DATABASECHANGELOG" dir="auto" class="heading" id="5.5.1.1_DATABASECHANGELOG"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.5.1.1 DATABASECHANGELOG</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">author和id唯一标识一个变化（ChangSet）</li>
+<li data-line="1" dir="auto">Liquibase 使用 databasechangelog 表来跟踪已运行的changeSet。</li>
+<li data-line="2" dir="auto">该表将每个更改设置作为一行进行跟踪，由存储changelog文件的路径的id、author和filename列的组合标识。</li>
+<li data-line="3" dir="auto">Liquibase会对已经执行的changelog的每一个changeSet的内容进行md5计算，生成的值是databasechanglog表的MD5SUM字段。当重新启动Liquibase时，会对每个changeSet进行md5值计算，与databasechanglog表中的MD5SUM字段进行对比，如果不一致，说明changeSet值已经被修改，无法启动成功。</li>
+</ul></div><div><p dir="auto"><span alt="a6e4f0764ec62d3feaeb5f607d95906a_MD5.png" src="a6e4f0764ec62d3feaeb5f607d95906a_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="a6e4f0764ec62d3feaeb5f607d95906a_MD5.png" src="attachments/a6e4f0764ec62d3feaeb5f607d95906a_md5.png" target="_self"></span></p></div><div><pre><code>`CREATE TABLE "CTS_DEV"."DATABASECHANGELOG" 
+(	"ID" VARCHAR2(255) NOT NULL ENABLE,		
+    "AUTHOR" VARCHAR2(255) NOT NULL ENABLE, 		
+    "FILENAME" VARCHAR2(255) NOT NULL ENABLE, 	
+    "DATEEXECUTED" TIMESTAMP (6) NOT NULL ENABLE, 	
+    "ORDEREXECUTED" NUMBER(*,0) NOT NULL ENABLE, 		
+    "EXECTYPE" VARCHAR2(10) NOT NULL ENABLE, 		
+    "MD5SUM" VARCHAR2(35), 		
+    "DESCRIPTION" VARCHAR2(255), 		
+    "COMMENTS" VARCHAR2(255), 		
+    "TAG" VARCHAR2(255), 		
+    "LIQUIBASE" VARCHAR2(20), 	
+    "CONTEXTS" VARCHAR2(255), 
+    "LABELS" VARCHAR2(255), 
+    "DEPLOYMENT_ID" VARCHAR2(10)
+   ) SEGMENT CREATION IMMEDIATE 
+PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+NOCOMPRESS LOGGING
+STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+          PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+          BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+TABLESPACE "USERS"` 
+
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="5.5.1.2 DATABASECHANGELOGLOCK" dir="auto" class="heading" id="5.5.1.2_DATABASECHANGELOGLOCK"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.5.1.2 DATABASECHANGELOGLOCK</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">Liquibase 使用 databasechangeloglock 表确保一次只运行一个 Liquibase 实例。</li>
+<li data-line="1" dir="auto">因为Liquibase 只是从 databasechangelog 表读取以确定需要运行的changeSet，因此，如果同时对同一数据库执行多个 Liquibase实例，则会发生冲突。如果多个开发人员使用相同的数据库实例，或者集群中有多个服务器在启动时自动运行 Liquibase，则可能会发生这种情况。</li>
+<li data-line="2" dir="auto">如果 Liquibase 未干净地退出，则锁住的行可能会保留为锁定状态。可以通过运行UPDATE DATABASECHANGELOGLOCK SET LOCKED=0 清除当前锁</li>
+</ul></div><div><p dir="auto"><span alt="602f6503c32c6a6790305bc80133b91a_MD5.png" src="602f6503c32c6a6790305bc80133b91a_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="602f6503c32c6a6790305bc80133b91a_MD5.png" src="attachments/602f6503c32c6a6790305bc80133b91a_md5.png" target="_self"></span></p></div><div><pre><code>`CREATE TABLE "CTS_DEV"."DATABASECHANGELOGLOCK" 
+(	"ID" NUMBER(*,0) NOT NULL ENABLE, 	
+    "LOCKED" NUMBER(1,0) NOT NULL ENABLE, 	
+    "LOCKGRANTED" TIMESTAMP (6), 		
+    "LOCKEDBY" VARCHAR2(255), 	
+    CONSTRAINT "PK_DATABASECHANGELOGLOCK" PRIMARY KEY ("ID")
+    USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+    STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+          PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+          BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+    TABLESPACE "USERS"  ENABLE
+   ) SEGMENT CREATION IMMEDIATE 
+PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+NOCOMPRESS LOGGING
+STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+          PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+          BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+TABLESPACE "USERS"` 
+
+
+</code><button class="copy-code-button">复制</button></pre></div><div><p dir="auto"><span alt="5c1b96e727ed2d15bbb9d92f65da13b0_MD5.png" src="5c1b96e727ed2d15bbb9d92f65da13b0_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="5c1b96e727ed2d15bbb9d92f65da13b0_MD5.png" src="attachments/5c1b96e727ed2d15bbb9d92f65da13b0_md5.png" target="_self"></span></p></div><div><p dir="auto"><span alt="e62aeb381546cc84f1f2d8370985210b_MD5.png" src="e62aeb381546cc84f1f2d8370985210b_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="e62aeb381546cc84f1f2d8370985210b_MD5.png" src="attachments/e62aeb381546cc84f1f2d8370985210b_md5.png" target="_self"></span></p></div></div></div></div></div></div></div><div class="heading-wrapper"><h3 data-heading="5.6 验证" dir="auto" class="heading" id="5.6_验证"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5.6 验证</h3><div class="heading-children"><div><p dir="auto">成功执行sql文件里的脚本：</p></div><div><p dir="auto"><span alt="4b70a4f6279fe1240adff6557703b922_MD5.png" src="4b70a4f6279fe1240adff6557703b922_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="4b70a4f6279fe1240adff6557703b922_MD5.png" src="attachments/4b70a4f6279fe1240adff6557703b922_md5.png" target="_self"></span></p></div></div></div></div></div><div class="heading-wrapper"><h2 data-heading="6 Java代码实现" dir="auto" class="heading" id="6_Java代码实现"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>6 Java代码实现</h2><div class="heading-children"><div class="heading-wrapper"><h3 data-heading="方法" dir="auto" class="heading" id="方法"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>方法</h3><div class="heading-children"><div><pre><code>`public static void main(String[] args) {
+    String dbUrl = "jdbc:oracle:thin:@172.20.0.7:1521:ctsdb";
+    String changeLogFile = "classpath:/db/changelog/changelog-master1.xml";
+    String dbUsername = "CTS_DEV";
+    String dbPassWord = "CTS_DEV";
+    
+    liquiBaseStart(dbUrl,dbUsername,dbPassWord,changeLogFile);
+}
+
+    public void liquiBaseStart(String dbUrl,String dbUsername,String dbPassWord,String changeLogFile)  {
+
+        
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            
+            Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassWord);
+            JdbcConnection jdbcConnection = new JdbcConnection(connection);
+            
+            Liquibase liquibase = new Liquibase(changeLogFile, new ClassLoaderResourceAccessor(), jdbcConnection);
+            
+            liquibase.update("");
+            connection.close();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (LiquibaseException e) {
+            throw new RuntimeException(e);
+        }
+    }` 
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div></div></div><div class="heading-wrapper"><h2 data-heading="7 plugin" dir="auto" class="heading" id="7_plugin"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>7 plugin</h2><div class="heading-children"><div><p dir="auto">该插件可以根据数据库逆向生成 changlog 文件，从已有的数据库生成xml配置信息</p></div><div><ol>
+<li data-line="0" dir="auto"><div class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>生成xml文件
+<ol>
+<li data-line="1" dir="auto">通过idea的maven功能，找到 liquibase plugin，双击 liquibase:generateChangeLog 选项，执行完成之后就会在 properties 文件中配置的 outputChangeLogFile 路径生成对应的xml文件</li>
+</ol>
+</li>
+<li data-line="2" dir="auto"><div class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>生成数据库修改文档
+<ol>
+<li data-line="3" dir="auto">双击liquibase plugin面板中的liquibase:dbDoc选项，会生成数据库修改文档，默认会生成到target目录中</li>
+</ol>
+</li>
+<li data-line="4" dir="auto"><div class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>发布changelog
+<ol>
+<li data-line="5" dir="auto">之前我们对changelog的编辑都需要通过启动项目来运行changelog，有时候我们可能想不重启项目便能将修改发布运行到数据库中</li>
+<li data-line="6" dir="auto">双击liquibase plugin面板中的liquibase:update选项，便可以将修改同步到数据库中</li>
+</ol>
+</li>
+</ol></div><div><p dir="auto"><span alt="b96b00abeaadafe4aece26dafbc3bb13_MD5.png" src="b96b00abeaadafe4aece26dafbc3bb13_MD5.png" class="internal-embed media-embed image-embed is-loaded"><img alt="b96b00abeaadafe4aece26dafbc3bb13_MD5.png" src="attachments/b96b00abeaadafe4aece26dafbc3bb13_md5.png" target="_self"></span></p></div><div class="heading-wrapper"><h3 data-heading="7.1 配置项" dir="auto" class="heading" id="7.1_配置项"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>7.1 配置项</h3><div class="heading-children"><div><p dir="auto">配置数据库连接信息和Liquibase生成规则配置。</p></div><div><pre><code>`&lt;!
+&lt;plugin&gt;
+    &lt;groupId&gt;org.liquibase&lt;/groupId&gt;
+    &lt;artifactId&gt;liquibase-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;3.5.1&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;propertyFile&gt;src/main/resources/db/liquibase.properties&lt;/propertyFile&gt;
+        &lt;propertyFileWillOverride&gt;true&lt;/propertyFileWillOverride&gt;
+        &lt;outputChangeLogFile&gt;src/main/resources/liquibase/changelog/changelog_init.xml&lt;/outputChangeLogFile&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;` 
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div></div></div><div class="heading-wrapper"><h2 data-heading="8 管理" dir="auto" class="heading" id="8_管理"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>8 管理</h2><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="根据发布进行管理" dir="auto" class="heading" id="根据发布进行管理"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>根据发布进行管理</h5><div class="heading-children"><div><ol>
+<li data-line="0" dir="auto">每个发布新建一个文件夹，所有发布相关的 ChangeSet 文件以及数据初始化文件，均放在些文件夹中。</li>
+<li data-line="1" dir="auto">每个发布新建一个 master.xml。此 master.xml 中，include 本次发布需要执行的 ChangeSet 文件</li>
+<li data-line="2" dir="auto">根据开发小组独立 ChangeSet文件(可选)</li>
+<li data-line="3" dir="auto">根据功能独立 ChangeSet 文件。例如 user.xml, company.xml</li>
+</ol></div><div><pre><code>`esources
+  |-liquibase
+    |-user
+    | |- master.xml
+    | |- release.1.0.0
+    | | |- release.xml
+    | | |- user.xml -- 用户相关表ChangeSet
+    | | |- user.csv -- 用户初始化数据
+    | | |- company.xml -- 公司相关表ChangeSet
+    | |- release.1.1.0
+    | | |- release.xml
+    | | |- ...` 
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="模块化管理" dir="auto" class="heading" id="模块化管理"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>模块化管理</h5><div class="heading-children"><div><p dir="auto">首先说明一下 Spring Boot 中 Liquibase 默认是如何执行以及执行结果。</p></div><div><ol>
+<li data-line="0" dir="auto">在启动时，LiquibaseAutoConfiguration 会根据默认配置初始化 SpringLiquibase</li>
+<li data-line="1" dir="auto">SpringLiquibase.afterPropertiesSet()中执行 ChangeSet 文件</li>
+<li data-line="2" dir="auto">第一次跑 ChangeSets 的时候，会在数据库中自动创建两个表databasechangelog和databasechangeloglock</li>
+</ol></div><div><p dir="auto">因此我们可以认为一个 SpringLiquibase 执行为一个模块。<br>
+引入多模块管理时，基于上节文件管理规范，我们基于模块管理再做下调整。</p></div><div><pre><code>`resources
+  |-liquibase
+    |-user
+    | |- master.xml
+    | |- release.1.0.0
+    | | |- release.xml
+    | | |- user.xml -- 用户相关表ChangeSet
+    | | |- user.csv -- 用户初始化数据
+    | | |- company.xml -- 公司相关表ChangeSet
+    | |- release.1.1.0
+    | | |- release.xml
+    | | |- ...
+    |- order
+    | |- master.xml
+    | |- release.1.0.0
+    | | |- ...` 
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div></div></div><div class="heading-wrapper"><h2 data-heading="9 基本规范" dir="auto" class="heading" id="9_基本规范"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>9 基本规范</h2><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">ChangeSet id 使用[任务ID]-[日期]-[序号]，如 T100-20181009-001</li>
+<li data-line="1" dir="auto">ChangeSet 必须填写 author</li>
+<li data-line="2" dir="auto">Liquibase 禁止对业务数据进行 sql 操作</li>
+<li data-line="3" dir="auto">使用时，禁止包含 schema 名称</li>
+<li data-line="4" dir="auto">Liquibase 禁止使用存储过程</li>
+<li data-line="5" dir="auto">所有表，列要加 remarks 进行注释</li>
+<li data-line="6" dir="auto">已经执行过的 ChangeSet 严禁修改。</li>
+<li data-line="7" dir="auto">不要随便升级项目 liquibase 版本，特别是大版本升级。不同版本 ChangeSet MD5SUM 的算法不一样。</li>
+</ul></div></div></div><div class="heading-wrapper"><h2 data-heading="10 常见问题" dir="auto" class="heading" id="10_常见问题"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>10 常见问题</h2><div class="heading-children"><div class="heading-wrapper"><h4 data-heading="10.1 Waiting for changelog lock" dir="auto" class="heading" id="10.1_Waiting_for_changelog_lock"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>10.1 Waiting for changelog lock</h4><div class="heading-children"><div><p dir="auto">如果启动服务时，控制台提示如下信息：<br>
+<code>Liquibase - Waiting for changelog lockWaiting for changelog lock....</code><br>
+通常是由于 Liquibase 在重构数据库时使数据库死锁。解决方法如下：<br>
+1 查看锁住数据库的id：<br>
+<code>SELECT * FROM DATABASECHANGELOGLOCK where LOCKED = true;</code><br>
+2 解锁：<br>
+<code>UPDATE DATABASECHANGELOGLOCKSET locked=0, lockgranted=null, lockedby=nullWHERE id={id}</code><br>
+{id} 为第一步中查询出来对应记录的id。</p></div></div></div><div class="heading-wrapper"><h4 data-heading="10.2 change set check sums…" dir="auto" class="heading" id="10.2_change_set_check_sums…"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>10.2 change set check sums…</h4><div class="heading-children"><div><p dir="auto">liquibase 在处理 changeset 的时候, 会先计算校验和并将其存储到 DATABASECHANGELOG 这个表中. 在 changeset 运行之后, 如果 changeset 有任何修改 liquibase 都能通过对比校验和感知到.<br>
+如果已经运行的 changeset 发生了修改, 会导致校验和变化,liquibase 会退出执行并且报错:<br>
+<code>Validation failed: change set check sums &lt;changeset identifer&gt; was: &lt;old checksum&gt; but is now: &lt;newchecksum&gt;.</code><br>
+这是因为 liquibase 不知道你做了哪些变更. 如果确实是 changeset 需要修改, 而你又想忽略这个错误, 有两个选择：</p></div><div><p dir="auto"><strong>手动修改 DATABASECHANGELOG 中的记录</strong><br>
+第一个方法是手动修改 DATABASECHANGELOG 这个表中对应的记录, 可以将其设置为空值. 这个应该在所有的环境都被部署之后进行. 下次你再运行 liquibase 的时候, 将会更新 checksum 到正确的新值.</p></div><div><p dir="auto"><strong>属性</strong><br>
+第二个方法是给 changeset 增加一个 元素. 这个文本将原来报错的 md5 放到这里来.</p></div><div><p dir="auto"><strong>runOnChange 属性</strong><br>
+校验和通常会和 changeSet 的 runOnChange 属性结合使用. 有时候你并不想增加新的 changeset, 因为只需要知道当前版本, 但是你又想每次更新的时候使用.<br>
+runOnChange 默认是 false 的. 如果将其设置为 true 的话, 那么只要 changeset 有更新则会执行.</p></div><div><hr></div></div></div></div></div><div class="heading-wrapper"><h2 data-heading="参考" dir="auto" class="heading" id="参考"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>参考</h2><div class="heading-children"><div><p dir="auto"><a data-tooltip-position="top" aria-label="https://docsstage.liquibase.com/home.html" rel="noopener" class="external-link is-unresolved" href="https://docsstage.liquibase.com/home.html" target="_self">Liquibase官网</a></p></div><div class="mod-footer"></div></div></div></div></div></div><div class="sidebar-right sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content"><div class="graph-view-wrapper"><div class="sidebar-section-header">Interactive Graph</div><div class="graph-view-placeholder">
+		<div class="graph-view-container">
+			<div class="graph-icon graph-expand" role="button" aria-label="Expand" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+			<canvas id="graph-canvas" class="hide" width="512px" height="512px"></canvas>
+		</div>
+		</div></div><div class="outline-tree tree-container"><div class="tree-item nav-folder mod-root" data-depth="0"><div class="tree-item-self nav-folder-title"><div class="tree-item-inner nav-folder-title-content">Table Of Contents</div><button class="clickable-icon nav-action-button tree-collapse-all is-collapsed" aria-label="Collapse All"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><div class="tree-item-children nav-folder-children"><div class="nav-folder-spacer"></div><div class="tree-item is-collapsed" data-depth="1"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#【Liquibase】基础概念 + demo实战-CSDN博客" data-path="#【Liquibase】基础概念 + demo实战-CSDN博客"><div class="tree-item-inner heading-link" heading-name="【Liquibase】基础概念 + demo实战-CSDN博客">【Liquibase】基础概念 + demo实战-CSDN博客</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#1_定义" data-path="#1_定义"><div class="tree-item-inner heading-link" heading-name="1 定义">1 定义</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#2_背景" data-path="#2_背景"><div class="tree-item-inner heading-link" heading-name="2 背景">2 背景</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#3_概念" data-path="#3_概念"><div class="tree-item-inner heading-link" heading-name="3 概念">3 概念</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#4_工作流程" data-path="#4_工作流程"><div class="tree-item-inner heading-link" heading-name="4 工作流程">4 工作流程</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5_SpringBoot集成liquibase" data-path="#5_SpringBoot集成liquibase"><div class="tree-item-inner heading-link" heading-name="5 SpringBoot集成liquibase">5 SpringBoot集成liquibase</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="3"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.1_maven依赖" data-path="#5.1_maven依赖"><div class="tree-item-inner heading-link" heading-name="5.1 maven依赖">5.1 maven依赖</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="3"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.2_添加changelog" data-path="#5.2_添加changelog"><div class="tree-item-inner heading-link" heading-name="5.2 添加changelog">5.2 添加changelog</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.2.1_标签详解" data-path="#5.2.1_标签详解"><div class="tree-item-inner heading-link" heading-name="5.2.1 标签详解">5.2.1 标签详解</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="6"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#属性" data-path="#属性"><div class="tree-item-inner heading-link" heading-name="属性">属性</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="6"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#子标签" data-path="#子标签"><div class="tree-item-inner heading-link" heading-name="子标签">子标签</div></a><div class="tree-item-children"></div></div></div></div></div></div><div class="tree-item is-collapsed" data-depth="3"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.3_添加sql文件" data-path="#5.3_添加sql文件"><div class="tree-item-inner heading-link" heading-name="5.3 添加sql文件">5.3 添加sql文件</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="3"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.4_添加liquibase配置" data-path="#5.4_添加liquibase配置"><div class="tree-item-inner heading-link" heading-name="5.4 添加liquibase配置">5.4 添加liquibase配置</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.4.1_配置项详解" data-path="#5.4.1_配置项详解"><div class="tree-item-inner heading-link" heading-name="5.4.1 配置项详解">5.4.1 配置项详解</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item is-collapsed" data-depth="3"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.5_启动服务" data-path="#5.5_启动服务"><div class="tree-item-inner heading-link" heading-name="5.5 启动服务">5.5 启动服务</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.5.1_自动创建表" data-path="#5.5.1_自动创建表"><div class="tree-item-inner heading-link" heading-name="5.5.1 自动创建表">5.5.1 自动创建表</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.5.1.1_DATABASECHANGELOG" data-path="#5.5.1.1_DATABASECHANGELOG"><div class="tree-item-inner heading-link" heading-name="5.5.1.1 DATABASECHANGELOG">5.5.1.1 DATABASECHANGELOG</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.5.1.2_DATABASECHANGELOGLOCK" data-path="#5.5.1.2_DATABASECHANGELOGLOCK"><div class="tree-item-inner heading-link" heading-name="5.5.1.2 DATABASECHANGELOGLOCK">5.5.1.2 DATABASECHANGELOGLOCK</div></a><div class="tree-item-children"></div></div></div></div></div></div><div class="tree-item is-collapsed" data-depth="3"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#5.6_验证" data-path="#5.6_验证"><div class="tree-item-inner heading-link" heading-name="5.6 验证">5.6 验证</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#6_Java代码实现" data-path="#6_Java代码实现"><div class="tree-item-inner heading-link" heading-name="6 Java代码实现">6 Java代码实现</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="3"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#方法" data-path="#方法"><div class="tree-item-inner heading-link" heading-name="方法">方法</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#7_plugin" data-path="#7_plugin"><div class="tree-item-inner heading-link" heading-name="7 plugin">7 plugin</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="3"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#7.1_配置项" data-path="#7.1_配置项"><div class="tree-item-inner heading-link" heading-name="7.1 配置项">7.1 配置项</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#8_管理" data-path="#8_管理"><div class="tree-item-inner heading-link" heading-name="8 管理">8 管理</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#根据发布进行管理" data-path="#根据发布进行管理"><div class="tree-item-inner heading-link" heading-name="根据发布进行管理">根据发布进行管理</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#模块化管理" data-path="#模块化管理"><div class="tree-item-inner heading-link" heading-name="模块化管理">模块化管理</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#9_基本规范" data-path="#9_基本规范"><div class="tree-item-inner heading-link" heading-name="9 基本规范">9 基本规范</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#10_常见问题" data-path="#10_常见问题"><div class="tree-item-inner heading-link" heading-name="10 常见问题">10 常见问题</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#10.1_Waiting_for_changelog_lock" data-path="#10.1_Waiting_for_changelog_lock"><div class="tree-item-inner heading-link" heading-name="10.1 Waiting for changelog lock">10.1 Waiting for changelog lock</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#10.2_change_set_check_sums…" data-path="#10.2_change_set_check_sums…"><div class="tree-item-inner heading-link" heading-name="10.2 change set check sums…">10.2 change set check sums…</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item is-collapsed" data-depth="2"><a class="tree-item-self is-clickable" href="知识库/工作技能/其他架构/【liquibase】基础概念-+-demo实战-csdn博客.html#参考" data-path="#参考"><div class="tree-item-inner heading-link" heading-name="参考">参考</div></a><div class="tree-item-children"></div></div></div></div></div></div></div></div><script defer="">let rs = document.querySelector(".sidebar-right"); rs.classList.add("is-collapsed"); if (window.innerWidth > 768) rs.classList.remove("is-collapsed"); rs.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-right-width"));</script></div></div></body></html>

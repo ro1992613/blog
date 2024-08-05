@@ -1,0 +1,439 @@
+<!DOCTYPE html> <html><head>
+<title>Linux 常用命令最全总结大全</title>
+<base href="../../../..">
+<meta id="root-path" root-path="../../../..">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+<meta charset="UTF-8">
+<meta name="description" content="笔记 - Linux 常用命令最全总结大全">
+<meta property="og:title" content="Linux 常用命令最全总结大全">
+<meta property="og:description" content="笔记 - Linux 常用命令最全总结大全">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pages-9hu.pages.dev/知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html">
+<meta property="og:image" content="undefined">
+<meta property="og:site_name" content="笔记">
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://pages-9hu.pages.dev/lib/rss.xml"><script async="" id="webpage-script" src="lib/scripts/webpage.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script type="module" async="" id="graph-view-script" src="lib/scripts/graph-view.js"></script><script async="" id="graph-wasm-script" src="lib/scripts/graph-wasm.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-render-worker-script" src="lib/scripts/graph-render-worker.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="tinycolor-script" src="lib/scripts/tinycolor.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="pixi-script" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.0/pixi.min.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="minisearch-script" src="https://cdn.jsdelivr.net/npm/minisearch@6.3.0/dist/umd/index.min.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="icon" href="lib/media/favicon.png"><script async="" id="graph-data-script" src="lib/scripts/graph-data.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="stylesheet" href="lib/styles/obsidian.css"><link rel="stylesheet" href="lib/styles/theme.css"><link rel="preload" href="lib/styles/global-variable-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/global-variable-styles.css"></noscript><link rel="preload" href="lib/styles/supported-plugins.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/supported-plugins.css"></noscript><link rel="preload" href="lib/styles/main-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/main-styles.css"></noscript><style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-horizontal-spacing:0.6em;--tree-vertical-spacing:0.6em;--sidebar-margin:12px}.sidebar{height:100%;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));font-size:14px;z-index:10;position:relative;overflow:hidden;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}.sidebar-left{left:0}.sidebar-right{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}body.floating-sidebars .sidebar{position:absolute}.sidebar-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .sidebar-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}.sidebar-left .sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}.sidebar-right .sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar:has(.sidebar-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:2em;width:var(--sidebar-width);top:var(--sidebar-margin);padding-inline:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}.sidebar-left .sidebar-topbar{left:0}.sidebar-right .sidebar-topbar{right:0}.topbar-content{overflow:hidden;overflow:clip;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:0!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}.sidebar-left .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}.sidebar-right .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.sidebar-section-header{margin:0 0 1em 0;text-transform:uppercase;letter-spacing:.06em}body{transition:background-color var(--color-fade-speed) ease-in-out}.webpage-container{display:flex;flex-direction:row;height:100%;width:100%;align-items:stretch;justify-content:center}.document-container{opacity:1;flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0;transition:opacity .2s ease-in-out}.document-container>.markdown-preview-view{margin:var(--sidebar-margin);margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;background-color:var(--background-primary);transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}.document-container>.markdown-preview-view>.markdown-preview-sizer{padding-bottom:80vh!important;width:100%!important;max-width:var(--line-width)!important;flex-basis:var(--line-width)!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}.markdown-rendered img:not([width]),.view-content img:not([width]){max-width:100%;outline:0}.document-container>.view-content.embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}.document-container>.view-content.embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6):has(> :is(.math,table)){overflow-x:auto!important}.document-container>.view-content{overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style><script defer="">async function loadIncludes(){if("file:"!=location.protocol){let e=document.querySelectorAll("include");for(const t of e){let e=t.getAttribute("src");try{const o=await fetch(e);if(!o.ok){console.log("Could not include file: "+e),t?.remove();continue}let l=await o.text(),n=document.createRange().createContextualFragment(l),c=Array.from(n.children);for(let e of c)e.classList.add("hide"),e.style.transition="opacity 0.5s ease-in-out",setTimeout((()=>{e.classList.remove("hide")}),10);t.before(n),t.remove(),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}else{if(document.querySelectorAll("include").length>0){var e=document.createElement("div");e.id="error",e.textContent="Web server exports must be hosted on an http / web server to be viewed correctly.",e.style.position="fixed",e.style.top="50%",e.style.left="50%",e.style.transform="translate(-50%, -50%)",e.style.fontSize="1.5em",e.style.fontWeight="bold",e.style.textAlign="center",document.body.appendChild(e),document.querySelector(".document-container")?.classList.remove("hide")}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script"))),l=0;!function e(){let n=o[l];l++,n&&"true"!=n.getAttribute("loaded")||l<o.length&&e(),l<o.length?n.addEventListener("load",e):t()}()}</script></head><body class="publish css-settings-manager theme-light show-inline-title show-ribbon trim-cols row-lines col-lines table-lines row-hover minimal-notion-light minimal-dracula-dark minimal-readable colorful-headings links-int-on links-ext-on full-width-media is-focused"><script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script><div class="webpage-container workspace"><div class="sidebar-left sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><label class="theme-toggle-container" for="theme_toggle"><input class="theme-toggle-input" type="checkbox" id="theme_toggle"><div class="toggle-background"></div></label></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content"><div class="search-input-container"><div class="search-input-wrapper"><input enterkeyhint="search" type="search" spellcheck="false" placeholder="Search..."><div class="search-input-clear-button" aria-label="Clear search"></div></div></div><include src="lib/html/file-tree.html"></include></div><script defer="">let ls = document.querySelector(".sidebar-left"); ls.classList.add("is-collapsed"); if (window.innerWidth > 768) ls.classList.remove("is-collapsed"); ls.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-left-width"));</script></div><div class="document-container markdown-reading-view hide"><div class="markdown-preview-view markdown-rendered allow-fold-headings allow-fold-lists is-readable-line-width"><style id="MJX-CHTML-styles"></style><div class="markdown-preview-sizer markdown-preview-section"><h1 class="page-title heading inline-title" id="Linux 常用命令最全总结大全"><p dir="auto">Linux 常用命令最全总结大全</p></h1><div class="heading-wrapper"><h4 data-heading="一、文件和命令" dir="auto" class="heading" id="一、文件和命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>一、文件和命令</h4><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="1、cd 命令" dir="auto" class="heading" id="1、cd_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>1、cd 命令</h5><div class="heading-children"><div><p dir="auto">（它用于<a data-tooltip-position="top" aria-label="https://so.csdn.net/so/search?q=%E5%88%87%E6%8D%A2%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95&amp;spm=1001.2101.3001.7020" rel="noopener" class="external-link is-unresolved" href="https://so.csdn.net/so/search?q=%E5%88%87%E6%8D%A2%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95&amp;spm=1001.2101.3001.7020" target="_self">切换当前目录</a>，它的参数是要切换到的目录的路径，可以是绝对路径，也可以是相对路径）</p></div><div><ul>
+<li data-line="0" dir="auto">cd /home 进入 ‘/ home’ 目录</li>
+<li data-line="2" dir="auto">cd … 返回上一级目录</li>
+<li data-line="4" dir="auto">cd …/… 返回上两级目录</li>
+<li data-line="6" dir="auto">cd / 返回跟目录</li>
+<li data-line="8" dir="auto">cd - 返回上次所在的目录</li>
+<li data-line="10" dir="auto"><code>mkdir &lt;目录名&gt;</code> <a data-tooltip-position="top" aria-label="https://so.csdn.net/so/search?q=%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95&amp;spm=1001.2101.3001.7020" rel="noopener" class="external-link is-unresolved" href="https://so.csdn.net/so/search?q=%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95&amp;spm=1001.2101.3001.7020" target="_self">创建目录</a></li>
+<li data-line="12" dir="auto"><code>mkdir dir1 dir2</code> 同时创建两个目录</li>
+<li data-line="14" dir="auto"><code>mkdir -p /tmp/dir1/dir2</code> 递归创建目录树</li>
+<li data-line="16" dir="auto"><code>rm -f file1</code> 删除’file1’⽂件</li>
+<li data-line="18" dir="auto"><code>rmdir dir1</code> 删除’dir1’⽬录</li>
+<li data-line="20" dir="auto"><code>rm -rf dir1</code> 删除’dir1’⽬录和其内容<br>
+-<code>rm -rf dir1 dir2</code> 同时删除两个⽬录及其内容</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="2、pwd 命令" dir="auto" class="heading" id="2、pwd_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>2、pwd 命令</h5><div class="heading-children"><div><p dir="auto">pwd 显示工作路径</p></div></div></div><div class="heading-wrapper"><h5 data-heading="3、ls 命令" dir="auto" class="heading" id="3、ls_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>3、ls 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto"><code>ls</code> 查看目录中的文件</li>
+<li data-line="1" dir="auto"><code>ls -l</code> 显示文件和目录的详细资料</li>
+<li data-line="2" dir="auto"><code>ls -a</code> 列出全部文件，包含隐藏文件</li>
+<li data-line="3" dir="auto"><code>ls -lh</code> 查看⽂件和⽬录的详情列表（增强⽂件⼤⼩易读性）</li>
+<li data-line="4" dir="auto"><code>ls -lSr</code> 查看⽂件和⽬录列表（以⽂件⼤⼩升序查看）</li>
+<li data-line="5" dir="auto"><code>tree</code> 查看⽂件和⽬录的树形结构 （如果没有需要先安装 yum install tree）</li>
+<li data-line="6" dir="auto"><code>ls -R</code> 连同子目录的内容一起列出（递归列出），等于该目录下的所有文件都会显示出来</li>
+<li data-line="7" dir="auto"><code>ls -al /proc/pid/exe</code> 通过pid查询程序正在运行的路径</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="4、cp 命令" dir="auto" class="heading" id="4、cp_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>4、cp 命令</h5><div class="heading-children"><div><p dir="auto">（用于复制文件，copy之意，它还可以把多个文件一次性地复制到一个目录下）</p></div><div><ul>
+<li data-line="0" dir="auto">-a 将文件的特性一起复制</li>
+<li data-line="1" dir="auto">-p 连同文件的属性一起复制，而非使用默认方式，与-a相似，常用于备份</li>
+<li data-line="2" dir="auto">-i 若目标文件已经存在时，在覆盖时会先询问操作的进行</li>
+<li data-line="3" dir="auto">-r 递归持续复制，用于目录的复制行为</li>
+<li data-line="4" dir="auto">-u 目标文件与源文件有差异时才会复制<br>
+-<code>cp dir/* .</code> 复制某目录下的所有文件至当前目录</li>
+<li data-line="6" dir="auto"><code>cp -a dir1 dir2</code> 复制目录</li>
+<li data-line="7" dir="auto"><code>cp -a /temp/dir1 .</code> 复制一个目录至当前目录</li>
+<li data-line="8" dir="auto"><code>ln -s file1 link1</code> 创建指向⽂件/⽬录的软链接</li>
+<li data-line="9" dir="auto"><code>ln file1 lnk1</code> 创建指向⽂件/⽬录的物理链接</li>
+<li data-line="10" dir="auto"><code>touch -t 0712250000 file1</code> 修改一个文件或目录的时间戳 - (YYMMDDhhmm)</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="5、mv 命令" dir="auto" class="heading" id="5、mv_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>5、mv 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">-f force强制的意思，如果目标文件已经存在，不会询问而直接覆盖</li>
+<li data-line="1" dir="auto">-i 若目标文件已经存在，就会询问是否覆盖</li>
+<li data-line="2" dir="auto">-u 若目标文件已经存在，且比目标文件新，才会更新</li>
+<li data-line="3" dir="auto">mv old_dir new_dir 重命名/移动⽬录</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="6、rm 命令" dir="auto" class="heading" id="6、rm_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>6、rm 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">-f ：就是force的意思，忽略不存在的文件，不会出现警告消息</li>
+<li data-line="1" dir="auto">-i ：互动模式，在删除前会询问用户是否操作</li>
+<li data-line="2" dir="auto">-r ：递归删除，最常用于目录删除，它是一个非常危险的参数</li>
+</ul></div></div></div></div></div><div class="heading-wrapper"><h4 data-heading="二、查看文件内容" dir="auto" class="heading" id="二、查看文件内容"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>二、查看文件内容</h4><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="7、cat 命令" dir="auto" class="heading" id="7、cat_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>7、cat 命令</h5><div class="heading-children"><div><p dir="auto">（用于查看文本文件的内容，后接要查看的文件名，通常可用管道与 more 和 less 一起使用）</p></div><div><ul>
+<li data-line="0" dir="auto"><code>cat file1</code> 从第一个字节开始正向查看文件的内容</li>
+<li data-line="1" dir="auto"><code>cat -n file1</code> 标示文件的行数</li>
+<li data-line="2" dir="auto"><code>cat xxx.txt</code> awk ‘NR%2==1’</li>
+<li data-line="3" dir="auto"><code>tac file1</code> 从最后一行开始反向查看一个文件的内容</li>
+<li data-line="4" dir="auto"><code>more file1</code> 查看一个长文件的内容</li>
+<li data-line="5" dir="auto"><code>less file1</code> 类似 more 命令，但允许方向操作</li>
+<li data-line="6" dir="auto"><code>head -n 2 file1</code> 查看一个文件的前两行</li>
+<li data-line="7" dir="auto"><code>tail -f /log/msg</code> 实时查看添加到⽂件中的内容</li>
+<li data-line="8" dir="auto"><code>tail -n 2 file1</code> 查看一个文件的最后两行</li>
+<li data-line="9" dir="auto"><code>tail -n +1000 file1</code> 从1000行开始显示，显示1000行以后的</li>
+<li data-line="10" dir="auto"><code>cat filename | head -n 3000 | tail -n +1000</code> 显示1000行到3000行</li>
+<li data-line="11" dir="auto"><code>cat filename | tail -n +3000 | head -n 1000</code> 从第3000行开始，显示1000(即显示3000~3999行)</li>
+<li data-line="12" dir="auto"><code>grep ss hello.txt</code> 在⽂件hello.txt中查找关键词 ss</li>
+<li data-line="13" dir="auto"><code>grep ^s hello.txt</code> 在⽂件hello.txt中查找以 s 开头的内容</li>
+<li data-line="14" dir="auto"><code>grep [0-9] hello.txt</code> 选择hello.txt⽂件中所有包含数字的⾏</li>
+<li data-line="15" dir="auto"><code>sed 's/ss/mm/g' hello.txt</code> 将hello.txt⽂件中的 ss 替换成 mm</li>
+<li data-line="16" dir="auto"><code>sed '/^$/d' hello.txt</code> 从hello.txt⽂件中删除所有空⽩⾏</li>
+<li data-line="17" dir="auto"><code>sed '/ *#/d; /^$/d' hello.txt</code> 从hello.txt⽂件中删除所有注释和空⽩⾏</li>
+<li data-line="18" dir="auto"><code>sed -e '1d' hello.txt</code> 从⽂件hello.txt 中排除第⼀⾏</li>
+<li data-line="19" dir="auto"><code>sed -n '/s1/p' hello.txt</code> 查看只包含关键词"s1"的⾏</li>
+<li data-line="20" dir="auto"><code>sed -e 's/ *$//' hello.txt</code> 删除每⼀⾏最后的空⽩字符</li>
+<li data-line="21" dir="auto"><code>sed -e 's/s1//g' hello.txt</code> 从⽂档中只删除词汇s1并保留剩余全部</li>
+<li data-line="22" dir="auto"><code>sed -n '1,5p;5q' hello.txt</code> 查看从第⼀⾏到第5⾏内容</li>
+<li data-line="23" dir="auto"><code>sed -n '5p;5q' hello.txt</code> 查看第5⾏</li>
+<li data-line="24" dir="auto"><code>paste file1 file2</code> 合并两个⽂件或两栏的内容</li>
+<li data-line="25" dir="auto"><code>paste -d '+' file1 file2</code> 合并两个⽂件或两栏的内容，中间⽤"+"区分</li>
+<li data-line="26" dir="auto"><code>sort file1 file2</code> 排序两个⽂件的内容</li>
+<li data-line="27" dir="auto"><code>sort file1 file2</code> uniq</li>
+<li data-line="28" dir="auto"><code>sort file1 file2</code> uniq -u</li>
+<li data-line="29" dir="auto"><code>sort file1 file2</code> uniq -d</li>
+<li data-line="30" dir="auto"><code>comm -1 file1 file2</code> ⽐较两个⽂件的内容(去除’file1’所含内容)</li>
+<li data-line="31" dir="auto"><code>comm -2 file1 file2</code> ⽐较两个⽂件的内容(去除’file2’所含内容)</li>
+<li data-line="32" dir="auto"><code>comm -3 file1 file2</code> ⽐较两个⽂件的内容(去除两⽂件共有部分)</li>
+</ul></div></div></div></div></div><div class="heading-wrapper"><h4 data-heading="三、文件搜索" dir="auto" class="heading" id="三、文件搜索"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>三、文件搜索</h4><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="8、find 命令" dir="auto" class="heading" id="8、find_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>8、find 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">find / -name file 从根目录开始搜索文件/目录</li>
+<li data-line="1" dir="auto">find / -user user1 搜索用户 user1 的文件/目录</li>
+<li data-line="2" dir="auto">find /dir -name *.bin 在目录/dir 中搜索带有 .bin 后缀的文件</li>
+<li data-line="3" dir="auto"><code>find / -name file1</code> 从 ‘/’ 开始进入根文件系统搜索文件和目录（完整文件或文件名）</li>
+<li data-line="4" dir="auto"><code>find / -user user1</code> 搜索属于用户 ‘user1’ 的文件和目录</li>
+<li data-line="5" dir="auto"><code>find /usr/bin -type f -atime +100</code> 搜索在过去100天内未被使用过的执行文件</li>
+<li data-line="6" dir="auto"><code>find /usr/bin -type f -mtime -10</code> 搜索在10天内被创建或者修改过的文件</li>
+<li data-line="7" dir="auto"><code>find . -regex '.*\(net\|comm\).*'</code> ‘-regex’ 选项匹配整个路径名，出当前目录树中所有文件名中任意位置包含字符串 net 或 comm 的文件</li>
+<li data-line="8" dir="auto">locate *.mp4 寻找 .mp4结尾的文件</li>
+<li data-line="9" dir="auto">whereis &lt;关键词&gt; 显示某⼆进制⽂件/可执⾏⽂件的路径</li>
+<li data-line="10" dir="auto"><code>whereis halt</code> 显示一个二进制文件、源码或man的位置</li>
+<li data-line="11" dir="auto">which &lt;关键词&gt; 查找系统⽬录下某的⼆进制⽂件</li>
+<li data-line="12" dir="auto"><code>which halt</code> 显示一个二进制文件或可执行文件的完整路径</li>
+</ul></div></div></div></div></div><div class="heading-wrapper"><h4 data-heading="四、文件的权限 \- 使用 “+” 设置权限，使用 “-” 用于取消" dir="auto" class="heading" id="四、文件的权限_\-_使用_“+”_设置权限，使用_“-”_用于取消"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>四、文件的权限 - 使用 “+” 设置权限，使用 “-” 用于取消</h4><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="9、chmod 命令" dir="auto" class="heading" id="9、chmod_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>9、chmod 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto"><code>ls -lh</code> 显示当前目录所有文件的权限</li>
+<li data-line="1" dir="auto"><code>chmod 777</code> 文件名 修改文件权限（最高权限）</li>
+<li data-line="2" dir="auto"><code>chmod ugo+rwx dir</code> 设置目录的所有人(u)、群组(g)以及其他人(o)以读（r，4 ）、写(w，2)和执行(x，1)的权限</li>
+<li data-line="3" dir="auto"><code>chmod go-rwx dir1</code> 删除群组(g)与其他人(o)对目录的读写执行权限</li>
+<li data-line="4" dir="auto">chmod <strong>u</strong>+s /bin/file1 设置一个二进制文件的 SUID 位 - 运行该文件的用户也被赋予和所有者同样的权限</li>
+<li data-line="5" dir="auto">chmod <strong>u</strong>-s /bin/file1` 禁用一个二进制文件的 SUID位</li>
+<li data-line="6" dir="auto">chmod g+s /home/public 设置一个目录的SGID 位 - 类似SUID ，不过这是针对目录的</li>
+<li data-line="7" dir="auto">chmod g-s /home/public 禁用一个目录的 SGID 位</li>
+<li data-line="8" dir="auto">chmod <strong>o</strong>+t /home/public 设置一个文件的 STIKY 位 - 只允许合法所有人删除文件</li>
+<li data-line="9" dir="auto">chmod <strong>o</strong>-t /home/public 禁用一个目录的 STIKY 位</li>
+<li data-line="10" dir="auto">chmod +<strong>x</strong> 文件路径 为所有者、所属组和其他用户添加执行的权限</li>
+<li data-line="11" dir="auto">chmod -<strong>x</strong> 文件路径 为所有者、所属组和其他用户删除执行的权限</li>
+<li data-line="12" dir="auto">chmod <strong>u</strong>+<strong>x</strong> 文件路径 为所有者添加执行的权限</li>
+<li data-line="13" dir="auto">chmod g+<strong>x</strong> 文件路径 为所属组添加执行的权限</li>
+<li data-line="14" dir="auto">chmod <strong>o</strong>+<strong>x</strong> 文件路径 为其他用户添加执行的权限</li>
+<li data-line="15" dir="auto">chmod ug+<strong>x</strong> 文件路径 为所有者、所属组添加执行的权限</li>
+<li data-line="16" dir="auto">chmod =wx 文件路径 为所有者、所属组和其他用户添加写、执行的权限，取消读权限</li>
+<li data-line="17" dir="auto">chmod ug=wx 文件路径 为所有者、所属组添加写、执行的权限，取消读权限</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="10、chown 命令" dir="auto" class="heading" id="10、chown_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>10、chown 命令</h5><div class="heading-children"><div><p dir="auto">（改变文件的所有者）</p></div><div><ul>
+<li data-line="0" dir="auto"><code>chown user1 file1</code> 改变一个文件的所有人属性</li>
+<li data-line="1" dir="auto"><code>chown -R user1 dir1</code> 改变一个目录的所有人属性并同时改变改目录下所有文件的属性</li>
+<li data-line="2" dir="auto"><code>chown user1:group1 file1</code> 改变一个文件的所有人和群组属性</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="11、chgrp 命令" dir="auto" class="heading" id="11、chgrp_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>11、chgrp 命令</h5><div class="heading-children"><div><p dir="auto">（改变文件所属用户组）</p></div><div><ul>
+<li data-line="0" dir="auto"><code>chgrp group1 file1</code> 改变文件的群组</li>
+</ul></div></div></div></div></div><div class="heading-wrapper"><h4 data-heading="五、文本处理" dir="auto" class="heading" id="五、文本处理"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>五、文本处理</h4><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="12、grep 命令(improtant)" dir="auto" class="heading" id="12、grep_命令(improtant)"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>12、grep 命令(improtant)</h5><div class="heading-children"><div><p dir="auto">（分析一行的信息，若当中有我们所需要的信息，就将该行显示出来，该命令通常与管道命令一起使用，用于对一些命令的输出进行筛选加工等等）</p></div><div><ul>
+<li data-line="0" dir="auto"><code>grep Aug /var/log/messages</code> 在文件 '/var/log/messages’中查找关键词"Aug"</li>
+<li data-line="1" dir="auto"><code>grep ^Aug /var/log/messages</code> 在文件 '/var/log/messages’中查找以"Aug"开始的词汇</li>
+<li data-line="2" dir="auto"><code>grep [0-9] /var/log/messages</code> 选择 ‘/var/log/messages’ 文件中所有包含数字的行</li>
+<li data-line="3" dir="auto"><code>grep Aug -R /var/log/*</code> 在目录 ‘/var/log’ 及随后的目录中搜索字符串"Aug"</li>
+<li data-line="4" dir="auto"><code>sed 's/stringa1/stringa2/g' example.txt</code> 将example.txt文件中的 “string1” 替换成 “string2”</li>
+<li data-line="5" dir="auto"><code>sed '/^$/d' example.txt</code> 从example.txt文件中删除所有空白行</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="13、paste 命令" dir="auto" class="heading" id="13、paste_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>13、paste 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto"><code>paste file1 file2</code> 合并两个文件或两栏的内容（查看两文件合并后的内容）</li>
+<li data-line="1" dir="auto"><code>paste -d '+' file1 file2</code> 合并两个文件或两栏的内容，中间用"+"区分</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="14、sort 命令" dir="auto" class="heading" id="14、sort_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>14、sort 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto"><code>sort file1 file2</code> 排序两个文件的内容</li>
+<li data-line="1" dir="auto"><code>sort file1 file2 | uniq</code> 取出两个文件的并集(重复的行只保留一份)</li>
+<li data-line="2" dir="auto"><code>sort file1 file2 | uniq -u</code> 删除交集，留下其他的行</li>
+<li data-line="3" dir="auto"><code>sort file1 file2 | uniq -d</code> 取出两个文件的交集(只留下同时存在于两个文件中的文件)</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="15、comm 命令" dir="auto" class="heading" id="15、comm_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>15、comm 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto"><code>comm -1 file1 file2</code> 比较两个文件的内容只删除 ‘file1’ 所包含的内容</li>
+<li data-line="1" dir="auto"><code>comm -2 file1 file2</code> 比较两个文件的内容只删除 ‘file2’ 所包含的内容</li>
+<li data-line="2" dir="auto"><code>comm -3 file1 file2</code> 比较两个文件的内容只删除两个文件共有的部</li>
+</ul></div></div></div></div></div><div class="heading-wrapper"><h4 data-heading="六、打包和压缩文件" dir="auto" class="heading" id="六、打包和压缩文件"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>六、打包和压缩文件</h4><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="16、tar 命令" dir="auto" class="heading" id="16、tar_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>16、tar 命令</h5><div class="heading-children"><div><p dir="auto">对文件进行打包，默认情况并不会压缩，如果指定了相应的参数，它还会调用相应的压缩程序（如gzip和bzip等）进行压缩和解压）推荐</p></div><div><ul>
+<li data-line="0" dir="auto">-c ：新建打包文件</li>
+<li data-line="1" dir="auto">-t ：查看打包文件的内容含有哪些文件名</li>
+<li data-line="2" dir="auto">-x ：解打包或解压缩的功能，可以搭配-C（大写）指定解压的目录，注意-c,-t,-x不能同时出现在同一条命令中</li>
+<li data-line="3" dir="auto">-j ：通过bzip2的支持进行压缩/解压缩</li>
+<li data-line="4" dir="auto">-z ：通过gzip的支持进行压缩/解压缩</li>
+<li data-line="5" dir="auto">-v ：在压缩/解压缩过程中，将正在处理的文件名显示出来</li>
+<li data-line="6" dir="auto">-f filename ：filename为要处理的文件</li>
+<li data-line="7" dir="auto">-C dir ：指定压缩/解压缩的目录dir</li>
+<li data-line="8" dir="auto">压缩：<code>tar -jcv -f filename.tar.bz2</code> 要被处理的文件或目录名称</li>
+<li data-line="9" dir="auto">查询：<code>tar -jtv -f filename.tar.bz2</code></li>
+<li data-line="10" dir="auto">解压：<code>tar -jxv -f filename.tar.bz2 -C</code> 欲解压缩的目录</li>
+<li data-line="11" dir="auto"><code>bunzip2 file1.bz2</code> 解压一个叫做 'file1.bz2’的文件</li>
+<li data-line="12" dir="auto"><code>bzip2 file1</code> 压缩一个叫做 ‘file1’ 的文件</li>
+<li data-line="13" dir="auto"><code>gunzip file1.gz</code> 解压一个叫做 'file1.gz’的文件</li>
+<li data-line="14" dir="auto"><code>gzip file1</code> 压缩一个叫做 'file1’的文件</li>
+<li data-line="15" dir="auto"><code>gzip -9 file1</code> 最大程度压缩</li>
+<li data-line="16" dir="auto"><code>rar a file1.rar test_file</code> 创建一个叫做 ‘file1.rar’ 的包</li>
+<li data-line="17" dir="auto"><code>rar a file1.rar file1 file2 dir1</code> 同时压缩 ‘file1’, ‘file2’ 以及目录 ‘dir1’</li>
+<li data-line="18" dir="auto"><code>rar x file1.rar</code> 解压rar包</li>
+<li data-line="19" dir="auto"><code>zip file1.zip file1</code> 创建一个zip格式的压缩包</li>
+<li data-line="20" dir="auto"><code>unzip file1.zip</code> 解压一个zip格式压缩包</li>
+<li data-line="21" dir="auto"><code>zip -r file1.zip file1 file2 dir1</code> 将几个文件和目录同时压缩成一个zip格式的压缩包</li>
+</ul></div></div></div></div></div><div class="heading-wrapper"><h4 data-heading="七、进程相关的命令" dir="auto" class="heading" id="七、进程相关的命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>七、进程相关的命令</h4><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="17、ps 命令" dir="auto" class="heading" id="17、ps_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>17、ps 命令</h5><div class="heading-children"><div><p dir="auto">用于将某个时间点的进程运行情况选取下来并输出，process之意</p></div><div><ul>
+<li data-line="0" dir="auto">-A ：所有的进程均显示出来</li>
+<li data-line="1" dir="auto">-a ：不与terminal有关的所有进程</li>
+<li data-line="2" dir="auto">-u ：有效用户的相关进程</li>
+<li data-line="3" dir="auto">-x ：一般与a参数一起使用，可列出较完整的信息</li>
+<li data-line="4" dir="auto">-l ：较长，较详细地将PID的信息列出</li>
+</ul></div><div><pre><code>`ps -ef 
+ps aux 
+ps ax 
+ps -lA 
+ps axjf 
+pstree -aup 
+netstat -lntp` 
+
+*   1
+*   2
+*   3
+*   4
+*   5
+*   6
+*   7
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="18、kill 命令" dir="auto" class="heading" id="18、kill_命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>18、kill 命令</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">kill -9 pid （-9表示强制关闭）</li>
+<li data-line="1" dir="auto">kill -9 程序的名字</li>
+<li data-line="2" dir="auto">kill -</li>
+<li data-line="3" dir="auto">pkill 程序的名字</li>
+</ul></div></div></div><div class="heading-wrapper"><h5 data-heading="19、Vim 下复制粘贴等操作" dir="auto" class="heading" id="19、Vim_下复制粘贴等操作"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>19、Vim 下复制粘贴等操作</h5><div class="heading-children"><div><ul>
+<li data-line="0" dir="auto">x,X : 在一行中，x为向后删除一个字符（相当于del键），X为向前删除一个字符（相当于backspace键）</li>
+<li data-line="2" dir="auto">dd : 删除光标所在的那一整行</li>
+<li data-line="4" dir="auto">ndd : n 为数字。从光标开始，删除向下n列</li>
+<li data-line="6" dir="auto">yy : 复制光标所在的那一行</li>
+<li data-line="8" dir="auto">nyy : n为数字。复制光标所在的向下n行</li>
+<li data-line="10" dir="auto">p,P : p 为将已复制的数据粘贴到光标的下一行，P则为贴在光标的上一行</li>
+<li data-line="12" dir="auto">u : 复原前一个操作</li>
+<li data-line="14" dir="auto"><code>CTRL + r</code> : 重做上一个操作</li>
+<li data-line="16" dir="auto">小数点 ‘.’：重复前一个动作</li>
+<li data-line="18" dir="auto"><code>:set number</code> :在每一行设置行标号</li>
+<li data-line="20" dir="auto"><code>:n1,n2 m n3</code> 移动n1-n2行(包括n1,n2)到n3行之下</li>
+<li data-line="22" dir="auto"><code>:n1,n2 co n3</code> 复制n1-n2行(包括n1,n2)到n3行之下</li>
+<li data-line="24" dir="auto"><code>:n1,n2 d</code> 删除n1-n2行(包括n1,n2)行</li>
+</ul></div></div></div></div></div><div class="heading-wrapper"><h4 data-heading="系统常用命令" dir="auto" class="heading" id="系统常用命令"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>系统常用命令</h4><div class="heading-children"><div class="heading-wrapper"><h5 data-heading="关机、注销、重启" dir="auto" class="heading" id="关机、注销、重启"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>关机、注销、重启</h5><div class="heading-children"><div><pre><code>查看进程端口号：netstat -tunlp|grep 端口号 
+ss -tnl  查看正在已使用的端口
+shutdown -h now 关闭系统(1) 即刻关机
+shutdown -h 10 10分钟后关机
+shutdown -h 11:00  11:00 关机
+shutdown -h +10 预定时间关机（10分钟后关机）
+shutdown -c  取消指定时间关机
+shutdown -f now 重启
+shutdown -r 10  10分钟后重启
+shutdown -r 11:00   定时重启
+reboot 重启
+init 6 重启
+init 0 即刻关机
+telinit 0 关机
+poweroff   立刻关机
+halt 关机
+sync  buff数据同步到磁盘
+logout 退出登录Shell
+time 测算一个命令（即程序）的执行时间
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="系统信息和性能查看" dir="auto" class="heading" id="系统信息和性能查看"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>系统信息和性能查看</h5><div class="heading-children"><div><pre><code>lsb_release -a
+
+uname -a 
+
+uname -r
+
+uname -m
+
+arch
+
+hostname
+
+who
+
+who am i
+
+whoami
+
+cat /proc/version
+
+cat /proc/cpuinfo
+
+cat /proc/interrupts
+
+cat /proc/loadavg
+
+uptime
+
+env
+
+lspci -tv
+
+lsmod
+
+grep MemTotal /proc/meminfo
+
+grep MemFree /proc/meminfo
+
+free -m
+
+date
+
+cal 2021
+
+top
+
+vmstat 1 20 
+
+iostat
+
+sar -u 1 10
+
+sar -d 1 10
+
+ps -auxf | sort -nr -k 4 | head -10
+
+ps -auxf | sort -nr -k 3 | head -10
+
+ps -eo pid,ppid,cmd,%cpu,%mem --sort=-%cpu | head` 
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="磁盘和分区" dir="auto" class="heading" id="磁盘和分区"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>磁盘和分区</h5><div class="heading-children"><div><pre><code> `fdisk -l
+
+swapon -s
+
+df -h
+
+df -hl
+
+du -sh /dir
+
+du -sk * | sort -rn
+
+free -h
+
+cat /proc/cpuinfo
+
+mount /dev/hda2 /mnt/hda2
+
+mount -t ntfs /dev/sdc1 /mnt/usbhd1
+
+mount -o loop xxx.iso /mnt/cdrom
+
+mount /dev/sda1 /mnt/usbdisk
+
+umount -v /dev/sda1
+
+umount -v /mnt/mymnt
+
+fuser -km /mnt/hda1` 
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="用户和用户组" dir="auto" class="heading" id="用户和用户组"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>用户和用户组</h5><div class="heading-children"><div><pre><code> `useradd ss
+
+cut -d: -f1 /etc/passwd
+
+userdel -r ss
+
+groupadd group_name
+
+cut -d: -f1 /etc/group
+
+groupdel group_name
+
+usermod -g group_name user_name
+
+usermod -aG group_name user_name
+
+usermod -s /bin/ksh -d /home/codepig –g dev ss
+
+groups ss
+
+su user_name
+
+passwd
+
+passwd ss
+
+w
+
+id ss
+
+last
+
+crontab -l` 
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="网络和进程管理" dir="auto" class="heading" id="网络和进程管理"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>网络和进程管理</h5><div class="heading-children"><div><pre><code> `ifconfig
+
+ifconfig eth0
+
+route -n
+
+netstat -lntp
+
+netstat -antp
+
+netstat -lutp
+
+ifup eth0
+
+ifdown eth0
+
+iptables -L
+
+ifconfig eth0 192.168.1.1 netmask 255.255.255.0
+
+dhclient eth0
+
+route add -net 0/0 gw Gateway_IP
+
+route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.1.1
+
+route del 0/0 gw Gateway_IP
+
+hostname
+
+host 主机名  例如：host www.baidu.com
+
+nslookup 主机名  例如：nslookup wwww.baidu.com
+
+ps -ef
+
+ps -ef|grep redis
+
+kill -s name
+
+kill -s pid` 
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="查看文件大小" dir="auto" class="heading" id="查看文件大小"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>查看文件大小</h5><div class="heading-children"><div><pre><code> `du -sh
+
+du -sh *
+
+du -ach *
+du -h –max-depth=0 *
+
+du -h --max-depth=0` 
+
+
+</code><button class="copy-code-button">复制</button></pre></div></div></div><div class="heading-wrapper"><h5 data-heading="CentOS查看开机自启服务" dir="auto" class="heading" id="CentOS查看开机自启服务"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>CentOS查看开机自启服务</h5><div class="heading-children"><div><pre><code> `systemctl list-unit-files --type service | grep enabled
+
+systemctl list-unit-files --type service |grep service_name
+
+service service_name （start|stop|restart|status）
+
+systemctl (start|stop|restart|status) service_name
+
+
+
+开机启动：chkconfig --add service_name  或者  chkconfig  service_name  on
+开机关闭：chkconfig  --del   service_name  或者  chkconfig  service_name  off
+
+开机启动：systemctl enable service_name
+开机关闭：systemctl disable service_name` 
+
+
+
+</code><button class="copy-code-button">复制</button></pre></div><div><blockquote dir="auto">
+<p>以上内容有部分是参考其它文章，有部分是在工作中用到一些总结的内容</p>
+</blockquote></div><div class="mod-footer"></div></div></div></div></div></div></div></div><div class="sidebar-right sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content"><div class="graph-view-wrapper"><div class="sidebar-section-header">Interactive Graph</div><div class="graph-view-placeholder">
+		<div class="graph-view-container">
+			<div class="graph-icon graph-expand" role="button" aria-label="Expand" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+			<canvas id="graph-canvas" class="hide" width="512px" height="512px"></canvas>
+		</div>
+		</div></div><div class="outline-tree tree-container"><div class="tree-item nav-folder mod-root" data-depth="0"><div class="tree-item-self nav-folder-title"><div class="tree-item-inner nav-folder-title-content">Table Of Contents</div><button class="clickable-icon nav-action-button tree-collapse-all is-collapsed" aria-label="Collapse All"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><div class="tree-item-children nav-folder-children"><div class="nav-folder-spacer"></div><div class="tree-item is-collapsed" data-depth="1"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#Linux 常用命令最全总结大全" data-path="#Linux 常用命令最全总结大全"><div class="tree-item-inner heading-link" heading-name="Linux 常用命令最全总结大全">Linux 常用命令最全总结大全</div></a><div class="tree-item-children"><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#一、文件和命令" data-path="#一、文件和命令"><div class="tree-item-inner heading-link" heading-name="一、文件和命令">一、文件和命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#1、cd_命令" data-path="#1、cd_命令"><div class="tree-item-inner heading-link" heading-name="1、cd 命令">1、cd 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#2、pwd_命令" data-path="#2、pwd_命令"><div class="tree-item-inner heading-link" heading-name="2、pwd 命令">2、pwd 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#3、ls_命令" data-path="#3、ls_命令"><div class="tree-item-inner heading-link" heading-name="3、ls 命令">3、ls 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#4、cp_命令" data-path="#4、cp_命令"><div class="tree-item-inner heading-link" heading-name="4、cp 命令">4、cp 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#5、mv_命令" data-path="#5、mv_命令"><div class="tree-item-inner heading-link" heading-name="5、mv 命令">5、mv 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#6、rm_命令" data-path="#6、rm_命令"><div class="tree-item-inner heading-link" heading-name="6、rm 命令">6、rm 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#二、查看文件内容" data-path="#二、查看文件内容"><div class="tree-item-inner heading-link" heading-name="二、查看文件内容">二、查看文件内容</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#7、cat_命令" data-path="#7、cat_命令"><div class="tree-item-inner heading-link" heading-name="7、cat 命令">7、cat 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#三、文件搜索" data-path="#三、文件搜索"><div class="tree-item-inner heading-link" heading-name="三、文件搜索">三、文件搜索</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#8、find_命令" data-path="#8、find_命令"><div class="tree-item-inner heading-link" heading-name="8、find 命令">8、find 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#四、文件的权限_\-_使用_“+”_设置权限，使用_“-”_用于取消" data-path="#四、文件的权限_\-_使用_“+”_设置权限，使用_“-”_用于取消"><div class="tree-item-inner heading-link" heading-name="四、文件的权限 \- 使用 “+” 设置权限，使用 “-” 用于取消">四、文件的权限 - 使用 “+” 设置权限，使用 “-” 用于取消</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#9、chmod_命令" data-path="#9、chmod_命令"><div class="tree-item-inner heading-link" heading-name="9、chmod 命令">9、chmod 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#10、chown_命令" data-path="#10、chown_命令"><div class="tree-item-inner heading-link" heading-name="10、chown 命令">10、chown 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#11、chgrp_命令" data-path="#11、chgrp_命令"><div class="tree-item-inner heading-link" heading-name="11、chgrp 命令">11、chgrp 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#五、文本处理" data-path="#五、文本处理"><div class="tree-item-inner heading-link" heading-name="五、文本处理">五、文本处理</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#12、grep_命令(improtant)" data-path="#12、grep_命令(improtant)"><div class="tree-item-inner heading-link" heading-name="12、grep 命令(improtant)">12、grep 命令(improtant)</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#13、paste_命令" data-path="#13、paste_命令"><div class="tree-item-inner heading-link" heading-name="13、paste 命令">13、paste 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#14、sort_命令" data-path="#14、sort_命令"><div class="tree-item-inner heading-link" heading-name="14、sort 命令">14、sort 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#15、comm_命令" data-path="#15、comm_命令"><div class="tree-item-inner heading-link" heading-name="15、comm 命令">15、comm 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#六、打包和压缩文件" data-path="#六、打包和压缩文件"><div class="tree-item-inner heading-link" heading-name="六、打包和压缩文件">六、打包和压缩文件</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#16、tar_命令" data-path="#16、tar_命令"><div class="tree-item-inner heading-link" heading-name="16、tar 命令">16、tar 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#七、进程相关的命令" data-path="#七、进程相关的命令"><div class="tree-item-inner heading-link" heading-name="七、进程相关的命令">七、进程相关的命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#17、ps_命令" data-path="#17、ps_命令"><div class="tree-item-inner heading-link" heading-name="17、ps 命令">17、ps 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#18、kill_命令" data-path="#18、kill_命令"><div class="tree-item-inner heading-link" heading-name="18、kill 命令">18、kill 命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#19、Vim_下复制粘贴等操作" data-path="#19、Vim_下复制粘贴等操作"><div class="tree-item-inner heading-link" heading-name="19、Vim 下复制粘贴等操作">19、Vim 下复制粘贴等操作</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="4"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#系统常用命令" data-path="#系统常用命令"><div class="tree-item-inner heading-link" heading-name="系统常用命令">系统常用命令</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#关机、注销、重启" data-path="#关机、注销、重启"><div class="tree-item-inner heading-link" heading-name="关机、注销、重启">关机、注销、重启</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#系统信息和性能查看" data-path="#系统信息和性能查看"><div class="tree-item-inner heading-link" heading-name="系统信息和性能查看">系统信息和性能查看</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#磁盘和分区" data-path="#磁盘和分区"><div class="tree-item-inner heading-link" heading-name="磁盘和分区">磁盘和分区</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#用户和用户组" data-path="#用户和用户组"><div class="tree-item-inner heading-link" heading-name="用户和用户组">用户和用户组</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#网络和进程管理" data-path="#网络和进程管理"><div class="tree-item-inner heading-link" heading-name="网络和进程管理">网络和进程管理</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#查看文件大小" data-path="#查看文件大小"><div class="tree-item-inner heading-link" heading-name="查看文件大小">查看文件大小</div></a><div class="tree-item-children"></div></div><div class="tree-item is-collapsed" data-depth="5"><a class="tree-item-self is-clickable" href="知识库/工作技能/运维/linux/linux-常用命令最全总结大全.html#CentOS查看开机自启服务" data-path="#CentOS查看开机自启服务"><div class="tree-item-inner heading-link" heading-name="CentOS查看开机自启服务">CentOS查看开机自启服务</div></a><div class="tree-item-children"></div></div></div></div></div></div></div></div><script defer="">let rs = document.querySelector(".sidebar-right"); rs.classList.add("is-collapsed"); if (window.innerWidth > 768) rs.classList.remove("is-collapsed"); rs.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-right-width"));</script></div></div></body></html>
