@@ -1,0 +1,381 @@
+<!DOCTYPE html> <html lang="zh-cn"><head>
+<title>1Zuul 限流 · SpringCloud微服务实战 · 看云</title>
+<base href="../../../../..">
+<meta name="pathname" content="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html">
+<meta name="description" content="笔记 - 1Zuul 限流 · SpringCloud微服务实战 · 看云">
+<meta property="og:title" content="1Zuul 限流 · SpringCloud微服务实战 · 看云">
+<meta property="og:description" content="笔记 - 1Zuul 限流 · SpringCloud微服务实战 · 看云">
+<meta property="og:type" content="website">
+<meta property="og:url" content="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html">
+<meta property="og:image" content="attachments/d8647ca5646e1fc1a009235b0b2127c2_md5.webp">
+<meta charset="UTF-8"><meta property="og:site_name" content="笔记"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0"><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="site-lib/rss.xml"><script async="" id="webpage-script" src="site-lib/scripts/webpage.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-wasm-script" src="site-lib/scripts/graph-wasm.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-render-worker-script" src="site-lib/scripts/graph-render-worker.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="icon" href="site-lib/media/favicon.png"><link rel="stylesheet" href="site-lib/styles/obsidian.css"><link rel="stylesheet" href="site-lib/styles/theme.css"><link rel="preload" href="site-lib/styles/global-variable-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/global-variable-styles.css"></noscript><link rel="preload" href="site-lib/styles/supported-plugins.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/supported-plugins.css"></noscript><link rel="preload" href="site-lib/styles/main-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/main-styles.css"></noscript><style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-vertical-spacing:1.3em;--sidebar-margin:12px}:root{background-color:#202124}.sidebar{height:100%;font-size:14px;z-index:10;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));position:relative;overflow:hidden;overflow:clip;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}#left-sidebar{left:0}#right-sidebar{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}.sidebar.floating{position:absolute}.sidebar .leaf-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .leaf-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}#left-sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}#right-sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar #left-sidebar-content,.sidebar #right-sidebar-content{contain:none!important;container-type:normal!important;animation:none!important}.sidebar:has(.leaf-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:calc(2.3em + 2 * var(--sidebar-margin));width:var(--sidebar-width);padding:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}#left-sidebar .sidebar-topbar{left:0;flex-direction:row;border-top-right-radius:var(--radius-l)}#right-sidebar .sidebar-topbar{right:0;flex-direction:row-reverse;border-top-left-radius:var(--radius-l)}#left-sidebar .topbar-content{margin-right:calc(2.3em + var(--sidebar-margin));flex-direction:row}#right-sidebar .topbar-content{margin-left:calc(2.3em + var(--sidebar-margin));flex-direction:row-reverse}.topbar-content{overflow:hidden visible;overflow:clip visible;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:2px!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}#left-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}#right-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.feature-title{margin-left:1px;text-transform:uppercase;letter-spacing:.06em;margin-top:.75em;margin-bottom:.75em}.feature-header{display:flex;align-items:center;padding-top:0;font-size:1em;padding-left:0}body.floating-sidebars .sidebar{position:absolute}body{transition:background-color var(--color-fade-speed) ease-in-out}#navbar:not(:empty){display:flex;align-items:center;justify-content:space-between;padding:.5em 1em;width:100%}#main{display:flex;flex-direction:column;height:100%;width:100%;align-items:stretch;justify-content:center}#main-horizontal{display:flex;flex-direction:row;flex-grow:1;width:100%;align-items:stretch;justify-content:center}#center-content{flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0!important;transition:opacity .2s ease-in-out;pointer-events:none}#center-content>.obsidian-document{padding-left:2em;padding-right:1em;margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}body #center-content>.obsidian-document>.markdown-preview-sizer{padding-bottom:80vh;width:100%;max-width:var(--line-width);flex-basis:var(--line-width);transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document>div{width:100%!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document:not([data-type=markdown]).embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}#center-content>.obsidian-document:not([data-type=markdown]).embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6,li):has(> :is(.math,table)){overflow-x:auto!important}#center-content>.obsidian-document:not([data-type=markdown]){overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.obsidian-document[data-type=attachment]{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%}.obsidian-document[data-type=attachment]>*{outline:0;border:none;box-shadow:none}.obsidian-document[data-type=attachment] :is(img){max-width:90%;max-height:90%;object-fit:contain}.obsidian-document[data-type=attachment]>:is(audio){width:100%;max-width:min(90%,var(--line-width))}.obsidian-document[data-type=attachment]>:is(embed,iframe,video){width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.canvas-wrapper>:is(.header,.footer){z-index:100;position:absolute;display:flex;justify-content:center;flex-direction:column;width:100%;align-items:center}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style><script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script></head><body class="publish css-settings-manager mod-windows is-hidden-frameless show-inline-title show-ribbon show-view-header minimal-readable trim-cols sidebar-tabs-default row-lines col-lines table-lines row-hover minimal-notion-light minimal-dracula-dark colorful-headings links-int-on links-ext-on full-width-media"><script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script><div class="parsed-feature-container" style="display: contents;"><link itemprop="include" href="site-lib/html/custom-head-content-content.html"></div><div id="main"><div id="navbar"></div><div id="main-horizontal"><div id="left-content" class="leaf" style="--sidebar-width: var(--sidebar-width-left);"><div id="left-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><div id="search-container"><div id="search-wrapper"><input enterkeyhint="search" type="search" spellcheck="false" placeholder="Search..."><div aria-label="Clear search" id="search-clear-button"></div></div></div></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="left-sidebar-content" class="leaf-content"><link itemprop="include" href="site-lib/html/file-tree-content.html"></div></div><script defer="">let ls = document.querySelector("#left-sidebar"); ls.classList.toggle("is-collapsed", window.innerWidth < 768); ls.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-left-width"));</script></div></div><div id="center-content" class="leaf"><div class="obsidian-document markdown-preview-view markdown-rendered node-insert-event is-readable-line-width allow-fold-headings allow-fold-lists show-indentation-guide show-properties" data-type="markdown"><style id="MJX-CHTML-styles"></style><div class="markdown-preview-sizer markdown-preview-section"><div class="header"><h1 class="page-title heading inline-title" id="1Zuul_限流_·_SpringCloud微服务实战_·_看云_0">1Zuul 限流 · SpringCloud微服务实战 · 看云</h1><div class="data-bar"></div></div><div class="markdown-preview-pusher" style="width: 1px; height: 0.1px; margin-bottom: 0px;"></div><div class="el-h2"><h2 data-heading="1\. Zuul 限流" dir="auto" class="heading" id="1\._Zuul_限流_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1. Zuul 限流</h2></div><div class="el-blockquote"><blockquote dir="auto">
+<blockquote dir="auto">
+<p><strong>导航</strong></p>
+</blockquote>
+</blockquote></div><div class="el-h2"><h2 data-heading="本节代码地址" dir="auto" class="heading" id="本节代码地址_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>本节代码地址</h2></div><div class="el-p"><p dir="auto">GitHub:<a rel="noopener nofollow" class="external-link is-unresolved" href="https://github.com/xuyisu/fw-sping-cloud/tree/master/fw-cloud-gateways/fw-cloud-gateways-zuul-extend" target="_self">https://github.com/xuyisu/fw-sping-cloud/tree/master/fw-cloud-gateways/fw-cloud-gateways-zuul-extend</a></p></div><div class="el-hr"><hr></div><div class="el-p"><p dir="auto">举个例子，为什么每年的双11凌晨淘宝抢购的时候，有时会返回一个类似“当前拥挤”的提示。其实这是淘宝为了保护自己的服务而做的限流，防止应用挂掉后产生更严重的后果。<br>
+再比如，一些在北上广等上班的同学早上乘地铁的时候7点半到8点半也会被限流，正常会开三个门的通道，这段时间只会开通一个，排队通过，这是缓解地铁站台及列车的压力。<br>
+常见的限流方式，比如Hystrix适用线程池隔离，超过线程池的负载，走熔断的逻辑。在一般应用服务器中，比如tomcat容器也是通过限制它的线程数来控制并发的；常见的限流纬度有比如通过Ip来限流、通过uri来限流、通过用户访问频次来限流。<br>
+一般限流都是在网关这一层做，比如Nginx、Openresty、kong、Zuul、Spring Cloud Gateway等。<br>
+<strong>分布式系统架构的利器：缓存、负载、限流、降级</strong></p></div><div class="el-h3"><h3 data-heading="1.1 常见的限流算法" dir="auto" class="heading" id="1.1_常见的限流算法_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.1 常见的限流算法</h3></div><div class="el-h4"><h4 data-heading="1.1.1 计数器" dir="auto" class="heading" id="1.1.1_计数器_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.1.1 计数器</h4></div><div class="el-p"><p dir="auto">简单的做法是维护一个单位时间内的 计数器，每次请求计数器加1，当单位时间内计数器累加到大于设定的阈值，则之后的请求都被拒绝，直到单位时间已经过去，再将 计数器 重置为零。此方式有个弊端：如果在单位时间1s内允许100个请求，在10ms已经通过了100个请求，那后面的990ms，只能眼巴巴的把请求拒绝，我们把这种现象称为“突刺现象”。</p></div><div class="el-p"><p dir="auto">常用的更平滑的限流算法有两种：<strong>漏桶算法</strong> 和 <strong>令牌桶算法</strong>。下面介绍下二者。</p></div><div class="el-h4"><h4 data-heading="1.1.2 漏桶算法" dir="auto" class="heading" id="1.1.2_漏桶算法_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.1.2 漏桶算法</h4></div><div class="el-p"><p dir="auto">漏桶算法思路很简单，水（请求）先进入到漏桶里，漏桶以一定的速度出水（接口有响应速率），当水流入速度过大会直接溢出（访问频率超过接口响应速率），然后就拒绝请求，可以看出漏桶算法能强行限制数据的传输速率。<br>
+<span alt="d8647ca5646e1fc1a009235b0b2127c2_MD5.webp" src="attachments/d8647ca5646e1fc1a009235b0b2127c2_md5.webp" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="d8647ca5646e1fc1a009235b0b2127c2_MD5.webp" src="attachments/d8647ca5646e1fc1a009235b0b2127c2_md5.webp" target="_self"></span></p></div><div class="el-p"><p dir="auto">可见这里有两个变量，一个是桶的大小，支持流量突发增多时可以存多少的水（burst），另一个是水桶漏洞的大小（rate）。因为漏桶的漏出速率是固定的参数，所以，即使网络中不存在资源冲突（没有发生拥塞），漏桶算法也不能使流突发（burst）到端口速率。因此，漏桶算法对于存在突发特性的流量来说缺乏效率。</p></div><div class="el-h4"><h4 data-heading="1.1.3 令牌桶算法" dir="auto" class="heading" id="1.1.3_令牌桶算法_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.1.3 令牌桶算法</h4></div><div class="el-p"><p dir="auto">令牌桶算法 和漏桶算法 效果一样但方向相反的算法，更加容易理解。随着时间流逝，系统会按恒定 1/QPS 时间间隔（如果 QPS=100，则间隔是 10ms）往桶里加入 Token（想象和漏洞漏水相反，有个水龙头在不断的加水），如果桶已经满了就不再加了。新请求来临时，会各自拿走一个 Token，如果没有 Token 可拿了就阻塞或者拒绝服务。</p></div><div class="el-p"><p dir="auto"><span alt="79e8f1c5e483db3de5c249867acbced9_MD5.webp" src="attachments/79e8f1c5e483db3de5c249867acbced9_md5.webp" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="79e8f1c5e483db3de5c249867acbced9_MD5.webp" src="attachments/79e8f1c5e483db3de5c249867acbced9_md5.webp" target="_self"></span></p></div><div class="el-p"><p dir="auto">令牌桶的另外一个好处是可以方便的改变速度。一旦需要提高速率，则按需提高放入桶中的令牌的速率。一般会定时（比如 100 毫秒）往桶中增加一定数量的令牌，有些变种算法则实时的计算应该增加的令牌的数量。</p></div><div class="el-h3"><h3 data-heading="1.2 新建项目" dir="auto" class="heading" id="1.2_新建项目_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.2 新建项目</h3></div><div class="el-p"><p dir="auto">为了演示方便，我们新建一个module，后续Zuul 拓展均建在此module下<br>
+<span alt="6351226c797ce55ce37f39bed5c4d4f9_MD5.webp" src="attachments/6351226c797ce55ce37f39bed5c4d4f9_md5.webp" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="6351226c797ce55ce37f39bed5c4d4f9_MD5.webp" src="attachments/6351226c797ce55ce37f39bed5c4d4f9_md5.webp" target="_self"></span></p></div><div class="el-h3"><h3 data-heading="1.3 限流实现基于Guava" dir="auto" class="heading" id="1.3_限流实现基于Guava_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.3 限流实现基于Guava</h3></div><div class="el-p"><p dir="auto">利用Guava 限流属于单应用限流，单节点限流实现较简单且方便，但是仅仅对这单个应用的节点做限制。如果要实现整个分布式系统的集群限流，就需要依赖外部中间件来实现，现在常用Redis。利用Redis也会存在一定的风险，比如缓存击穿、脑裂等问题会使限流功能失效。单个应用的限流能力非常有限，如果应用并发数不大，可以使用单应用即可，否则就要使用集群限流。</p></div><div class="el-h3"><h3 data-heading="1.4 添加maven配置" dir="auto" class="heading" id="1.4_添加maven配置_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.4 添加maven配置</h3></div><div class="el-p"><p dir="auto">我们需要Zuul、Eureka和Guava 的包，方便我们之后演示Zuul 代理转发的功能</p></div><div class="el-pre"><pre><code data-line="0">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-starter-netflix-zuul&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.google.guava&lt;/groupId&gt;
+        &lt;artifactId&gt;guava&lt;/artifactId&gt;
+        &lt;version&gt;${guava.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.yisu.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;fw-cloud-common&lt;/artifactId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.5 应用配置" dir="auto" class="heading" id="1.5_应用配置_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.5 应用配置</h3></div><div class="el-p"><p dir="auto">配置应用的基本信息(端口、应用名、eureka、redis、zuul),其中redis的连接信息需要修改为自己的，我这里为了防止连接信息暴露，将连接信息配置在环境变量中了，可以通过下图所示设置，网关转发到<code>fw-cloud-ribbon-server</code>上面，方便观察结果<br>
+<span alt="00ca26e6133dbf846a4238629bd00133_MD5.png" src="attachments/00ca26e6133dbf846a4238629bd00133_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="00ca26e6133dbf846a4238629bd00133_MD5.png" src="attachments/00ca26e6133dbf846a4238629bd00133_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto"><span alt="a8002e0f0918b00eeef3a6a35fc9f736_MD5.png" src="attachments/a8002e0f0918b00eeef3a6a35fc9f736_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="a8002e0f0918b00eeef3a6a35fc9f736_MD5.png" src="attachments/a8002e0f0918b00eeef3a6a35fc9f736_md5.png" target="_self"></span></p></div><div class="el-pre"><pre><code data-line="0">server:
+  port: 8680
+spring:
+  application:
+    name: fw-gateways-zuul-extend
+  redis:
+      host: ${redis.host}
+      password: ${redis.pwd}
+      port: 6379
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+zuul:
+  routes:
+    fw-cloud-ribbon-server:
+      path: /ribbon
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.6 新建限流过滤器" dir="auto" class="heading" id="1.6_新建限流过滤器_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.6 新建限流过滤器</h3></div><div class="el-p"><p dir="auto">接下来进入正题，我们世界利用<code>Guava</code>提供的限流方法，两句代码即可实现单个应用的限流。为了掩饰方便，笔者将速度限制在每秒10次，这里生产推荐使用<code>Apollo</code>、<code>Nacos</code>等分布式配置中心，并从中读取，可以使修改数据不用重启应用。</p></div><div class="el-pre"><pre><code data-line="0">
+public class LmitFilter extends ZuulFilter {
+    
+    private static volatile RateLimiter rateLimiter=RateLimiter.create(10.0);
+
+    public LmitFilter(){
+        super();
+    }
+
+    @Override
+    public String filterType() {
+        return "pre";
+    }
+
+    @Override
+    public int filterOrder() {
+        return 0;
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return true;
+    }
+
+    @Override
+    public Object run(){
+        rateLimiter.acquire();
+        return null;
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.7 新建启动类" dir="auto" class="heading" id="1.7_新建启动类_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.7 新建启动类</h3></div><div class="el-pre"><pre><code data-line="0">@EnableZuulProxy
+@EnableDiscoveryClient
+@SpringBootApplication
+public class FwZuulExtendApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(FwZuulExtendApplication.class, args);
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">这样就可以了，启动项目我们压测一下，压测工具我们用<code>Apache</code>的ab压测，下载地址<a rel="noopener nofollow" class="external-link is-unresolved" href="https://www.apachehaus.com/cgi-bin/download.plx" target="_self">https://www.apachehaus.com/cgi-bin/download.plx</a>，可以到群里下载<br>
+<span alt="2aeb790c4ed0a75ddf4835691922cf6b_MD5.png" src="attachments/2aeb790c4ed0a75ddf4835691922cf6b_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="2aeb790c4ed0a75ddf4835691922cf6b_MD5.png" src="attachments/2aeb790c4ed0a75ddf4835691922cf6b_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto">在Windows系统下，打开cmd命令行窗口，定位到apache安装目录的bin目录下</p></div><div class="el-pre"><pre><code data-line="0">ab -n 1000 -c 50 http://localhost:8680/ribbon/user/1
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-blockquote"><blockquote dir="auto">
+<p>注意: -n发出100个请求，-c模拟50并发，相当50人同时访问，后面是测试url</p>
+</blockquote></div><div class="el-p"><p dir="auto">限流为10的情况下<code>(RateLimiter.create(10.0))</code></p></div><div class="el-pre"><pre><code data-line="0">This is ApacheBench, Version 2.3 &lt;$Revision: 1843412 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:
+Server Hostname:        localhost
+Server Port:            8680
+
+Document Path:          /ribbon/user/1
+Document Length:        169 bytes
+
+Concurrency Level:      50
+Time taken for tests:   100.360 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      274000 bytes
+HTML transferred:       169000 bytes
+Requests per second:    9.96 [#/sec] (mean)
+Time per request:       5018.001 [ms] (mean)
+Time per request:       100.360 [ms] (mean, across all concurrent requests)
+Transfer rate:          2.67 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   0.6      1       3
+Processing:    80 4815 810.3   4998    5177
+Waiting:       62 4811 811.1   4994    5174
+Total:         82 4817 810.3   4999    5178
+
+Percentage of the requests served within a certain time (ms)
+  50%   4999
+  66%   5001
+  75%   5003
+  80%   5004
+  90%   5006
+  95%   5008
+  98%   5010
+  99%   5011
+ 100%   5178 (longest request)
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">限流为100的情况下<code>(RateLimiter.create(100.0))</code></p></div><div class="el-pre"><pre><code data-line="0">This is ApacheBench, Version 2.3 &lt;$Revision: 1843412 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:
+Server Hostname:        localhost
+Server Port:            8680
+
+Document Path:          /ribbon/user/1
+Document Length:        169 bytes
+
+Concurrency Level:      50
+Time taken for tests:   9.004 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      274000 bytes
+HTML transferred:       169000 bytes
+Requests per second:    111.06 [#/sec] (mean)
+Time per request:       450.220 [ms] (mean)
+Time per request:       9.004 [ms] (mean, across all concurrent requests)
+Transfer rate:          29.72 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   0.7      1      10
+Processing:    95  433 136.9    498     586
+Waiting:       13  424 150.3    496     581
+Total:         97  433 136.8    499     586
+
+Percentage of the requests served within a certain time (ms)
+  50%    499
+  66%    500
+  75%    500
+  80%    501
+  90%    502
+  95%    503
+  98%    506
+  99%    515
+ 100%    586 (longest request)
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">可以看到在，限流速率为10 的情况下需要用时100.36s，而限流速率为10 的情况下需要用时9.004s，可以看到限流的效果是显著的。</p></div><div class="el-h3"><h3 data-heading="1\. 8 限流实现基于Redis" dir="auto" class="heading" id="1\._8_限流实现基于Redis_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1. 8 限流实现基于Redis</h3></div><div class="el-p"><p dir="auto">基于redis 可以实现对整个集群的限流，<code>Redis</code>我们可以根据需要部署层单例、哨兵、集群均可。而且集群所承载的并发能力很高。我们的实现思路就是对每秒钟的请求次数加1，超过我们设置的阀值就返回提示信息。</p></div><div class="el-h3"><h3 data-heading="1.9 maven 配置添加" dir="auto" class="heading" id="1.9_maven_配置添加_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.9 maven 配置添加</h3></div><div class="el-p"><p dir="auto">添加<code>spring-boot-starter-data-redis</code>供我们在操作<code>Redis</code></p></div><div class="el-pre"><pre><code data-line="0">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto"><code>Redis</code>连接信息上面 <strong>1.5</strong> 已经贴出来了，连接信息只有在引入<code>Redis</code>相关依赖包之后才能生效。</p></div><div class="el-h3"><h3 data-heading="1.10 redis 配置类" dir="auto" class="heading" id="1.10_redis_配置类_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.10 redis 配置类</h3></div><div class="el-p"><p dir="auto">我们需要创建一个支持<code>Long</code>值存储的<code>bean</code>，实现整数的每次<code>+1</code>，我们需要的key 是<code>String</code>型的序列化，value 是<code>Long</code>型的。</p></div><div class="el-pre"><pre><code data-line="0">
+@Configuration
+public class RedisConfig {
+
+    @Autowired
+    RedisConnectionFactory redisConnectionFactory;
+
+    @Bean(name = "longRedisTemplate")
+    public RedisTemplate&lt;String,Long&gt; redisTemplate(){
+        RedisTemplate&lt;String,Long&gt; redisTemplate=new RedisTemplate&lt;&gt;();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new GenericToStringSerializer&lt;&gt;(Long.class));
+        redisTemplate.setValueSerializer(new GenericToStringSerializer&lt;&gt;(Long.class));
+        return redisTemplate;
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.11 创建过滤器" dir="auto" class="heading" id="1.11_创建过滤器_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.11 创建过滤器</h3></div><div class="el-p"><p dir="auto">这里我们设置了基于<code>Redis</code>的限流速率为100，并且给定了为0，并且设置的缓存的时间为1000秒，到期自动清除，针对每秒请求的数据对<code>Redis</code>的key +1,当操作我们配置的速率就会返回<code>当前访问量较大，请稍后重试</code>，这种提示在很多网站都有，现在我们可以自己实现。如果<code>Redis</code>发生异常，在使用<code>Guava</code>的限流。</p></div><div class="el-pre"><pre><code data-line="0">
+@Slf4j
+public class LmitFilterCluster extends ZuulFilter {
+
+
+    
+    private static volatile RateLimiter rateLimiter=RateLimiter.create(10.0);
+    
+    private static final long LIMIT_RATE_CLUSTER=100L;
+    
+    private static final long LIMIT_INIT_VALUE=0L;
+    
+    public static final String APPLICATION_JSON_CHARSET_UTF8 = "application/json;charset=utf8";
+    
+    private static final int LIMIT_CACHE_TIME=1000;
+
+    @Autowired
+    @Qualifier("longRedisTemplate")
+    private RedisTemplate&lt;String,Long&gt; redisTemplate;
+    @Override
+    public String filterType() {
+        return "pre";
+    }
+
+    @Override
+    public int filterOrder() {
+        return 0;
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return true;
+    }
+
+    @Override
+    public Object run(){
+        RequestContext ctx = RequestContext.getCurrentContext();
+        long currentSecond = System.currentTimeMillis() / 1000;
+        String key="fw-cloud-zuul-extend:"+"limit:"+currentSecond;
+        try{
+            if(!redisTemplate.hasKey(key)){
+                redisTemplate.opsForValue().set(key,LIMIT_INIT_VALUE,LIMIT_CACHE_TIME,TimeUnit.SECONDS);
+            }
+            Long increment = redisTemplate.opsForValue().increment(key, 1);
+            log.info(increment.toString());
+            if(increment&gt;=LIMIT_RATE_CLUSTER){
+                ctx.setSendZuulResponse(false);
+                
+                ctx.set("isShould",false);
+                ctx.setResponseBody(JSONUtil.toJsonStr(FwResult.failedMsg("当前访问量较大，请稍后重试")));
+                ctx.getResponse().setContentType(APPLICATION_JSON_CHARSET_UTF8);
+                return null;
+            }
+
+        }catch (Exception e){
+            log.error("LmitFilterCluster exception:{}",e);
+            rateLimiter.acquire();
+        }
+        return null;
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.12 启动应用" dir="auto" class="heading" id="1.12_启动应用_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.12 启动应用</h3></div><div class="el-p"><p dir="auto">启动之前修改一下<code>ZuulConfig</code>的配置，只启用集群版的。</p></div><div class="el-pre"><pre><code data-line="0">@Configuration
+public class ZuulConfig {
+
+    
+
+
+
+
+
+    
+    @Bean
+    public LmitFilterCluster lmitFilterCluster(){
+        return new LmitFilterCluster();
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">启动之后，我们用ab压测一下并验证结果</p></div><div class="el-pre"><pre><code data-line="0">ab -n 1000 -c 50 http://localhost:8680/ribbon/user/1
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">可以看到只走了<code>Redis</code>限流，没有<code>Guava</code>限流，并且执行时间只需要6s中。</p></div><div class="el-pre"><pre><code data-line="0">This is ApacheBench, Version 2.3 &lt;$Revision: 1843412 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:
+Server Hostname:        localhost
+Server Port:            8680
+
+Document Path:          /ribbon/user/1
+Document Length:        60 bytes
+
+Concurrency Level:      50
+Time taken for tests:   6.905 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      178000 bytes
+HTML transferred:       60000 bytes
+Requests per second:    144.82 [#/sec] (mean)
+Time per request:       345.248 [ms] (mean)
+Time per request:       6.905 [ms] (mean, across all concurrent requests)
+Transfer rate:          25.17 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.6      0       5
+Processing:   155  243 104.6    208    2044
+Waiting:      150  236 103.2    202    1989
+Total:        155  243 104.6    208    2044
+
+Percentage of the requests served within a certain time (ms)
+  50%    208
+  66%    221
+  75%    236
+  80%    280
+  90%    362
+  95%    484
+  98%    559
+  99%    563
+ 100%   2044 (longest request)
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">在<code>Redis</code>中也可以看到具体的计数值<br>
+<span alt="f698d46a8a47a10dafd0b8f57ef25162_MD5.png" src="attachments/f698d46a8a47a10dafd0b8f57ef25162_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="f698d46a8a47a10dafd0b8f57ef25162_MD5.png" src="attachments/f698d46a8a47a10dafd0b8f57ef25162_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto"><span alt="a3b7d497a7a747b6fe9f2b58ddd61310_MD5.png" src="attachments/a3b7d497a7a747b6fe9f2b58ddd61310_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="a3b7d497a7a747b6fe9f2b58ddd61310_MD5.png" src="attachments/a3b7d497a7a747b6fe9f2b58ddd61310_md5.png" target="_self"></span></p></div><div class="footer"><div class="data-bar"></div></div></div></div></div><div id="right-content" class="leaf" style="--sidebar-width: var(--sidebar-width-right);"><div id="right-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><label class="theme-toggle-container" for="theme-toggle-input" id=""><input class="theme-toggle-input" type="checkbox" id="theme-toggle-input"><div class="toggle-background"></div></label></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="right-sidebar-content" class="leaf-content"><div class="graph-view-wrapper"><div class="feature-header"><div class="feature-title">Interactive Graph</div></div><div class="graph-view-placeholder">
+		<div class="graph-view-container">
+			<div class="graph-icon graph-expand" role="button" aria-label="Expand" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+			<div class="graph-icon graph-global" role="button" aria-label="Global Graph" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-git-fork"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"></path><path d="M12 12v3"></path></svg></div>
+			<canvas id="graph-canvas" class="hide" width="512px" height="512px"></canvas>
+		</div>
+		</div></div><div id="outline" class=" tree-container"><div class="feature-header"><div class="feature-title">Table Of Contents</div><button class="clickable-icon nav-action-button tree-collapse-all" aria-label="Collapse All"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><div class="tree-item mod-collapsible" data-depth="1"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1Zuul_限流_·_SpringCloud微服务实战_·_看云_0" data-path="#1Zuul_限流_·_SpringCloud微服务实战_·_看云_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="1Zuul 限流 · SpringCloud微服务实战 · 看云">1Zuul 限流 · SpringCloud微服务实战 · 看云</div></a><div class="tree-item-children"><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1\._Zuul_限流_0" data-path="#1\._Zuul_限流_0"><div class="tree-item-inner heading-link" heading-name="1\. Zuul 限流">1. Zuul 限流</div></a><div class="tree-item-children"></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#本节代码地址_0" data-path="#本节代码地址_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="本节代码地址">本节代码地址</div></a><div class="tree-item-children"><div class="tree-item mod-collapsible" data-depth="3"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.1_常见的限流算法_0" data-path="#1.1_常见的限流算法_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="1.1 常见的限流算法">1.1 常见的限流算法</div></a><div class="tree-item-children"><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.1.1_计数器_0" data-path="#1.1.1_计数器_0"><div class="tree-item-inner heading-link" heading-name="1.1.1 计数器">1.1.1 计数器</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.1.2_漏桶算法_0" data-path="#1.1.2_漏桶算法_0"><div class="tree-item-inner heading-link" heading-name="1.1.2 漏桶算法">1.1.2 漏桶算法</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.1.3_令牌桶算法_0" data-path="#1.1.3_令牌桶算法_0"><div class="tree-item-inner heading-link" heading-name="1.1.3 令牌桶算法">1.1.3 令牌桶算法</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.2_新建项目_0" data-path="#1.2_新建项目_0"><div class="tree-item-inner heading-link" heading-name="1.2 新建项目">1.2 新建项目</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.3_限流实现基于Guava_0" data-path="#1.3_限流实现基于Guava_0"><div class="tree-item-inner heading-link" heading-name="1.3 限流实现基于Guava">1.3 限流实现基于Guava</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.4_添加maven配置_0" data-path="#1.4_添加maven配置_0"><div class="tree-item-inner heading-link" heading-name="1.4 添加maven配置">1.4 添加maven配置</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.5_应用配置_0" data-path="#1.5_应用配置_0"><div class="tree-item-inner heading-link" heading-name="1.5 应用配置">1.5 应用配置</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.6_新建限流过滤器_0" data-path="#1.6_新建限流过滤器_0"><div class="tree-item-inner heading-link" heading-name="1.6 新建限流过滤器">1.6 新建限流过滤器</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.7_新建启动类_0" data-path="#1.7_新建启动类_0"><div class="tree-item-inner heading-link" heading-name="1.7 新建启动类">1.7 新建启动类</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1\._8_限流实现基于Redis_0" data-path="#1\._8_限流实现基于Redis_0"><div class="tree-item-inner heading-link" heading-name="1\. 8 限流实现基于Redis">1. 8 限流实现基于Redis</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.9_maven_配置添加_0" data-path="#1.9_maven_配置添加_0"><div class="tree-item-inner heading-link" heading-name="1.9 maven 配置添加">1.9 maven 配置添加</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.10_redis_配置类_0" data-path="#1.10_redis_配置类_0"><div class="tree-item-inner heading-link" heading-name="1.10 redis 配置类">1.10 redis 配置类</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.11_创建过滤器_0" data-path="#1.11_创建过滤器_0"><div class="tree-item-inner heading-link" heading-name="1.11 创建过滤器">1.11 创建过滤器</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/2微服务进阶/2网关拓展/1zuul-拓展/1zuul-限流-·-springcloud微服务实战-·-看云.html#1.12_启动应用_0" data-path="#1.12_启动应用_0"><div class="tree-item-inner heading-link" heading-name="1.12 启动应用">1.12 启动应用</div></a><div class="tree-item-children"></div></div></div></div></div></div></div></div></div><script defer="">let rs = document.querySelector("#right-sidebar"); rs.classList.toggle("is-collapsed", window.innerWidth < 768); rs.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-right-width"));</script></div></div></div></div></body></html>

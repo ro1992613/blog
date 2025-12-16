@@ -1,0 +1,401 @@
+<!DOCTYPE html> <html lang="zh-cn"><head>
+<title>8Eureka客户端常用配置 · SpringCloud微服务实战 · 看云</title>
+<base href="../../../..">
+<meta name="pathname" content="专栏/springcloud微服务实战/1微服务入门/2注册中心eureka/8eureka客户端常用配置-·-springcloud微服务实战-·-看云.html">
+<meta name="description" content="笔记 - 8Eureka客户端常用配置 · SpringCloud微服务实战 · 看云">
+<meta property="og:title" content="8Eureka客户端常用配置 · SpringCloud微服务实战 · 看云">
+<meta property="og:description" content="笔记 - 8Eureka客户端常用配置 · SpringCloud微服务实战 · 看云">
+<meta property="og:type" content="website">
+<meta property="og:url" content="专栏/springcloud微服务实战/1微服务入门/2注册中心eureka/8eureka客户端常用配置-·-springcloud微服务实战-·-看云.html">
+<meta property="og:image" content="undefined">
+<meta charset="UTF-8"><meta property="og:site_name" content="笔记"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0"><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="site-lib/rss.xml"><script async="" id="webpage-script" src="site-lib/scripts/webpage.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-wasm-script" src="site-lib/scripts/graph-wasm.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-render-worker-script" src="site-lib/scripts/graph-render-worker.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="icon" href="site-lib/media/favicon.png"><link rel="stylesheet" href="site-lib/styles/obsidian.css"><link rel="stylesheet" href="site-lib/styles/theme.css"><link rel="preload" href="site-lib/styles/global-variable-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/global-variable-styles.css"></noscript><link rel="preload" href="site-lib/styles/supported-plugins.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/supported-plugins.css"></noscript><link rel="preload" href="site-lib/styles/main-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/main-styles.css"></noscript><style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-vertical-spacing:1.3em;--sidebar-margin:12px}:root{background-color:#202124}.sidebar{height:100%;font-size:14px;z-index:10;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));position:relative;overflow:hidden;overflow:clip;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}#left-sidebar{left:0}#right-sidebar{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}.sidebar.floating{position:absolute}.sidebar .leaf-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .leaf-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}#left-sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}#right-sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar #left-sidebar-content,.sidebar #right-sidebar-content{contain:none!important;container-type:normal!important;animation:none!important}.sidebar:has(.leaf-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:calc(2.3em + 2 * var(--sidebar-margin));width:var(--sidebar-width);padding:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}#left-sidebar .sidebar-topbar{left:0;flex-direction:row;border-top-right-radius:var(--radius-l)}#right-sidebar .sidebar-topbar{right:0;flex-direction:row-reverse;border-top-left-radius:var(--radius-l)}#left-sidebar .topbar-content{margin-right:calc(2.3em + var(--sidebar-margin));flex-direction:row}#right-sidebar .topbar-content{margin-left:calc(2.3em + var(--sidebar-margin));flex-direction:row-reverse}.topbar-content{overflow:hidden visible;overflow:clip visible;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:2px!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}#left-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}#right-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.feature-title{margin-left:1px;text-transform:uppercase;letter-spacing:.06em;margin-top:.75em;margin-bottom:.75em}.feature-header{display:flex;align-items:center;padding-top:0;font-size:1em;padding-left:0}body.floating-sidebars .sidebar{position:absolute}body{transition:background-color var(--color-fade-speed) ease-in-out}#navbar:not(:empty){display:flex;align-items:center;justify-content:space-between;padding:.5em 1em;width:100%}#main{display:flex;flex-direction:column;height:100%;width:100%;align-items:stretch;justify-content:center}#main-horizontal{display:flex;flex-direction:row;flex-grow:1;width:100%;align-items:stretch;justify-content:center}#center-content{flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0!important;transition:opacity .2s ease-in-out;pointer-events:none}#center-content>.obsidian-document{padding-left:2em;padding-right:1em;margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}body #center-content>.obsidian-document>.markdown-preview-sizer{padding-bottom:80vh;width:100%;max-width:var(--line-width);flex-basis:var(--line-width);transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document>div{width:100%!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document:not([data-type=markdown]).embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}#center-content>.obsidian-document:not([data-type=markdown]).embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6,li):has(> :is(.math,table)){overflow-x:auto!important}#center-content>.obsidian-document:not([data-type=markdown]){overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.obsidian-document[data-type=attachment]{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%}.obsidian-document[data-type=attachment]>*{outline:0;border:none;box-shadow:none}.obsidian-document[data-type=attachment] :is(img){max-width:90%;max-height:90%;object-fit:contain}.obsidian-document[data-type=attachment]>:is(audio){width:100%;max-width:min(90%,var(--line-width))}.obsidian-document[data-type=attachment]>:is(embed,iframe,video){width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.canvas-wrapper>:is(.header,.footer){z-index:100;position:absolute;display:flex;justify-content:center;flex-direction:column;width:100%;align-items:center}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style><script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script></head><body class="publish css-settings-manager mod-windows is-hidden-frameless show-inline-title show-ribbon show-view-header minimal-readable trim-cols sidebar-tabs-default row-lines col-lines table-lines row-hover minimal-notion-light minimal-dracula-dark colorful-headings links-int-on links-ext-on full-width-media"><script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script><div class="parsed-feature-container" style="display: contents;"><link itemprop="include" href="site-lib/html/custom-head-content-content.html"></div><div id="main"><div id="navbar"></div><div id="main-horizontal"><div id="left-content" class="leaf" style="--sidebar-width: var(--sidebar-width-left);"><div id="left-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><div id="search-container"><div id="search-wrapper"><input enterkeyhint="search" type="search" spellcheck="false" placeholder="Search..."><div aria-label="Clear search" id="search-clear-button"></div></div></div></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="left-sidebar-content" class="leaf-content"><link itemprop="include" href="site-lib/html/file-tree-content.html"></div></div><script defer="">let ls = document.querySelector("#left-sidebar"); ls.classList.toggle("is-collapsed", window.innerWidth < 768); ls.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-left-width"));</script></div></div><div id="center-content" class="leaf"><div class="obsidian-document markdown-preview-view markdown-rendered node-insert-event is-readable-line-width allow-fold-headings allow-fold-lists show-indentation-guide show-properties" data-type="markdown"><style id="MJX-CHTML-styles">mjx-container[jax=CHTML]{line-height:0}mjx-container [space="1"]{margin-left:.111em}mjx-container [space="2"]{margin-left:.167em}mjx-container [space="3"]{margin-left:.222em}mjx-container [space="4"]{margin-left:.278em}mjx-container [space="5"]{margin-left:.333em}mjx-container [rspace="1"]{margin-right:.111em}mjx-container [rspace="2"]{margin-right:.167em}mjx-container [rspace="3"]{margin-right:.222em}mjx-container [rspace="4"]{margin-right:.278em}mjx-container [rspace="5"]{margin-right:.333em}mjx-container [size="s"]{font-size:70.7%}mjx-container [size=ss]{font-size:50%}mjx-container [size=Tn]{font-size:60%}mjx-container [size=sm]{font-size:85%}mjx-container [size=lg]{font-size:120%}mjx-container [size=Lg]{font-size:144%}mjx-container [size=LG]{font-size:173%}mjx-container [size=hg]{font-size:207%}mjx-container [size=HG]{font-size:249%}mjx-container [width=full]{width:100%}mjx-box{display:inline-block}mjx-block{display:block}mjx-itable{display:inline-table}mjx-row{display:table-row}mjx-row>*{display:table-cell}mjx-mtext{display:inline-block}mjx-mstyle{display:inline-block}mjx-merror{display:inline-block;color:red;background-color:#ff0}mjx-mphantom{visibility:hidden}mjx-assistive-mml{top:0;left:0;clip:rect(1px,1px,1px,1px);user-select:none;position:absolute!important;padding:1px 0 0!important;border:0!important;display:block!important;width:auto!important;overflow:hidden!important}mjx-assistive-mml[display=block]{width:100%!important}mjx-math{display:inline-block;text-align:left;line-height:0;text-indent:0;font-style:normal;font-weight:400;font-size:100%;letter-spacing:normal;border-collapse:collapse;overflow-wrap:normal;word-spacing:normal;white-space:nowrap;direction:ltr;padding:1px 0}mjx-container[jax=CHTML][display=true]{display:block;text-align:center;margin:1em 0}mjx-container[jax=CHTML][display=true][width=full]{display:flex}mjx-container[jax=CHTML][display=true] mjx-math{padding:0}mjx-container[jax=CHTML][justify=left]{text-align:left}mjx-container[jax=CHTML][justify=right]{text-align:right}mjx-texatom{display:inline-block;text-align:left}mjx-mo{display:inline-block;text-align:left}mjx-stretchy-h{display:inline-table;width:100%}mjx-stretchy-h>*{display:table-cell;width:0}mjx-stretchy-h>*>mjx-c{display:inline-block;transform:scaleX(1)}mjx-stretchy-h>*>mjx-c::before{display:inline-block;width:initial}mjx-stretchy-h>mjx-ext{overflow:clip visible;width:100%}mjx-stretchy-h>mjx-ext>mjx-c::before{transform:scaleX(500)}mjx-stretchy-h>mjx-ext>mjx-c{width:0}mjx-stretchy-h>mjx-beg>mjx-c{margin-right:-.1em}mjx-stretchy-h>mjx-end>mjx-c{margin-left:-.1em}mjx-stretchy-v{display:inline-block}mjx-stretchy-v>*{display:block}mjx-stretchy-v>mjx-beg{height:0}mjx-stretchy-v>mjx-end>mjx-c{display:block}mjx-stretchy-v>*>mjx-c{transform:scaleY(1);transform-origin:left center;overflow:hidden}mjx-stretchy-v>mjx-ext{display:block;height:100%;box-sizing:border-box;border:0 solid transparent;overflow:visible clip}mjx-stretchy-v>mjx-ext>mjx-c::before{width:initial;box-sizing:border-box}mjx-stretchy-v>mjx-ext>mjx-c{transform:scaleY(500) translateY(.075em);overflow:visible}mjx-mark{display:inline-block;height:0}mjx-c{display:inline-block}mjx-utext{display:inline-block;padding:.75em 0 .2em}mjx-mi{display:inline-block;text-align:left}mjx-c::before{display:block;width:0}.MJX-TEX{font-family:MJXZERO,MJXTEX}.TEX-B{font-family:MJXZERO,MJXTEX-B}.TEX-I{font-family:MJXZERO,MJXTEX-I}.TEX-MI{font-family:MJXZERO,MJXTEX-MI}.TEX-BI{font-family:MJXZERO,MJXTEX-BI}.TEX-S1{font-family:MJXZERO,MJXTEX-S1}.TEX-S2{font-family:MJXZERO,MJXTEX-S2}.TEX-S3{font-family:MJXZERO,MJXTEX-S3}.TEX-S4{font-family:MJXZERO,MJXTEX-S4}.TEX-A{font-family:MJXZERO,MJXTEX-A}.TEX-C{font-family:MJXZERO,MJXTEX-C}.TEX-CB{font-family:MJXZERO,MJXTEX-CB}.TEX-FR{font-family:MJXZERO,MJXTEX-FR}.TEX-FRB{font-family:MJXZERO,MJXTEX-FRB}.TEX-SS{font-family:MJXZERO,MJXTEX-SS}.TEX-SSB{font-family:MJXZERO,MJXTEX-SSB}.TEX-SSI{font-family:MJXZERO,MJXTEX-SSI}.TEX-SC{font-family:MJXZERO,MJXTEX-SC}.TEX-T{font-family:MJXZERO,MJXTEX-T}.TEX-V{font-family:MJXZERO,MJXTEX-V}.TEX-VB{font-family:MJXZERO,MJXTEX-VB}mjx-stretchy-h mjx-c,mjx-stretchy-v mjx-c{font-family:MJXZERO,MJXTEX-S1,MJXTEX-S4,MJXTEX,MJXTEX-A!important}@font-face{font-family:MJXZERO;src:url("site-lib/fonts/mathjax_zero.woff") format("woff")}@font-face{font-family:MJXTEX;src:url("site-lib/fonts/mathjax_main-regular.woff") format("woff")}@font-face{font-family:MJXTEX-B;src:url("site-lib/fonts/mathjax_main-bold.woff") format("woff")}@font-face{font-family:MJXTEX-I;src:url("site-lib/fonts/mathjax_math-italic.woff") format("woff")}@font-face{font-family:MJXTEX-MI;src:url("site-lib/fonts/mathjax_main-italic.woff") format("woff")}@font-face{font-family:MJXTEX-BI;src:url("site-lib/fonts/mathjax_math-bolditalic.woff") format("woff")}@font-face{font-family:MJXTEX-S1;src:url("site-lib/fonts/mathjax_size1-regular.woff") format("woff")}@font-face{font-family:MJXTEX-S2;src:url("site-lib/fonts/mathjax_size2-regular.woff") format("woff")}@font-face{font-family:MJXTEX-S3;src:url("site-lib/fonts/mathjax_size3-regular.woff") format("woff")}@font-face{font-family:MJXTEX-S4;src:url("site-lib/fonts/mathjax_size4-regular.woff") format("woff")}@font-face{font-family:MJXTEX-A;src:url("site-lib/fonts/mathjax_ams-regular.woff") format("woff")}@font-face{font-family:MJXTEX-C;src:url("site-lib/fonts/mathjax_calligraphic-regular.woff") format("woff")}@font-face{font-family:MJXTEX-CB;src:url("site-lib/fonts/mathjax_calligraphic-bold.woff") format("woff")}@font-face{font-family:MJXTEX-FR;src:url("site-lib/fonts/mathjax_fraktur-regular.woff") format("woff")}@font-face{font-family:MJXTEX-FRB;src:url("site-lib/fonts/mathjax_fraktur-bold.woff") format("woff")}@font-face{font-family:MJXTEX-SS;src:url("site-lib/fonts/mathjax_sansserif-regular.woff") format("woff")}@font-face{font-family:MJXTEX-SSB;src:url("site-lib/fonts/mathjax_sansserif-bold.woff") format("woff")}@font-face{font-family:MJXTEX-SSI;src:url("site-lib/fonts/mathjax_sansserif-italic.woff") format("woff")}@font-face{font-family:MJXTEX-SC;src:url("site-lib/fonts/mathjax_script-regular.woff") format("woff")}@font-face{font-family:MJXTEX-T;src:url("site-lib/fonts/mathjax_typewriter-regular.woff") format("woff")}@font-face{font-family:MJXTEX-V;src:url("site-lib/fonts/mathjax_vector-regular.woff") format("woff")}@font-face{font-family:MJXTEX-VB;src:url("site-lib/fonts/mathjax_vector-bold.woff") format("woff")}mjx-c.mjx-c5B::before{padding:.75em .278em .25em 0;content:"["}mjx-c.mjx-c1D460.TEX-I::before{padding:.442em .469em .01em 0;content:"s"}mjx-c.mjx-c1D45D.TEX-I::before{padding:.442em .503em .194em 0;content:"p"}mjx-c.mjx-c1D45F.TEX-I::before{padding:.442em .451em .011em 0;content:"r"}mjx-c.mjx-c1D456.TEX-I::before{padding:.661em .345em .011em 0;content:"i"}mjx-c.mjx-c1D45B.TEX-I::before{padding:.442em .6em .011em 0;content:"n"}mjx-c.mjx-c1D454.TEX-I::before{padding:.442em .477em .205em 0;content:"g"}mjx-c.mjx-c2E::before{padding:.12em .278em 0 0;content:"."}mjx-c.mjx-c1D44E.TEX-I::before{padding:.441em .529em .01em 0;content:"a"}mjx-c.mjx-c1D459.TEX-I::before{padding:.694em .298em .011em 0;content:"l"}mjx-c.mjx-c1D450.TEX-I::before{padding:.442em .433em .011em 0;content:"c"}mjx-c.mjx-c1D461.TEX-I::before{padding:.626em .361em .011em 0;content:"t"}mjx-c.mjx-c1D45C.TEX-I::before{padding:.441em .485em .011em 0;content:"o"}mjx-c.mjx-c1D45A.TEX-I::before{padding:.442em .878em .011em 0;content:"m"}mjx-c.mjx-c1D452.TEX-I::before{padding:.442em .466em .011em 0;content:"e"}mjx-c.mjx-c5D::before{padding:.75em .278em .25em 0;content:"]"}mjx-c.mjx-c28::before{padding:.75em .389em .25em 0;content:"("}mjx-c.mjx-c210E.TEX-I::before{padding:.694em .576em .011em 0;content:"h"}mjx-c.mjx-c3A::before{padding:.43em .278em 0 0;content:":"}mjx-c.mjx-c2F::before{padding:.75em .5em .25em 0;content:"/"}mjx-c.mjx-c29::before{padding:.75em .389em .25em 0;content:")"}</style><div class="markdown-preview-sizer markdown-preview-section"><div class="header"><h1 class="page-title heading inline-title" id="8Eureka客户端常用配置_·_SpringCloud微服务实战_·_看云_0">8Eureka客户端常用配置 · SpringCloud微服务实战 · 看云</h1><div class="data-bar"></div></div><div class="markdown-preview-pusher" style="width: 1px; height: 0.1px; margin-bottom: 0px;"></div><div class="el-blockquote"><blockquote dir="auto">
+<blockquote dir="auto">
+<p><strong>导航</strong></p>
+</blockquote>
+</blockquote></div><div class="el-hr"><hr></div><div class="el-h2"><h2 data-heading="1\. **eureka.client.常用**" dir="auto" class="heading" id="1\._**eureka.client.常用**_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1. <strong>eureka.client.常用</strong></h2></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th dir="ltr">参数</th>
+<th dir="ltr">描述</th>
+<th dir="ltr">默认</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td dir="ltr">eureka.client.service-url</td>
+<td dir="ltr">指定服务注册中心地址，类型为 HashMap，并设置有一组默认值，如果服务注册中心为高可用集群时，多个注册中心地址以逗号分隔。如果服务注册中心加入了安全验证，这里配置的地址格式为: http://:@localhost:8761/eureka</td>
+<td dir="ltr">默认的Key为 defaultZone;默认的Value为 <a rel="noopener nofollow" class="external-link is-unresolved" href="http://localhost:8761/eureka" target="_self">http://localhost:8761/eureka</a></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.fetch-registry</td>
+<td dir="ltr">是否从 Eureka Server 获取注册信息</td>
+<td dir="ltr">默认TRUE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.register-with-eureka</td>
+<td dir="ltr">是否要将自身的实例信息注册到 Eureka Server</td>
+<td dir="ltr">默认TRUE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-connection-idle-timeout-seconds</td>
+<td dir="ltr">Eureka Server连接空闲关闭时间，单位:秒</td>
+<td dir="ltr">默认30</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-server-connect-timeout-seconds</td>
+<td dir="ltr">连接 Eureka Server 的超时时间，单位:秒</td>
+<td dir="ltr">默认5</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-server-read-timeout-seconds</td>
+<td dir="ltr">读取 Eureka Server 信息的超时时间，单位:秒</td>
+<td dir="ltr">默认8</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-server-total-connections</td>
+<td dir="ltr">从 Eureka Client 到所有Eureka Server的连接总数</td>
+<td dir="ltr">默认200</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-server-total-connections-per-host</td>
+<td dir="ltr">从 Eureka Client 到每个 Eureka Server 主机的连接总数</td>
+<td dir="ltr">默认50</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-service-url-poll-interval-seconds</td>
+<td dir="ltr">轮询 Eureka Server 地址更改的间隔时间，单位:秒。</td>
+<td dir="ltr">默认0</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.initial-instance-info-replication-interval-seconds</td>
+<td dir="ltr">初始化实例信息到 Eureka Server 的间隔时间，单位:秒</td>
+<td dir="ltr">默认40</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.instance-info-replication-interval-seconds</td>
+<td dir="ltr">更新实例信息的变化到 Eureka Server 的间隔时间，单位:秒</td>
+<td dir="ltr">默认30</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.registry-fetch-interval-seconds</td>
+<td dir="ltr">从 Eureka Server 获取注册信息的间隔时间，单位:秒</td>
+<td dir="ltr">默认30</td>
+</tr>
+</tbody>
+</table></div><div class="el-h2"><h2 data-heading="2\. **eureka.client.其它**" dir="auto" class="heading" id="2\._**eureka.client.其它**_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>2. <strong>eureka.client.其它</strong></h2></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th dir="ltr">参数</th>
+<th dir="ltr">描述</th>
+<th dir="ltr">默认</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td dir="ltr">eureka.client.allow-redirects</td>
+<td dir="ltr">服务器是否能够重定向客户端请求到备份服务器。 如果设置为false，服务器将直接处理请求，如果设置为true，它可能发送HTTP重定向到客户端。默认为false</td>
+<td dir="ltr">默认FALSE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.availability-zones</td>
+<td dir="ltr">获取此实例所在区域的可用性区域列表（在AWS数据中心中使用）。这些更改在registryFetchIntervalSeconds指定的下一个注册表获取周期的运行时生效，用逗号隔开。</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.backup-registry-impl</td>
+<td dir="ltr">获取实现了eureka客户端在第一次启动时读取注册表的信息作为回退选项的实现名称</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.cache-refresh-executor-exponential-back-off-bound</td>
+<td dir="ltr">执行程序指数回退刷新的相关属性，是重试延迟的最大倍数值，默认为10</td>
+<td dir="ltr">默认10</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.cache-refresh-executor-thread-pool-size</td>
+<td dir="ltr">执行程序缓存刷新线程池的大小，默认为2</td>
+<td dir="ltr">默认2</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.client-data-accept</td>
+<td dir="ltr">EurekaAccept客户端数据接受名称</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.decoder-name</td>
+<td dir="ltr">这是一个短暂的解码器的配置，如果最新的解码器是稳定的，则可以去除，默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.disable-delta</td>
+<td dir="ltr">指示eureka客户端是否应该禁用提取delta，而应该诉诸于获取完整的注册表信息。请注意，增量获取可以极大地减少流量，因为尤利卡服务器的更改速率通常远低于提取速率。更改在运行时在registryFetchIntervalSeconds指定的下一个注册表提取周期中有效</td>
+<td dir="ltr">默认FALSE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.dollar-replacement</td>
+<td dir="ltr">eureka服务器序列化/反序列化的信息中获取“$”符号的的替换字符串。默认为“_-”</td>
+<td dir="ltr">默认_-</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.enabled</td>
+<td dir="ltr">用于指示Eureka客户端已启用的标志</td>
+<td dir="ltr">默认TRUE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.encoder-name</td>
+<td dir="ltr">这是一个短暂的编码器的配置，如果最新的编码器是稳定的，则可以去除，默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.escape-char-replacement</td>
+<td dir="ltr">eureka服务器序列化/反序列化的信息中获取“_”符号的的替换字符串。默认为“__”</td>
+<td dir="ltr">默认 __</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-server-d-n-s-name</td>
+<td dir="ltr">获取要查询的DNS名称来获得eureka服务器，此配置只有在eureka服务器ip地址列表是在DNS中才会用到。默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-server-port</td>
+<td dir="ltr">获取eureka服务器的端口，此配置只有在eureka服务器ip地址列表是在DNS中才会用到。默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.eureka-server-u-r-l-context</td>
+<td dir="ltr">表示eureka注册中心的路径，如果配置为eureka，则为<a data-tooltip-position="top" aria-label="http://x.x.x.x:x/eureka/%EF%BC%8C%E5%9C%A8eureka%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%8A%A0%E5%85%A5%E6%AD%A4%E9%85%8D%E7%BD%AE%E8%A1%A8%E7%A4%BAeureka%E4%BD%9C%E4%B8%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%91%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E6%B3%A8%E5%86%8C%EF%BC%8C%E4%BB%8E%E8%80%8C%E6%9E%84%E6%88%90eureka%E9%9B%86%E7%BE%A4%E3%80%82%E6%AD%A4%E9%85%8D%E7%BD%AE%E5%8F%AA%E6%9C%89%E5%9C%A8eureka%E6%9C%8D%E5%8A%A1%E5%99%A8ip%E5%9C%B0%E5%9D%80%E5%88%97%E8%A1%A8%E6%98%AF%E5%9C%A8DNS%E4%B8%AD%E6%89%8D%E4%BC%9A%E7%94%A8%E5%88%B0%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%BAnull" rel="noopener nofollow" class="external-link is-unresolved" href="http://x.x.x.x:x/eureka/%EF%BC%8C%E5%9C%A8eureka%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%8A%A0%E5%85%A5%E6%AD%A4%E9%85%8D%E7%BD%AE%E8%A1%A8%E7%A4%BAeureka%E4%BD%9C%E4%B8%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%91%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E6%B3%A8%E5%86%8C%EF%BC%8C%E4%BB%8E%E8%80%8C%E6%9E%84%E6%88%90eureka%E9%9B%86%E7%BE%A4%E3%80%82%E6%AD%A4%E9%85%8D%E7%BD%AE%E5%8F%AA%E6%9C%89%E5%9C%A8eureka%E6%9C%8D%E5%8A%A1%E5%99%A8ip%E5%9C%B0%E5%9D%80%E5%88%97%E8%A1%A8%E6%98%AF%E5%9C%A8DNS%E4%B8%AD%E6%89%8D%E4%BC%9A%E7%94%A8%E5%88%B0%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%BAnull" target="_self">http://x.x.x.x:x/eureka/，在eureka的配置文件中加入此配置表示eureka作为客户端向注册中心注册，从而构成eureka集群。此配置只有在eureka服务器ip地址列表是在DNS中才会用到，默认为null</a></td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.fetch-remote-regions-registry</td>
+<td dir="ltr">eureka服务注册表信息里的以逗号隔开的地区名单，如果不这样返回这些地区名单，则客户端启动将会出错。默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.filter-only-up-instances</td>
+<td dir="ltr">是否获得处于开启状态的实例的应用程序过滤之后的应用程序。默认为true</td>
+<td dir="ltr">默认TRUE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.g-zip-content</td>
+<td dir="ltr">eureka注册表的内容是否被压缩，默认为true，并且是在最好的网络流量下被压缩</td>
+<td dir="ltr">默认TRUE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.heartbeat-executor-exponential-back-off-bound</td>
+<td dir="ltr">心跳执行程序回退相关的属性，是重试延迟的最大倍数值，默认为10</td>
+<td dir="ltr">默认10</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.heartbeat-executor-thread-pool-size</td>
+<td dir="ltr">心跳执行程序线程池的大小,默认为2</td>
+<td dir="ltr">默认2</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.log-delta-diff</td>
+<td dir="ltr">是否记录eureka服务器和客户端之间在注册表的信息方面的差异，默认为false</td>
+<td dir="ltr">默认FALSE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.on-demand-update-status-change</td>
+<td dir="ltr">如果设置为true,客户端的状态更新将会点播更新到远程服务器上，默认为true</td>
+<td dir="ltr">默认TRUE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.prefer-same-zone-eureka</td>
+<td dir="ltr">实例是否使用同一zone里的eureka服务器，默认为true，理想状态下，eureka客户端与服务端是在同一zone下</td>
+<td dir="ltr">默认TRUE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.property-resolver</td>
+<td dir="ltr">属性解析器</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.proxy-host</td>
+<td dir="ltr">获取eureka服务的代理主机，默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.proxy-password</td>
+<td dir="ltr">获取eureka服务的代理密码，默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.proxy-port</td>
+<td dir="ltr">获取eureka服务的代理端口, 默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.proxy-user-name</td>
+<td dir="ltr">获取eureka服务的代理用户名，默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.region</td>
+<td dir="ltr">获取实例所在的地区。默认为us-east-1</td>
+<td dir="ltr">默认us-east-1</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.registry-refresh-single-vip-address</td>
+<td dir="ltr">此客户端只对一个单一的VIP注册表的信息感兴趣。默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.client.use-dns-for-fetching-service-urls</td>
+<td dir="ltr">eureka客户端是否应该使用DNS机制来获取eureka服务器的地址列表，默认为false</td>
+<td dir="ltr">默认FALSE</td>
+</tr>
+</tbody>
+</table></div><div class="el-h2"><h2 data-heading="3\. **eureka.instance.常用**" dir="auto" class="heading" id="3\._**eureka.instance.常用**_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>3. <strong>eureka.instance.常用</strong></h2></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th dir="ltr">参数</th>
+<th dir="ltr">描述</th>
+<th dir="ltr">默认</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td dir="ltr">eureka.instance.instance-id</td>
+<td dir="ltr">此实例注册到eureka服务端的唯一的实例ID,其组成为<span class="math math-inline is-loaded"><mjx-container class="MathJax" jax="CHTML"><mjx-math class="MJX-TEX"><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c5B"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D460 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45F TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2E"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D459 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D450 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45C TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2E"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D452 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3A"></mjx-c></mjx-mo><mjx-texatom space="4" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c2F"></mjx-c></mjx-mo></mjx-texatom><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c2F"></mjx-c></mjx-mo></mjx-texatom><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D460 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45F TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2E"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D459 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D450 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45C TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2E"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D45A TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D452 TEX-I"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c2F"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3A"></mjx-c></mjx-mo></mjx-math></mjx-container></span>{spring.application.instance_id:${random.value}}服务名，默认取 <a data-tooltip-position="top" aria-label="http://spring.application.name/" rel="noopener nofollow" class="external-link is-unresolved" href="http://spring.application.name/" target="_self">spring.application.name</a> 配置值</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.hostname</td>
+<td dir="ltr">主机名，不配置的时候讲根据操作系统的主机名来获取</td>
+<td dir="ltr">默认unknown</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.prefer-ip-address</td>
+<td dir="ltr">是否优先使用IP地址作为主机名的标识,如果设置了tru，则使用该属性配置的IP，否则自动获取除环路IP外的第一个IP地址</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.ip-address</td>
+<td dir="ltr">IP地址</td>
+<td dir="ltr">默认FALSE</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.lease-expiration-duration-in-seconds</td>
+<td dir="ltr">定义服务续约任务（心跳）的调用间隔，单位：秒,表示eureka client发送心跳给server端的频率。如果在leaseExpirationDurationInSeconds后，server端没有收到client的心跳，则将摘除该instance。除此之外，如果该instance实现了HealthCheckCallback，并决定让自己unavailable的话，则该instance也不会接收到流量。</td>
+<td dir="ltr">默认90</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.lease-renewal-interval-in-seconds</td>
+<td dir="ltr">定义服务失效的时间，单位：秒,表示eureka server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该instance。该值至少应该大于leaseRenewalIntervalInSeconds</td>
+<td dir="ltr">默认30</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.home-page-url</td>
+<td dir="ltr">获取此实例的绝对主页URL路径，为其他服务提供信息时使用的路径,默认为null</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.home-page-url-path</td>
+<td dir="ltr">获取此实例的相关主页URL路径，然后构造出主机名，安全端口等，默认为/</td>
+<td dir="ltr">默认 /</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.health-check-url</td>
+<td dir="ltr">配置健康检查页面的URL，绝对路径</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.health-check-url-path</td>
+<td dir="ltr">健康检查页面的URL，相对路径，默认使用 HTTP 访问，如果需要使用 HTTPS则需要使用绝对路径</td>
+<td dir="ltr">默认/actuator/health</td>
+</tr>
+<tr>
+<td dir="ltr">eureka.instance.secure-health-check-url</td>
+<td dir="ltr">获取此实例的绝对安全健康检查网页的URL路径，默认为null</td>
+<td dir="auto"></td>
+</tr>
+</tbody>
+</table></div><div class="el-h2"><h2 data-heading="4\. **eureka.instance.其它**" dir="auto" class="heading" id="4\._**eureka.instance.其它**_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>4. <strong>eureka.instance.其它</strong></h2></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th dir="ltr">参数</th>
+<th dir="ltr">描述</th>
+<th dir="ltr">默认</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td dir="ltr">a-s-g-name</td>
+<td dir="ltr">与此实例相关联 AWS自动缩放组名称。此项配置是在AWS环境专门使用的实例启动，它已被用于流量停用后自动把一个实例退出服务。</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">app-group-name</td>
+<td dir="ltr">注册到注册中心的应用所属分组名称</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">data-center-info</td>
+<td dir="ltr">指定服务实例所属数据中心</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">default-address-resolution-order</td>
+<td dir="ltr">获取实例的网络地址</td>
+<td dir="ltr">默认为[]</td>
+</tr>
+<tr>
+<td dir="ltr">environment</td>
+<td dir="ltr">该服务实例环境配置</td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">initial-status</td>
+<td dir="ltr">该服务实例注册到Eureka Server 的初始状态</td>
+<td dir="ltr">默认UP</td>
+</tr>
+<tr>
+<td dir="ltr">instance-enabled-onit</td>
+<td dir="ltr">实例注册到eureka服务器时，是否开启通讯</td>
+<td dir="ltr">默认false</td>
+</tr>
+<tr>
+<td dir="ltr">metadata-map 获取与此实例相关联的元数据(key,value)。这个信息被发送到eureka服务器，其他实例可以使用。</td>
+<td dir="auto"></td>
+<td dir="auto"></td>
+</tr>
+<tr>
+<td dir="ltr">namespace</td>
+<td dir="ltr">获取用于查找属性的命名空间，默认为eureka</td>
+<td dir="ltr">默认eureka</td>
+</tr>
+<tr>
+<td dir="ltr">non-secure-port</td>
+<td dir="ltr">获取该实例应该接收通信的非安全端口。</td>
+<td dir="ltr">默认80</td>
+</tr>
+<tr>
+<td dir="ltr">non-secure-port-enabled</td>
+<td dir="ltr">该实例应该接收通信的非安全端口是否启用</td>
+<td dir="ltr">默认true</td>
+</tr>
+<tr>
+<td dir="ltr">secure-port</td>
+<td dir="ltr">获取该实例应该接收通信的安全端口</td>
+<td dir="ltr">默认443</td>
+</tr>
+<tr>
+<td dir="ltr">secure-port-enabled</td>
+<td dir="ltr">该实例应该接收通信的安全端口是否启用</td>
+<td dir="ltr">默认false</td>
+</tr>
+<tr>
+<td dir="ltr">secure-virtual-host-name</td>
+<td dir="ltr">服务实例安全主机名称(HTTPS)</td>
+<td dir="ltr">默认unknown</td>
+</tr>
+</tbody>
+</table></div><div class="el-h2"><h2 data-heading="5\. 配置来源" dir="auto" class="heading" id="5\._配置来源_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>5. 配置来源</h2></div><div class="el-p"><p dir="auto">org\springframework\cloud\spring-cloud-netflix-eureka-server\2.2.0.RELEASE\spring-cloud-netflix-eureka-server-2.2.0.RELEASE.jar!\META-INF\spring-configuration-metadata.json</p></div><div class="footer"><div class="data-bar"></div></div></div></div></div><div id="right-content" class="leaf" style="--sidebar-width: var(--sidebar-width-right);"><div id="right-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><label class="theme-toggle-container" for="theme-toggle-input" id=""><input class="theme-toggle-input" type="checkbox" id="theme-toggle-input"><div class="toggle-background"></div></label></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="right-sidebar-content" class="leaf-content"><div class="graph-view-wrapper"><div class="feature-header"><div class="feature-title">Interactive Graph</div></div><div class="graph-view-placeholder">
+		<div class="graph-view-container">
+			<div class="graph-icon graph-expand" role="button" aria-label="Expand" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+			<div class="graph-icon graph-global" role="button" aria-label="Global Graph" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-git-fork"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"></path><path d="M12 12v3"></path></svg></div>
+			<canvas id="graph-canvas" class="hide" width="512px" height="512px"></canvas>
+		</div>
+		</div></div><div id="outline" class=" tree-container"><div class="feature-header"><div class="feature-title">Table Of Contents</div><button class="clickable-icon nav-action-button tree-collapse-all" aria-label="Collapse All"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><div class="tree-item mod-collapsible" data-depth="1"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/1微服务入门/2注册中心eureka/8eureka客户端常用配置-·-springcloud微服务实战-·-看云.html#8Eureka客户端常用配置_·_SpringCloud微服务实战_·_看云_0" data-path="#8Eureka客户端常用配置_·_SpringCloud微服务实战_·_看云_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="8Eureka客户端常用配置 · SpringCloud微服务实战 · 看云">8Eureka客户端常用配置 · SpringCloud微服务实战 · 看云</div></a><div class="tree-item-children"><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/1微服务入门/2注册中心eureka/8eureka客户端常用配置-·-springcloud微服务实战-·-看云.html#1\._**eureka.client.常用**_0" data-path="#1\._**eureka.client.常用**_0"><div class="tree-item-inner heading-link" heading-name="1\. **eureka.client.常用**">1. <strong>eureka.client.常用</strong></div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/1微服务入门/2注册中心eureka/8eureka客户端常用配置-·-springcloud微服务实战-·-看云.html#2\._**eureka.client.其它**_0" data-path="#2\._**eureka.client.其它**_0"><div class="tree-item-inner heading-link" heading-name="2\. **eureka.client.其它**">2. <strong>eureka.client.其它</strong></div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/1微服务入门/2注册中心eureka/8eureka客户端常用配置-·-springcloud微服务实战-·-看云.html#3\._**eureka.instance.常用**_0" data-path="#3\._**eureka.instance.常用**_0"><div class="tree-item-inner heading-link" heading-name="3\. **eureka.instance.常用**">3. <strong>eureka.instance.常用</strong></div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/1微服务入门/2注册中心eureka/8eureka客户端常用配置-·-springcloud微服务实战-·-看云.html#4\._**eureka.instance.其它**_0" data-path="#4\._**eureka.instance.其它**_0"><div class="tree-item-inner heading-link" heading-name="4\. **eureka.instance.其它**">4. <strong>eureka.instance.其它</strong></div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/1微服务入门/2注册中心eureka/8eureka客户端常用配置-·-springcloud微服务实战-·-看云.html#5\._配置来源_0" data-path="#5\._配置来源_0"><div class="tree-item-inner heading-link" heading-name="5\. 配置来源">5. 配置来源</div></a><div class="tree-item-children"></div></div></div></div></div></div></div><script defer="">let rs = document.querySelector("#right-sidebar"); rs.classList.toggle("is-collapsed", window.innerWidth < 768); rs.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-right-width"));</script></div></div></div></div></body></html>

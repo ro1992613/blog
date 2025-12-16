@@ -1,0 +1,341 @@
+<!DOCTYPE html> <html lang="zh-cn"><head>
+<title>3RocketMQ 分布式事务实践 · SpringCloud微服务实战 · 看云</title>
+<base href="../../../../../..">
+<meta name="pathname" content="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html">
+<meta name="description" content="笔记 - 3RocketMQ 分布式事务实践 · SpringCloud微服务实战 · 看云">
+<meta property="og:title" content="3RocketMQ 分布式事务实践 · SpringCloud微服务实战 · 看云">
+<meta property="og:description" content="笔记 - 3RocketMQ 分布式事务实践 · SpringCloud微服务实战 · 看云">
+<meta property="og:type" content="website">
+<meta property="og:url" content="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html">
+<meta property="og:image" content="attachments/eff5927c7ca11e0c31a93ca8375bf7ea_md5.png">
+<meta charset="UTF-8"><meta property="og:site_name" content="笔记"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0"><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="site-lib/rss.xml"><script async="" id="webpage-script" src="site-lib/scripts/webpage.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-wasm-script" src="site-lib/scripts/graph-wasm.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-render-worker-script" src="site-lib/scripts/graph-render-worker.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="icon" href="site-lib/media/favicon.png"><link rel="stylesheet" href="site-lib/styles/obsidian.css"><link rel="stylesheet" href="site-lib/styles/theme.css"><link rel="preload" href="site-lib/styles/global-variable-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/global-variable-styles.css"></noscript><link rel="preload" href="site-lib/styles/supported-plugins.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/supported-plugins.css"></noscript><link rel="preload" href="site-lib/styles/main-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/main-styles.css"></noscript><style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-vertical-spacing:1.3em;--sidebar-margin:12px}:root{background-color:#202124}.sidebar{height:100%;font-size:14px;z-index:10;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));position:relative;overflow:hidden;overflow:clip;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}#left-sidebar{left:0}#right-sidebar{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}.sidebar.floating{position:absolute}.sidebar .leaf-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .leaf-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}#left-sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}#right-sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar #left-sidebar-content,.sidebar #right-sidebar-content{contain:none!important;container-type:normal!important;animation:none!important}.sidebar:has(.leaf-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:calc(2.3em + 2 * var(--sidebar-margin));width:var(--sidebar-width);padding:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}#left-sidebar .sidebar-topbar{left:0;flex-direction:row;border-top-right-radius:var(--radius-l)}#right-sidebar .sidebar-topbar{right:0;flex-direction:row-reverse;border-top-left-radius:var(--radius-l)}#left-sidebar .topbar-content{margin-right:calc(2.3em + var(--sidebar-margin));flex-direction:row}#right-sidebar .topbar-content{margin-left:calc(2.3em + var(--sidebar-margin));flex-direction:row-reverse}.topbar-content{overflow:hidden visible;overflow:clip visible;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:2px!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}#left-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}#right-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.feature-title{margin-left:1px;text-transform:uppercase;letter-spacing:.06em;margin-top:.75em;margin-bottom:.75em}.feature-header{display:flex;align-items:center;padding-top:0;font-size:1em;padding-left:0}body.floating-sidebars .sidebar{position:absolute}body{transition:background-color var(--color-fade-speed) ease-in-out}#navbar:not(:empty){display:flex;align-items:center;justify-content:space-between;padding:.5em 1em;width:100%}#main{display:flex;flex-direction:column;height:100%;width:100%;align-items:stretch;justify-content:center}#main-horizontal{display:flex;flex-direction:row;flex-grow:1;width:100%;align-items:stretch;justify-content:center}#center-content{flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0!important;transition:opacity .2s ease-in-out;pointer-events:none}#center-content>.obsidian-document{padding-left:2em;padding-right:1em;margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}body #center-content>.obsidian-document>.markdown-preview-sizer{padding-bottom:80vh;width:100%;max-width:var(--line-width);flex-basis:var(--line-width);transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document>div{width:100%!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document:not([data-type=markdown]).embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}#center-content>.obsidian-document:not([data-type=markdown]).embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6,li):has(> :is(.math,table)){overflow-x:auto!important}#center-content>.obsidian-document:not([data-type=markdown]){overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.obsidian-document[data-type=attachment]{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%}.obsidian-document[data-type=attachment]>*{outline:0;border:none;box-shadow:none}.obsidian-document[data-type=attachment] :is(img){max-width:90%;max-height:90%;object-fit:contain}.obsidian-document[data-type=attachment]>:is(audio){width:100%;max-width:min(90%,var(--line-width))}.obsidian-document[data-type=attachment]>:is(embed,iframe,video){width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.canvas-wrapper>:is(.header,.footer){z-index:100;position:absolute;display:flex;justify-content:center;flex-direction:column;width:100%;align-items:center}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style><script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script></head><body class="publish css-settings-manager mod-windows is-hidden-frameless show-inline-title show-ribbon show-view-header minimal-readable trim-cols sidebar-tabs-default row-lines col-lines table-lines row-hover minimal-notion-light minimal-dracula-dark colorful-headings links-int-on links-ext-on full-width-media"><script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script><div class="parsed-feature-container" style="display: contents;"><link itemprop="include" href="site-lib/html/custom-head-content-content.html"></div><div id="main"><div id="navbar"></div><div id="main-horizontal"><div id="left-content" class="leaf" style="--sidebar-width: var(--sidebar-width-left);"><div id="left-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><div id="search-container"><div id="search-wrapper"><input enterkeyhint="search" type="search" spellcheck="false" placeholder="Search..."><div aria-label="Clear search" id="search-clear-button"></div></div></div></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="left-sidebar-content" class="leaf-content"><link itemprop="include" href="site-lib/html/file-tree-content.html"></div></div><script defer="">let ls = document.querySelector("#left-sidebar"); ls.classList.toggle("is-collapsed", window.innerWidth < 768); ls.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-left-width"));</script></div></div><div id="center-content" class="leaf"><div class="obsidian-document markdown-preview-view markdown-rendered node-insert-event is-readable-line-width allow-fold-headings allow-fold-lists show-indentation-guide show-properties" data-type="markdown"><style id="MJX-CHTML-styles"></style><div class="markdown-preview-sizer markdown-preview-section"><div class="header"><h1 class="page-title heading inline-title" id="3RocketMQ_分布式事务实践_·_SpringCloud微服务实战_·_看云_0">3RocketMQ 分布式事务实践 · SpringCloud微服务实战 · 看云</h1><div class="data-bar"></div></div><div class="markdown-preview-pusher" style="width: 1px; height: 0.1px; margin-bottom: 0px;"></div><div class="el-blockquote"><blockquote dir="auto">
+<blockquote dir="auto">
+<p><strong>导航</strong></p>
+</blockquote>
+</blockquote></div><div class="el-h2"><h2 data-heading="本节代码地址" dir="auto" class="heading" id="本节代码地址_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>本节代码地址</h2></div><div class="el-p"><p dir="auto">GitHub:<a rel="noopener nofollow" class="external-link is-unresolved" href="https://github.com/xuyisu/fw-spring-cloud/tree/master/fw-cloud-transaction/fw-cloud-transaction-rocketmq/fw-cloud-transaction-rocketmq-order" target="_self">https://github.com/xuyisu/fw-spring-cloud/tree/master/fw-cloud-transaction/fw-cloud-transaction-rocketmq/fw-cloud-transaction-rocketmq-order</a><br>
+GitHub:<a rel="noopener nofollow" class="external-link is-unresolved" href="https://github.com/xuyisu/fw-spring-cloud/tree/master/fw-cloud-transaction/fw-cloud-transaction-rocketmq/fw-cloud-transaction-rocketmq-send" target="_self">https://github.com/xuyisu/fw-spring-cloud/tree/master/fw-cloud-transaction/fw-cloud-transaction-rocketmq/fw-cloud-transaction-rocketmq-send</a></p></div><div class="el-hr"><hr></div><div class="el-p"><p dir="auto">RocketMQ 的事务原理之前在RocketMQ 介绍篇已经介绍了，现在把图再拿过来，跟着图片的步骤，我们来实际操作一遍<br>
+<span alt="eff5927c7ca11e0c31a93ca8375bf7ea_MD5.png" src="attachments/eff5927c7ca11e0c31a93ca8375bf7ea_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="eff5927c7ca11e0c31a93ca8375bf7ea_MD5.png" src="attachments/eff5927c7ca11e0c31a93ca8375bf7ea_md5.png" target="_self"></span></p></div><div class="el-h2"><h2 data-heading="1\. 基于RocketMQ 实例演示" dir="auto" class="heading" id="1\._基于RocketMQ_实例演示_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1. 基于RocketMQ 实例演示</h2></div><div class="el-p"><p dir="auto">本模块中我们将新建两个模块，我们将模拟电商购物环节中的下单-&gt;发货的过程。两个模块的名称分别为<code>fw-cloud-transaction-rocketmq-order</code>和<code>fw-cloud-transaction-rocketmq-send</code>，order 作为Producer，send 作为Consumer</p></div><div class="el-h3"><h3 data-heading="1.1 maven 依赖" dir="auto" class="heading" id="1.1_maven_依赖_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.1 maven 依赖</h3></div><div class="el-p"><p dir="auto">两个模块所使用的依赖也是相同的，这里可以看到，我们依赖了上面封装的<code>fw-cloud-transaction-base-dao</code>，不需要再自己写基本的mapper等，因为是基于RocketMQ调用的，因此引入<code>rocketmq-spring-boot-starter</code>包</p></div><div class="el-pre"><pre><code data-line="0">&lt;dependencies&gt;
+    &lt;!--基础包--&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.yisu.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;fw-cloud-transaction-base-dao&lt;/artifactId&gt;
+        &lt;version&gt;${version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!--rocketmq--&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.rocketmq&lt;/groupId&gt;
+        &lt;artifactId&gt;rocketmq-spring-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;${rocketmq.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- 数据连接池--&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.zaxxer&lt;/groupId&gt;
+        &lt;artifactId&gt;HikariCP&lt;/artifactId&gt;
+        &lt;version&gt;${HikariCP.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto"><strong>并在MySql中新建fw_transaction库</strong>,并执行以下脚本，供<code>fw-cloud-transaction-rocktmq-order</code>和<code>fw-cloud-transaction-rocktmq-send</code>使用</p></div><div class="el-pre"><pre><code data-line="0">CREATE TABLE `fw_trade_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '订单状态 1.待支付 2.待发货 3.待收货 4.订单完成 5.订单关闭',
+  `status_dsc` varchar(100) CHARACTER SET utf8 DEFAULT '' COMMENT '状态描述',
+  `product_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商品id',
+  `product_name` varchar(100) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `order_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单id',
+  `order_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '订单总额',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
+CREATE TABLE `fw_transaction_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `transaction_Id` varchar(50) NOT NULL COMMENT '事务id',
+  `remark` varchar(50) NOT NULL COMMENT '备注',
+  PRIMARY KEY (`id`,`transaction_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='事务日志表';
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.2 fw-cloud-transaction-rocketmq-order模块" dir="auto" class="heading" id="1.2_fw-cloud-transaction-rocketmq-order模块_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.2 fw-cloud-transaction-rocketmq-order模块</h3></div><div class="el-h4"><h4 data-heading="1.2.1 订单接口创建" dir="auto" class="heading" id="1.2.1_订单接口创建_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.2.1 订单接口创建</h4></div><div class="el-p"><p dir="auto">再订单模块中创建一个订单接口，在里面分别设置下单和支付的接口，因为是半方法发送，支付成功后的业务查分出来，二次确认支付的时候方便调用，因此拆开</p></div><div class="el-pre"><pre><code data-line="0">
+public interface OrderService{
+
+    
+    void saveAndPayOrder(String productName);
+
+    
+    void payOrder(FwTradeLog fwTradeLog,String transactionId);
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.2.2 订单接口实现" dir="auto" class="heading" id="1.2.2_订单接口实现_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.2.2 订单接口实现</h4></div><div class="el-p"><p dir="auto">第1步和第2步：向RocketMQ发送半消息，我们通过RocketMQTemplate的sendMessageInTransaction方法发送了一条半消息，但是并没有实际操作数据库，数据库操作过程抽出来放到了payOrder方法中,然后，半消息发送成功之后，会告知Producer 成功收到了半消息，待会我们在半消息的监听RocketMQLocalTransactionListener讲到，由半消息的监听来确认支付方法是否成功</p></div><div class="el-pre"><pre><code data-line="0">
+@Service
+@Slf4j
+public class OrderServiceImpl implements OrderService {
+
+    @Autowired
+    private FwTradeLogService fwTradeLogService;
+    @Autowired
+    private FwTransactionLogService fwTransactionLogService;
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Override
+    public void saveAndPayOrder(String productName) {
+
+        FwTradeLog fwTradeLog =new FwTradeLog(StatusEnum.TWO);
+        fwTradeLog.setProductId(System.currentTimeMillis());
+        fwTradeLog.setProductName(productName);
+        String transactionId = UUID.randomUUID().toString();
+        
+        this.rocketMQTemplate.sendMessageInTransaction(
+                "fw-pay-order-group", 
+                "pay-success", 
+                MessageBuilder.withPayload(fwTradeLog)
+                        .setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
+                        .build(), 
+                fwTradeLog 
+        );
+
+    }
+
+    @Override
+    @Transactional
+    public void payOrder(FwTradeLog fwTradeLog,String transactionId) {
+        fwTradeLogService.save(fwTradeLog);
+        log.info("[订单状态{}]=&gt;{},当前商品id=&gt;{},商品名称=&gt;{}",fwTradeLog.getOrderId(), StatusEnum.TWO.getDesc(),fwTradeLog.getProductId(),fwTradeLog.getProductName());
+
+        
+        FwTransactionLog transactionLog = new FwTransactionLog();
+        transactionLog.setTransactionId(transactionId);
+        String remark = String.format("事务ID为%s的本地事务执行成功", transactionId);
+        transactionLog.setRemark(remark);
+        fwTransactionLogService.save(transactionLog);
+        log.info("事务ID=&gt;{} 本地事务执行成功", transactionId);
+
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.2.3 RocketMQ 本地事务配置" dir="auto" class="heading" id="1.2.3_RocketMQ_本地事务配置_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.2.3 RocketMQ 本地事务配置</h4></div><div class="el-p"><p dir="auto">这里我们实现RocketMQLocalTransactionListener并在类上使用<code>@RocketMQTransactionListener</code>注解标注，注解属性<code>txProducerGroup</code>值和前面发送的事务消息分组组名必须一致。<br>
+实现了RocketMQLocalTransactionListener接口的<code>executeLocalTransaction</code>和<code>checkLocalTransaction</code>方法。<code>executeLocalTransaction</code>用于指定执行本地事务逻辑，<code>checkLocalTransaction</code>方法用于RocketMQ回查本地事务状态<br>
+当监听器对应的半消息发送成功后，就会执行<code>executeLocalTransaction</code>方法；如果本地事务已经提交了，但是RocketMQ并未收到COMMIT确认时。可能网络突然中断或者程序故障，这种情况下，当网络和应用恢复正常后，RocketMQ会执行本地事务回查操作，因为RocketMQ会定期扫描消息集群中的事物消息，如果发现了Prepared消息，它会向消息发送端(生产者)确认。</p></div><div class="el-p"><p dir="auto">为了方便，我们创建一张事务日志表，在本地事务执行成功后，往本地事务日志表中也插入一条事务日志。事务回查时，只要通过transicationId能够找到对应的日志，则说明本地事务执行成功，否则认为执行失败。</p></div><div class="el-pre"><pre><code data-line="0">
+@Slf4j
+@Component
+@RocketMQTransactionListener(txProducerGroup = "fw-pay-order-group")
+public class LocalTransactionRocketMQListener implements RocketMQLocalTransactionListener {
+
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private FwTransactionLogService fwTransactionLogService;
+
+    
+    @Override
+    public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object o) {
+        MessageHeaders headers = message.getHeaders();
+        String transicationId = (String) headers.get(RocketMQHeaders.TRANSACTION_ID);
+
+        try {
+            FwTradeLog tradeLog = (FwTradeLog) o;
+            orderService.payOrder(tradeLog,transicationId); 
+            log.info("本地事务=&gt;{} 执行成功，往RocketMQ发送COMMIT",transicationId);
+            return RocketMQLocalTransactionState.COMMIT; 
+        } catch (Exception e){
+            log.info("本地事务=&gt;{} 回滚，往RocketMQ发送ROLLBACK",transicationId ,e);
+            return RocketMQLocalTransactionState.ROLLBACK; 
+        }
+    }
+
+    
+    @Override
+    public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
+        MessageHeaders headers = message.getHeaders();
+        String transicationId = (String) headers.get(RocketMQHeaders.TRANSACTION_ID);
+        log.info("RocketMQ事务状态回查=&gt;{}",transicationId);
+        
+        FwTransactionLog transactionLog = fwTransactionLogService.getOne(
+                new LambdaQueryWrapper&lt;FwTransactionLog&gt;().eq(FwTransactionLog::getTransactionId, transicationId)
+        );
+        
+        return transactionLog != null ? RocketMQLocalTransactionState.COMMIT : RocketMQLocalTransactionState.ROLLBACK;
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.2.4 Controller 控制层" dir="auto" class="heading" id="1.2.4_Controller_控制层_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.2.4 Controller 控制层</h4></div><div class="el-p"><p dir="auto">配置订单服务对外的接口，方便演示</p></div><div class="el-pre"><pre><code data-line="0">
+@RestController
+public class OrderController {
+
+    @Autowired
+    private OrderService orderService;
+
+    
+    @GetMapping("saveOrder")
+    public FwResult saveOrder(String productName){
+         orderService.saveAndPayOrder(productName);
+         return FwResult.ok();
+    }
+
+
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.2.5 启动类配置" dir="auto" class="heading" id="1.2.5_启动类配置_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.2.5 启动类配置</h4></div><div class="el-p"><p dir="auto">这里就时是普通的应用启动类</p></div><div class="el-pre"><pre><code data-line="0">@SpringBootApplication
+public class FwTransactionRocketmqOrderApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(FwTransactionRocketmqOrderApplication.class, args);
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.2.6 应用配置" dir="auto" class="heading" id="1.2.6_应用配置_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.2.6 应用配置</h4></div><div class="el-p"><p dir="auto">配置中需要配置数据库，以及RocketMq的连接信息</p></div><div class="el-pre"><pre><code data-line="0">server:
+  port: 9002
+spring:
+  #数据库配置  start
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://${dbIp}:3306/fw_transaction?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true&amp;useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      connection-timeout: 20000
+      auto-commit: true
+      max-lifetime: 1200000
+      minimum-idle: 5
+      maximum-pool-size: 12
+      idle-timeout: 300000
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: order-group
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.3 fw-cloud-transaction-rocketmq-send模块" dir="auto" class="heading" id="1.3_fw-cloud-transaction-rocketmq-send模块_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.3 fw-cloud-transaction-rocketmq-send模块</h3></div><div class="el-h4"><h4 data-heading="1.3.1 发货接口创建" dir="auto" class="heading" id="1.3.1_发货接口创建_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.3.1 发货接口创建</h4></div><div class="el-p"><p dir="auto">配置发货接口，并且创建发货的方法</p></div><div class="el-pre"><pre><code data-line="0">
+public interface SendService {
+
+    
+    void sendOrder(FwTradeLog fwTradeLog);
+
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.3.2 发货接口实现" dir="auto" class="heading" id="1.3.2_发货接口实现_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.3.2 发货接口实现</h4></div><div class="el-p"><p dir="auto">这里在实现方法上加上<code>@Transactional</code>已实现本地事务的控制，并且设置订单的状态为待收货</p></div><div class="el-pre"><pre><code data-line="0">
+@Service
+@Slf4j
+public class SendServiceImpl implements SendService {
+
+    @Autowired
+    private FwTradeLogService fwTradeLogService;
+
+    @Override
+    public void sendOrder(FwTradeLog fwTradeLog) {
+        fwTradeLog.setStatus(StatusEnum.THREE.getValue());
+        fwTradeLog.setStatusDsc(StatusEnum.THREE.getDesc());
+        fwTradeLogService.save(fwTradeLog);
+        log.info("[订单状态{}]=&gt;{},当前商品id=&gt;{},商品名称=&gt;{}",fwTradeLog.getOrderId(), StatusEnum.THREE.getDesc(),fwTradeLog.getProductId(),fwTradeLog.getProductName());
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.3.3 Send 消费者监听" dir="auto" class="heading" id="1.3.3_Send_消费者监听_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.3.3 Send 消费者监听</h4></div><div class="el-p"><p dir="auto">这里需要注意的是在类上添加<code>@RocketMQMessageListener</code>注解，注意consumerGroup 和topic 不要搞错了</p></div><div class="el-pre"><pre><code data-line="0">
+@Slf4j
+@Component
+@RocketMQMessageListener(consumerGroup = "fw-pay-order-group", topic = "pay-success")
+public class PayRocketMQListener implements RocketMQListener&lt;FwTradeLog&gt; {
+
+    @Autowired
+    private PayService payService;
+
+
+    @Override
+    public void onMessage(FwTradeLog fwTradeLog) {
+        log.info("监听到用户已经下单成功订单id=&gt;{}，名称=&gt;{}的商品", fwTradeLog.getOrderId(), fwTradeLog.getProductName());
+        payService.sendOrder(fwTradeLog);
+    }
+
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.3.4 发货控制层实现" dir="auto" class="heading" id="1.3.4_发货控制层实现_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.3.4 发货控制层实现</h4></div><div class="el-p"><p dir="auto">提供给订单模块调用的接口，注意方法名和请求方式要保持一致</p></div><div class="el-pre"><pre><code data-line="0">
+@RestController
+public class SendController {
+
+    @Autowired
+    private SendService sendService;
+
+    
+    @PostMapping("send")
+    public void sendOrder(@RequestBody FwTradeLog tradeLog) {
+         sendService.sendOrder(tradeLog);
+    }
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.3.5 启动类" dir="auto" class="heading" id="1.3.5_启动类_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.3.5 启动类</h4></div><div class="el-p"><p dir="auto">这里没什么特别的注解</p></div><div class="el-pre"><pre><code data-line="0">
+@SpringBootApplication
+public class FwTransactionRocketmqPayApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(FwTransactionRocketmqPayApplication.class, args);
+    }
+
+
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h4"><h4 data-heading="1.3.6 应用配置" dir="auto" class="heading" id="1.3.6_应用配置_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.3.6 应用配置</h4></div><div class="el-p"><p dir="auto">配置中需要配置数据库，以及设置了RocketMQ的连接信息</p></div><div class="el-pre"><pre><code data-line="0">server:
+  port: 9003
+spring:
+  #数据库配置  start
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://${dbIp}:3306/fw_transaction?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true&amp;useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      connection-timeout: 20000
+      auto-commit: true
+      max-lifetime: 1200000
+      minimum-idle: 5
+      maximum-pool-size: 12
+      idle-timeout: 300000
+rocketmq:
+  name-server: localhost:9876
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.4 启动服务" dir="auto" class="heading" id="1.4_启动服务_0"><span class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></span>1.4 启动服务</h3></div><div class="el-p"><p dir="auto">分别启动RocketMQ、fw-transaction-rocketmq-send、fw-transaction-rocketmq-order<br>
+<span alt="ca6fa205dc1aed93e437eaf9ae24ac06_MD5.png" src="attachments/ca6fa205dc1aed93e437eaf9ae24ac06_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="ca6fa205dc1aed93e437eaf9ae24ac06_MD5.png" src="attachments/ca6fa205dc1aed93e437eaf9ae24ac06_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto">Postman输入<a rel="noopener nofollow" class="external-link" href=".html" target="_self">localhost:9002/saveOrder</a><br>
+<span alt="af1cea21c04c3aca13756054649dac97_MD5.png" src="attachments/af1cea21c04c3aca13756054649dac97_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="af1cea21c04c3aca13756054649dac97_MD5.png" src="attachments/af1cea21c04c3aca13756054649dac97_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto">可以看到订单服务的日志如下：</p></div><div class="el-pre"><pre><code data-line="0">2020-04-11 19:19:35.944  INFO 12564 --- [nio-9002-exec-3] c.y.t.r.o.service.impl.OrderServiceImpl  : [订单状态771390]=&gt;待发货,当前商品id=&gt;1586603975086,商品名称=&gt;Mac pro 2019款
+2020-04-11 19:19:35.977  INFO 12564 --- [nio-9002-exec-3] c.y.t.r.o.service.impl.OrderServiceImpl  : 事务ID=&gt;f1f08d8c-da88-4641-975f-fe6848dd4fb1 本地事务执行成功
+2020-04-11 19:19:35.977  INFO 12564 --- [nio-9002-exec-3] t.r.o.l.LocalTransactionRocketMQListener : 本地事务=&gt;f1f08d8c-da88-4641-975f-fe6848dd4fb1 执行成功，往RocketMQ发送COMMIT
+
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">发货服务的日志如下：</p></div><div class="el-pre"><pre><code data-line="0">2020-04-11 19:19:36.882  INFO 22984 --- [MessageThread_1] c.y.t.r.s.listener.PayRocketMQListener   : 监听到用户已经下单成功订单id=&gt;771390，名称=&gt;Mac pro 2019款的商品
+2020-04-11 19:19:36.937  INFO 22984 --- [MessageThread_1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-04-11 19:19:37.400  INFO 22984 --- [MessageThread_1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-04-11 19:19:37.522  INFO 22984 --- [MessageThread_1] c.y.t.r.s.service.impl.PayServiceImpl    : [订单状态771390]=&gt;待收货,当前商品id=&gt;1586603975086,商品名称=&gt;Mac pro 2019款
+
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">数据库正常进入两条数据<br>
+<span alt="0a20aaf25fd79947fa7871d9afadfe81_MD5.png" src="attachments/0a20aaf25fd79947fa7871d9afadfe81_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="0a20aaf25fd79947fa7871d9afadfe81_MD5.png" src="attachments/0a20aaf25fd79947fa7871d9afadfe81_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto">MQ控制台 信息<br>
+<span alt="038825ddcc287b653af0cd171ec6a4dd_MD5.png" src="attachments/038825ddcc287b653af0cd171ec6a4dd_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="038825ddcc287b653af0cd171ec6a4dd_MD5.png" src="attachments/038825ddcc287b653af0cd171ec6a4dd_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto"><span alt="22132464decff338d311cc05d6cb28c2_MD5.png" src="attachments/22132464decff338d311cc05d6cb28c2_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="22132464decff338d311cc05d6cb28c2_MD5.png" src="attachments/22132464decff338d311cc05d6cb28c2_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto"><strong>现在让订单服务的方法抛出异常</strong><br>
+直接在方法中加一个抛异常的语句<code>int i=1/0;</code>，如下所示</p></div><div class="el-pre"><pre><code data-line="0">@Override
+@Transactional
+public void payOrder(FwTradeLog fwTradeLog,String transactionId) {
+    fwTradeLogService.save(fwTradeLog);
+    log.info("[订单状态{}]=&gt;{},当前商品id=&gt;{},商品名称=&gt;{}",fwTradeLog.getOrderId(), StatusEnum.TWO.getDesc(),fwTradeLog.getProductId(),fwTradeLog.getProductName());
+
+    
+    FwTransactionLog transactionLog = new FwTransactionLog();
+    transactionLog.setTransactionId(transactionId);
+    String remark = String.format("事务ID为%s的本地事务执行成功", transactionId);
+    transactionLog.setRemark(remark);
+    fwTransactionLogService.save(transactionLog);
+    log.info("事务ID=&gt;{} 本地事务执行成功", transactionId);
+    int i=10/0;
+}
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">重启订单服务，删除之前fw_trade_log表的数据<br>
+Postman输入<a rel="noopener nofollow" class="external-link" href=".html" target="_self">localhost:9002/saveOrder</a><br>
+<span alt="f15a6f74d633c63562e5c42743b75573_MD5.png" src="attachments/f15a6f74d633c63562e5c42743b75573_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="f15a6f74d633c63562e5c42743b75573_MD5.png" src="attachments/f15a6f74d633c63562e5c42743b75573_md5.png" target="_self"></span></p></div><div class="el-p"><p dir="auto">订单服务日志如下，可以看到RocketMQ 本地事务回滚了</p></div><div class="el-pre"><pre><code data-line="0">2020-04-11 19:40:05.111  INFO 28016 --- [nio-9002-exec-1] c.y.t.r.o.service.impl.OrderServiceImpl  : [订单状态246287]=&gt;待发货,当前商品id=&gt;1586605204008,商品名称=&gt;Mac pro 2020款
+2020-04-11 19:40:05.144  INFO 28016 --- [nio-9002-exec-1] c.y.t.r.o.service.impl.OrderServiceImpl  : 事务ID=&gt;7d7a3274-6333-49ac-bd11-7aed62c5a544 本地事务执行成功
+2020-04-11 19:40:05.177  INFO 28016 --- [nio-9002-exec-1] t.r.o.l.LocalTransactionRocketMQListener : 本地事务=&gt;7d7a3274-6333-49ac-bd11-7aed62c5a544 回滚，往RocketMQ发送ROLLBACK
+
+java.lang.ArithmeticException: / by zero
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">发送服务并没有被调用到，因此没有日志</p></div><div class="el-p"><p dir="auto">因此数据库里并没有数据<br>
+<span alt="317c6b67db6b4e8a1d1dc325d084941a_MD5.png" src="attachments/317c6b67db6b4e8a1d1dc325d084941a_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="317c6b67db6b4e8a1d1dc325d084941a_MD5.png" src="attachments/317c6b67db6b4e8a1d1dc325d084941a_md5.png" target="_self"></span></p></div><div class="footer"><div class="data-bar"></div></div></div></div></div><div id="right-content" class="leaf" style="--sidebar-width: var(--sidebar-width-right);"><div id="right-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><label class="theme-toggle-container" for="theme-toggle-input" id=""><input class="theme-toggle-input" type="checkbox" id="theme-toggle-input"><div class="toggle-background"></div></label></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="right-sidebar-content" class="leaf-content"><div class="graph-view-wrapper"><div class="feature-header"><div class="feature-title">Interactive Graph</div></div><div class="graph-view-placeholder">
+		<div class="graph-view-container">
+			<div class="graph-icon graph-expand" role="button" aria-label="Expand" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+			<div class="graph-icon graph-global" role="button" aria-label="Global Graph" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-git-fork"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"></path><path d="M12 12v3"></path></svg></div>
+			<canvas id="graph-canvas" class="hide" width="512px" height="512px"></canvas>
+		</div>
+		</div></div><div id="outline" class=" tree-container"><div class="feature-header"><div class="feature-title">Table Of Contents</div><button class="clickable-icon nav-action-button tree-collapse-all" aria-label="Collapse All"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><div class="tree-item mod-collapsible" data-depth="1"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#3RocketMQ_分布式事务实践_·_SpringCloud微服务实战_·_看云_0" data-path="#3RocketMQ_分布式事务实践_·_SpringCloud微服务实战_·_看云_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="3RocketMQ 分布式事务实践 · SpringCloud微服务实战 · 看云">3RocketMQ 分布式事务实践 · SpringCloud微服务实战 · 看云</div></a><div class="tree-item-children"><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#本节代码地址_0" data-path="#本节代码地址_0"><div class="tree-item-inner heading-link" heading-name="本节代码地址">本节代码地址</div></a><div class="tree-item-children"></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1\._基于RocketMQ_实例演示_0" data-path="#1\._基于RocketMQ_实例演示_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="1\. 基于RocketMQ 实例演示">1. 基于RocketMQ 实例演示</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.1_maven_依赖_0" data-path="#1.1_maven_依赖_0"><div class="tree-item-inner heading-link" heading-name="1.1 maven 依赖">1.1 maven 依赖</div></a><div class="tree-item-children"></div></div><div class="tree-item mod-collapsible" data-depth="3"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.2_fw-cloud-transaction-rocketmq-order模块_0" data-path="#1.2_fw-cloud-transaction-rocketmq-order模块_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="1.2 fw-cloud-transaction-rocketmq-order模块">1.2 fw-cloud-transaction-rocketmq-order模块</div></a><div class="tree-item-children"><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.2.1_订单接口创建_0" data-path="#1.2.1_订单接口创建_0"><div class="tree-item-inner heading-link" heading-name="1.2.1 订单接口创建">1.2.1 订单接口创建</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.2.2_订单接口实现_0" data-path="#1.2.2_订单接口实现_0"><div class="tree-item-inner heading-link" heading-name="1.2.2 订单接口实现">1.2.2 订单接口实现</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.2.3_RocketMQ_本地事务配置_0" data-path="#1.2.3_RocketMQ_本地事务配置_0"><div class="tree-item-inner heading-link" heading-name="1.2.3 RocketMQ 本地事务配置">1.2.3 RocketMQ 本地事务配置</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.2.4_Controller_控制层_0" data-path="#1.2.4_Controller_控制层_0"><div class="tree-item-inner heading-link" heading-name="1.2.4 Controller 控制层">1.2.4 Controller 控制层</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.2.5_启动类配置_0" data-path="#1.2.5_启动类配置_0"><div class="tree-item-inner heading-link" heading-name="1.2.5 启动类配置">1.2.5 启动类配置</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.2.6_应用配置_0" data-path="#1.2.6_应用配置_0"><div class="tree-item-inner heading-link" heading-name="1.2.6 应用配置">1.2.6 应用配置</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="3"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.3_fw-cloud-transaction-rocketmq-send模块_0" data-path="#1.3_fw-cloud-transaction-rocketmq-send模块_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="1.3 fw-cloud-transaction-rocketmq-send模块">1.3 fw-cloud-transaction-rocketmq-send模块</div></a><div class="tree-item-children"><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.3.1_发货接口创建_0" data-path="#1.3.1_发货接口创建_0"><div class="tree-item-inner heading-link" heading-name="1.3.1 发货接口创建">1.3.1 发货接口创建</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.3.2_发货接口实现_0" data-path="#1.3.2_发货接口实现_0"><div class="tree-item-inner heading-link" heading-name="1.3.2 发货接口实现">1.3.2 发货接口实现</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.3.3_Send_消费者监听_0" data-path="#1.3.3_Send_消费者监听_0"><div class="tree-item-inner heading-link" heading-name="1.3.3 Send 消费者监听">1.3.3 Send 消费者监听</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.3.4_发货控制层实现_0" data-path="#1.3.4_发货控制层实现_0"><div class="tree-item-inner heading-link" heading-name="1.3.4 发货控制层实现">1.3.4 发货控制层实现</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.3.5_启动类_0" data-path="#1.3.5_启动类_0"><div class="tree-item-inner heading-link" heading-name="1.3.5 启动类">1.3.5 启动类</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.3.6_应用配置_0" data-path="#1.3.6_应用配置_0"><div class="tree-item-inner heading-link" heading-name="1.3.6 应用配置">1.3.6 应用配置</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/3微服务高级/6分布式事务/2实战/4基于rocketmq/3rocketmq-分布式事务实践-·-springcloud微服务实战-·-看云.html#1.4_启动服务_0" data-path="#1.4_启动服务_0"><div class="tree-item-inner heading-link" heading-name="1.4 启动服务">1.4 启动服务</div></a><div class="tree-item-children"></div></div></div></div></div></div></div></div></div><script defer="">let rs = document.querySelector("#right-sidebar"); rs.classList.toggle("is-collapsed", window.innerWidth < 768); rs.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-right-width"));</script></div></div></div></div></body></html>

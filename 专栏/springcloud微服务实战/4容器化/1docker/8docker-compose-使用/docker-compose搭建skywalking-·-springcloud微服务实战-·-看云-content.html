@@ -1,0 +1,278 @@
+<!DOCTYPE html> <html lang="zh-cn"><head>
+<title>docker-compose搭建Skywalking · SpringCloud微服务实战 · 看云</title>
+<base href="../../../../..">
+<meta name="pathname" content="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html">
+<meta name="description" content="笔记 - docker-compose搭建Skywalking · SpringCloud微服务实战 · 看云">
+<meta property="og:title" content="docker-compose搭建Skywalking · SpringCloud微服务实战 · 看云">
+<meta property="og:description" content="笔记 - docker-compose搭建Skywalking · SpringCloud微服务实战 · 看云">
+<meta property="og:type" content="website">
+<meta property="og:url" content="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html">
+<meta property="og:image" content="attachments/c085ad8f0db9bca934ace0549d0d008e_md5.png">
+<meta charset="UTF-8"><meta property="og:site_name" content="笔记"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0"><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="site-lib/rss.xml"><script async="" id="webpage-script" src="site-lib/scripts/webpage.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-wasm-script" src="site-lib/scripts/graph-wasm.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-render-worker-script" src="site-lib/scripts/graph-render-worker.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="icon" href="site-lib/media/favicon.png"><link rel="stylesheet" href="site-lib/styles/obsidian.css"><link rel="stylesheet" href="site-lib/styles/theme.css"><link rel="preload" href="site-lib/styles/global-variable-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/global-variable-styles.css"></noscript><link rel="preload" href="site-lib/styles/supported-plugins.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/supported-plugins.css"></noscript><link rel="preload" href="site-lib/styles/main-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="site-lib/styles/main-styles.css"></noscript><style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-vertical-spacing:1.3em;--sidebar-margin:12px}:root{background-color:#202124}.sidebar{height:100%;font-size:14px;z-index:10;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));position:relative;overflow:hidden;overflow:clip;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}#left-sidebar{left:0}#right-sidebar{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}.sidebar.floating{position:absolute}.sidebar .leaf-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .leaf-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}#left-sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}#right-sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar #left-sidebar-content,.sidebar #right-sidebar-content{contain:none!important;container-type:normal!important;animation:none!important}.sidebar:has(.leaf-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:calc(2.3em + 2 * var(--sidebar-margin));width:var(--sidebar-width);padding:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}#left-sidebar .sidebar-topbar{left:0;flex-direction:row;border-top-right-radius:var(--radius-l)}#right-sidebar .sidebar-topbar{right:0;flex-direction:row-reverse;border-top-left-radius:var(--radius-l)}#left-sidebar .topbar-content{margin-right:calc(2.3em + var(--sidebar-margin));flex-direction:row}#right-sidebar .topbar-content{margin-left:calc(2.3em + var(--sidebar-margin));flex-direction:row-reverse}.topbar-content{overflow:hidden visible;overflow:clip visible;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:2px!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}#left-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}#right-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.feature-title{margin-left:1px;text-transform:uppercase;letter-spacing:.06em;margin-top:.75em;margin-bottom:.75em}.feature-header{display:flex;align-items:center;padding-top:0;font-size:1em;padding-left:0}body.floating-sidebars .sidebar{position:absolute}body{transition:background-color var(--color-fade-speed) ease-in-out}#navbar:not(:empty){display:flex;align-items:center;justify-content:space-between;padding:.5em 1em;width:100%}#main{display:flex;flex-direction:column;height:100%;width:100%;align-items:stretch;justify-content:center}#main-horizontal{display:flex;flex-direction:row;flex-grow:1;width:100%;align-items:stretch;justify-content:center}#center-content{flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0!important;transition:opacity .2s ease-in-out;pointer-events:none}#center-content>.obsidian-document{padding-left:2em;padding-right:1em;margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}body #center-content>.obsidian-document>.markdown-preview-sizer{padding-bottom:80vh;width:100%;max-width:var(--line-width);flex-basis:var(--line-width);transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document>div{width:100%!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document:not([data-type=markdown]).embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}#center-content>.obsidian-document:not([data-type=markdown]).embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6,li):has(> :is(.math,table)){overflow-x:auto!important}#center-content>.obsidian-document:not([data-type=markdown]){overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.obsidian-document[data-type=attachment]{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%}.obsidian-document[data-type=attachment]>*{outline:0;border:none;box-shadow:none}.obsidian-document[data-type=attachment] :is(img){max-width:90%;max-height:90%;object-fit:contain}.obsidian-document[data-type=attachment]>:is(audio){width:100%;max-width:min(90%,var(--line-width))}.obsidian-document[data-type=attachment]>:is(embed,iframe,video){width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.canvas-wrapper>:is(.header,.footer){z-index:100;position:absolute;display:flex;justify-content:center;flex-direction:column;width:100%;align-items:center}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style><script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script></head><body class="publish css-settings-manager mod-windows is-hidden-frameless show-inline-title show-ribbon show-view-header minimal-readable trim-cols sidebar-tabs-default row-lines col-lines table-lines row-hover minimal-notion-light minimal-dracula-dark colorful-headings links-int-on links-ext-on full-width-media"><script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script><div class="parsed-feature-container" style="display: contents;"><link itemprop="include" href="site-lib/html/custom-head-content-content.html"></div><div id="main"><div id="navbar"></div><div id="main-horizontal"><div id="left-content" class="leaf" style="--sidebar-width: var(--sidebar-width-left);"><div id="left-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><div id="search-container"><div id="search-wrapper"><input enterkeyhint="search" type="search" spellcheck="false" placeholder="Search..."><div aria-label="Clear search" id="search-clear-button"></div></div></div></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="left-sidebar-content" class="leaf-content"><link itemprop="include" href="site-lib/html/file-tree-content.html"></div></div><script defer="">let ls = document.querySelector("#left-sidebar"); ls.classList.toggle("is-collapsed", window.innerWidth < 768); ls.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-left-width"));</script></div></div><div id="center-content" class="leaf"><div class="obsidian-document markdown-preview-view markdown-rendered node-insert-event is-readable-line-width allow-fold-headings allow-fold-lists show-indentation-guide show-properties" data-type="markdown"><style id="MJX-CHTML-styles"></style><div class="markdown-preview-sizer"><div class="header"><h1 class="page-title heading inline-title" id="docker-compose搭建Skywalking_·_SpringCloud微服务实战_·_看云_0">docker-compose搭建Skywalking · SpringCloud微服务实战 · 看云</h1><div class="data-bar"></div></div><div class="markdown-pusher" style="width: 1px; height: 0.1px; margin-bottom: 0px;"></div><div class="el-blockquote"><blockquote dir="auto">
+<blockquote dir="auto">
+<p><strong>导航</strong></p>
+</blockquote>
+</blockquote></div><div class="el-hr"><hr></div><div class="el-p"><p dir="auto">在前面我们已经说明了Skywalking的基本使用以及在Windows的快速安装使用，下面我们来演示使用docker的方式部署Skywalking。</p></div><div class="el-blockquote"><blockquote dir="auto">
+<p>数据存储我们选择性能更高的Elasticsearch，虽然我们之前在搭建ELK的时候已经部署过了Elasticsearch，但必须在之前的基础上添加一些Elasticsearch配置，否则会出现collector无法访问Elasticsearch的情况，本节将重新搭建一个Elasticsearch数据库</p>
+</blockquote></div><div class="el-h2"><h2 data-heading="1\. 创建Elasticsearch的挂载目录和配置文件" dir="auto" class="heading" id="1\._创建Elasticsearch的挂载目录和配置文件_0">1. 创建Elasticsearch的挂载目录和配置文件</h2></div><div class="el-h3"><h3 data-heading="1.1 创建Elasticsearch的挂载目录" dir="auto" class="heading" id="1.1_创建Elasticsearch的挂载目录_0">1.1 创建Elasticsearch的挂载目录</h3></div><div class="el-pre"><pre><code data-line="0">mkdir -p /fwcloud/elasticsearch/data /fwcloud/elasticsearch/logs
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.2 创建Elasticsearch的配置文件elasticsearch.yml" dir="auto" class="heading" id="1.2_创建Elasticsearch的配置文件elasticsearch.yml_0">1.2 创建Elasticsearch的配置文件elasticsearch.yml</h3></div><div class="el-pre"><pre><code data-line="0">vim /fwcloud/elasticsearch/elasticsearch.yml
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.3 配置文件elasticsearch.yml" dir="auto" class="heading" id="1.3_配置文件elasticsearch.yml_0">1.3 配置文件elasticsearch.yml</h3></div><div class="el-p"><p dir="auto">network.host，network.host 要配置成 skywalking 可以访问得到的地址，这里配置了<code>0.0.0.0</code></p></div><div class="el-pre"><pre><code data-line="0">http.host: 0.0.0.0
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+transport.host: 0.0.0.0
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="1.4 授予最高权限" dir="auto" class="heading" id="1.4_授予最高权限_0">1.4 授予最高权限</h3></div><div class="el-pre"><pre><code data-line="0">chmod 777 -R /fwcloud/elasticsearch
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h2"><h2 data-heading="2\. 创建 Skywalking 的挂载目录和配置文件" dir="auto" class="heading" id="2\._创建_Skywalking_的挂载目录和配置文件_0">2. 创建 Skywalking 的挂载目录和配置文件</h2></div><div class="el-h3"><h3 data-heading="2.1 创建skywalking-oap的挂载目录" dir="auto" class="heading" id="2.1_创建skywalking-oap的挂载目录_0">2.1 创建skywalking-oap的挂载目录</h3></div><div class="el-pre"><pre><code data-line="0">mkdir -p /fwcloud/skywalking/config
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="2.2 创建skywalking-oap的配置文件application.yml" dir="auto" class="heading" id="2.2_创建skywalking-oap的配置文件application.yml_0">2.2 创建skywalking-oap的配置文件application.yml</h3></div><div class="el-pre"><pre><code data-line="0">touch /fwcloud/skywalking/config/application.yml
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h3"><h3 data-heading="2.3 配置文件application.yml" dir="auto" class="heading" id="2.3_配置文件application.yml_0">2.3 配置文件application.yml</h3></div><div class="el-p"><p dir="auto">存储选择了Elasticsearch代替默认的H2，其他配置均为skywalking-oap的默认配置</p></div><div class="el-pre"><pre><code data-line="0"># Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+cluster:
+  standalone:
+  # Please check your ZooKeeper is 3.5+, However, it is also compatible with ZooKeeper 3.4.x. Replace the ZooKeeper 3.5+
+  # library the oap-libs folder with your ZooKeeper 3.4.x library.
+#  zookeeper:
+#    nameSpace: ${SW_NAMESPACE:""}
+#    hostPort: ${SW_CLUSTER_ZK_HOST_PORT:localhost:2181}
+#    #Retry Policy
+#    baseSleepTimeMs: ${SW_CLUSTER_ZK_SLEEP_TIME:1000} # initial amount of time to wait between retries
+#    maxRetries: ${SW_CLUSTER_ZK_MAX_RETRIES:3} # max number of times to retry
+#    # Enable ACL
+#    enableACL: ${SW_ZK_ENABLE_ACL:false} # disable ACL in default
+#    schema: ${SW_ZK_SCHEMA:digest} # only support digest schema
+#    expression: ${SW_ZK_EXPRESSION:skywalking:skywalking}
+#  kubernetes:
+#    watchTimeoutSeconds: ${SW_CLUSTER_K8S_WATCH_TIMEOUT:60}
+#    namespace: ${SW_CLUSTER_K8S_NAMESPACE:default}
+#    labelSelector: ${SW_CLUSTER_K8S_LABEL:app=collector,release=skywalking}
+#    uidEnvName: ${SW_CLUSTER_K8S_UID:SKYWALKING_COLLECTOR_UID}
+#  consul:
+#    serviceName: ${SW_SERVICE_NAME:"SkyWalking_OAP_Cluster"}
+#     Consul cluster nodes, example: 10.0.0.1:8500,10.0.0.2:8500,10.0.0.3:8500
+#    hostPort: ${SW_CLUSTER_CONSUL_HOST_PORT:localhost:8500}
+#  nacos:
+#    serviceName: ${SW_SERVICE_NAME:"SkyWalking_OAP_Cluster"}
+#    hostPort: ${SW_CLUSTER_NACOS_HOST_PORT:localhost:8848}
+#  # Nacos Configuration namespace
+#    namespace: 'public'
+#  etcd:
+#    serviceName: ${SW_SERVICE_NAME:"SkyWalking_OAP_Cluster"}
+#     etcd cluster nodes, example: 10.0.0.1:2379,10.0.0.2:2379,10.0.0.3:2379
+#    hostPort: ${SW_CLUSTER_ETCD_HOST_PORT:localhost:2379}
+core:
+  default:
+    # Mixed: Receive agent data, Level 1 aggregate, Level 2 aggregate
+    # Receiver: Receive agent data, Level 1 aggregate
+    # Aggregator: Level 2 aggregate
+    role: ${SW_CORE_ROLE:Mixed} # Mixed/Receiver/Aggregator
+    restHost: ${SW_CORE_REST_HOST:0.0.0.0}
+    restPort: ${SW_CORE_REST_PORT:12800}
+    restContextPath: ${SW_CORE_REST_CONTEXT_PATH:/}
+    gRPCHost: ${SW_CORE_GRPC_HOST:0.0.0.0}
+    gRPCPort: ${SW_CORE_GRPC_PORT:11800}
+    downsampling:
+      - Hour
+      - Day
+      - Month
+    # Set a timeout on metrics data. After the timeout has expired, the metrics data will automatically be deleted.
+    enableDataKeeperExecutor: ${SW_CORE_ENABLE_DATA_KEEPER_EXECUTOR:true} # Turn it off then automatically metrics data delete will be close.
+    dataKeeperExecutePeriod: ${SW_CORE_DATA_KEEPER_EXECUTE_PERIOD:5} # How often the data keeper executor runs periodically, unit is minute
+    recordDataTTL: ${SW_CORE_RECORD_DATA_TTL:90} # Unit is minute
+    minuteMetricsDataTTL: ${SW_CORE_MINUTE_METRIC_DATA_TTL:90} # Unit is minute
+    hourMetricsDataTTL: ${SW_CORE_HOUR_METRIC_DATA_TTL:36} # Unit is hour
+    dayMetricsDataTTL: ${SW_CORE_DAY_METRIC_DATA_TTL:45} # Unit is day
+    monthMetricsDataTTL: ${SW_CORE_MONTH_METRIC_DATA_TTL:18} # Unit is month
+    # Cache metric data for 1 minute to reduce database queries, and if the OAP cluster changes within that minute,
+    # the metrics may not be accurate within that minute.
+    enableDatabaseSession: ${SW_CORE_ENABLE_DATABASE_SESSION:true}
+storage:
+  elasticsearch:
+    # set the namespace in elasticsearch
+    clusterNodes: ${SW_STORAGE_ES_CLUSTER_NODES:elasticsearch:9200}
+    indexShardsNumber: ${SW_STORAGE_ES_INDEX_SHARDS_NUMBER:2}
+    indexReplicasNumber: ${SW_STORAGE_ES_INDEX_REPLICAS_NUMBER:0}
+    # Batch process setting, refer to https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.5/java-docs-bulk-processor.html
+    bulkActions: ${SW_STORAGE_ES_BULK_ACTIONS:2000} # Execute the bulk every 2000 requests
+    bulkSize: ${SW_STORAGE_ES_BULK_SIZE:20} # flush the bulk every 20mb
+    flushInterval: ${SW_STORAGE_ES_FLUSH_INTERVAL:10} # flush the bulk every 10 seconds whatever the number of requests
+    concurrentRequests: ${SW_STORAGE_ES_CONCURRENT_REQUESTS:2} # the number of concurrent requests
+    metadataQueryMaxSize: ${SW_STORAGE_ES_QUERY_MAX_SIZE:5000}
+    segmentQueryMaxSize: ${SW_STORAGE_ES_QUERY_SEGMENT_SIZE:200}
+#  h2:
+#    driver: ${SW_STORAGE_H2_DRIVER:org.h2.jdbcx.JdbcDataSource}
+#    url: ${SW_STORAGE_H2_URL:jdbc:h2:mem:skywalking-oap-db}
+#    user: ${SW_STORAGE_H2_USER:sa}
+#    metadataQueryMaxSize: ${SW_STORAGE_H2_QUERY_MAX_SIZE:5000}
+#  mysql:
+#    properties:
+#      jdbcUrl: ${SW_JDBC_URL:"jdbc:mysql://localhost:3306/swtest"}
+#      dataSource.user: ${SW_DATA_SOURCE_USER:root}
+#      dataSource.password: ${SW_DATA_SOURCE_PASSWORD:root@1234}
+#      dataSource.cachePrepStmts: ${SW_DATA_SOURCE_CACHE_PREP_STMTS:true}
+#      dataSource.prepStmtCacheSize: ${SW_DATA_SOURCE_PREP_STMT_CACHE_SQL_SIZE:250}
+#      dataSource.prepStmtCacheSqlLimit: ${SW_DATA_SOURCE_PREP_STMT_CACHE_SQL_LIMIT:2048}
+#      dataSource.useServerPrepStmts: ${SW_DATA_SOURCE_USE_SERVER_PREP_STMTS:true}
+#    metadataQueryMaxSize: ${SW_STORAGE_MYSQL_QUERY_MAX_SIZE:5000}
+receiver-sharing-server:
+  default:
+receiver-register:
+  default:
+receiver-trace:
+  default:
+    bufferPath: ${SW_RECEIVER_BUFFER_PATH:../trace-buffer/}  # Path to trace buffer files, suggest to use absolute path
+    bufferOffsetMaxFileSize: ${SW_RECEIVER_BUFFER_OFFSET_MAX_FILE_SIZE:100} # Unit is MB
+    bufferDataMaxFileSize: ${SW_RECEIVER_BUFFER_DATA_MAX_FILE_SIZE:500} # Unit is MB
+    bufferFileCleanWhenRestart: ${SW_RECEIVER_BUFFER_FILE_CLEAN_WHEN_RESTART:false}
+    sampleRate: ${SW_TRACE_SAMPLE_RATE:10000} # The sample rate precision is 1/10000. 10000 means 100% sample in default.
+    slowDBAccessThreshold: ${SW_SLOW_DB_THRESHOLD:default:200,mongodb:100} # The slow database access thresholds. Unit ms.
+receiver-jvm:
+  default:
+receiver-clr:
+  default:
+service-mesh:
+  default:
+    bufferPath: ${SW_SERVICE_MESH_BUFFER_PATH:../mesh-buffer/}  # Path to trace buffer files, suggest to use absolute path
+    bufferOffsetMaxFileSize: ${SW_SERVICE_MESH_OFFSET_MAX_FILE_SIZE:100} # Unit is MB
+    bufferDataMaxFileSize: ${SW_SERVICE_MESH_BUFFER_DATA_MAX_FILE_SIZE:500} # Unit is MB
+    bufferFileCleanWhenRestart: ${SW_SERVICE_MESH_BUFFER_FILE_CLEAN_WHEN_RESTART:false}
+istio-telemetry:
+  default:
+envoy-metric:
+  default:
+#    alsHTTPAnalysis: ${SW_ENVOY_METRIC_ALS_HTTP_ANALYSIS:k8s-mesh}
+#receiver_zipkin:
+#  default:
+#    host: ${SW_RECEIVER_ZIPKIN_HOST:0.0.0.0}
+#    port: ${SW_RECEIVER_ZIPKIN_PORT:9411}
+#    contextPath: ${SW_RECEIVER_ZIPKIN_CONTEXT_PATH:/}
+query:
+  graphql:
+    path: ${SW_QUERY_GRAPHQL_PATH:/graphql}
+alarm:
+  default:
+telemetry:
+  none:
+configuration:
+  none:
+#  apollo:
+#    apolloMeta: http://106.12.25.204:8080
+#    apolloCluster: default
+#    # apolloEnv: # defaults to null
+#    appId: skywalking
+#    period: 5
+#  nacos:
+#    # Nacos Server Host
+#    serverAddr: 127.0.0.1
+#    # Nacos Server Port
+#    port: 8848
+#    # Nacos Configuration Group
+#    group: 'skywalking'
+#    # Nacos Configuration namespace
+#    namespace: ''
+#    # Unit seconds, sync period. Default fetch every 60 seconds.
+#    period : 60
+#    # the name of current cluster, set the name if you want to upstream system known.
+#    clusterName: "default"
+#  zookeeper:
+#    period : 60 # Unit seconds, sync period. Default fetch every 60 seconds.
+#    nameSpace: /default
+#    hostPort: localhost:2181
+#    #Retry Policy
+#    baseSleepTimeMs: 1000 # initial amount of time to wait between retries
+#    maxRetries: 3 # max number of times to retry
+#  etcd:
+#    period : 60 # Unit seconds, sync period. Default fetch every 60 seconds.
+#    group :  'skywalking'
+#    serverAddr: localhost:2379
+#    clusterName: "default"
+#  consul:
+#    # Consul host and ports, separated by comma, e.g. 1.2.3.4:8500,2.3.4.5:8500
+#    hostAndPorts: ${consul.address}
+#    # Sync period in seconds. Defaults to 60 seconds.
+#    period: 1
+
+#exporter:
+#  grpc:
+#    targetHost: ${SW_EXPORTER_GRPC_HOST:127.0.0.1}
+#    targetPort: ${SW_EXPORTER_GRPC_PORT:9870}
+
+
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h2"><h2 data-heading="3\. 完整docker-compose.yml配置" dir="auto" class="heading" id="3\._完整docker-compose.yml配置_0">3. 完整docker-compose.yml配置</h2></div><div class="el-p"><p dir="auto">在config 目录添加<code>docker-compose.yml</code></p></div><div class="el-pre"><pre><code data-line="0">touch /fwcloud/skywalking/config/docker-compose.yml
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-p"><p dir="auto">添加下面内容</p></div><div class="el-pre"><pre><code data-line="0">version: '3'
+
+services:
+  elasticsearch:
+    image: elasticsearch:6.5.4
+    container_name: elasticsearch
+    restart: always
+    environment:
+      - cluster.name=elasticsearch
+      - xpack.security.enabled=false #关闭x-pack安全认证
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" #jvm内存分配为 512MB
+      - "discovery.type=single-node" #单节点启动
+      - "TZ=Asia/Shanghai"
+    volumes:
+      - /fwcloud/elasticsearch/data:/usr/share/elasticsearch/data
+      - /fwcloud/elasticsearch/logs:/usr/share/elasticsearch/logs
+      - /fwcloud/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+
+  skywalking-oap:
+    image: apache/skywalking-oap-server:6.5.0
+    container_name: skywalking-oap
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+    restart: always
+    ports:
+      - 11800:11800
+      - 12800:12800
+    environment:
+      - "TZ=Asia/Shanghai"
+    volumes:
+      - /fwcloud/skywalking/config:/apache-skywalking-apm-bin/config:ro
+
+  skywalking-ui:
+    image: apache/skywalking-ui:6.5.0
+    container_name: skywalking-ui
+    depends_on:
+      - skywalking-oap
+    links:
+      - skywalking-oap
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - "collector.ribbon.listOfServers=skywalking-oap:12800"
+      - "TZ=Asia/Shanghai"
+
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-h2"><h2 data-heading="4\. 与SpringCloud 的整合" dir="auto" class="heading" id="4\._与SpringCloud_的整合_0">4. 与SpringCloud 的整合</h2></div><div class="el-p"><p dir="auto">前面在说Skywalking已经演示操作过程，现在只需要安装之前的步骤替换一下连接地址即可。<br>
+<span alt="c085ad8f0db9bca934ace0549d0d008e_MD5.png" src="attachments/c085ad8f0db9bca934ace0549d0d008e_md5.png" class="internal-embed media-embed image-embed is-loaded" target="_self"><img alt="c085ad8f0db9bca934ace0549d0d008e_MD5.png" src="attachments/c085ad8f0db9bca934ace0549d0d008e_md5.png" target="_self"></span></p></div><div class="el-h2"><h2 data-heading="注意" dir="auto" class="heading" id="注意_0">注意</h2></div><div class="el-p"><p dir="auto">docker-compose.yml中我们通过<code>TZ=Asia/Shanghai</code>设置了时区，如果不指定时区的话默认是UTC时区，你会看到收集到的数据会比实际早8个小时。</p></div><div class="el-hr"><hr></div><div class="el-p"><p dir="auto">在启动之前我们还需要通过<code>sysctl -w vm.max_map_count=262144</code>命令设置内存权限，<code>262144</code>是构建Elasticsearch的最小内存。</p></div><div class="footer"><div class="data-bar"></div></div></div></div></div><div id="right-content" class="leaf" style="--sidebar-width: var(--sidebar-width-right);"><div id="right-sidebar" class="sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><label class="theme-toggle-container" for="theme-toggle-input" id=""><input class="theme-toggle-input" type="checkbox" id="theme-toggle-input"><div class="toggle-background"></div></label></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content-wrapper"><div id="right-sidebar-content" class="leaf-content"><div class="graph-view-wrapper"><div class="feature-header"><div class="feature-title">Interactive Graph</div></div><div class="graph-view-placeholder">
+		<div class="graph-view-container">
+			<div class="graph-icon graph-expand" role="button" aria-label="Expand" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+			<div class="graph-icon graph-global" role="button" aria-label="Global Graph" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-git-fork"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"></path><path d="M12 12v3"></path></svg></div>
+			<canvas id="graph-canvas" class="hide" width="512px" height="512px"></canvas>
+		</div>
+		</div></div><div id="outline" class=" tree-container"><div class="feature-header"><div class="feature-title">Table Of Contents</div><button class="clickable-icon nav-action-button tree-collapse-all" aria-label="Collapse All"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><div class="tree-item mod-collapsible" data-depth="1"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#docker-compose搭建Skywalking_·_SpringCloud微服务实战_·_看云_0" data-path="#docker-compose搭建Skywalking_·_SpringCloud微服务实战_·_看云_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="docker-compose搭建Skywalking · SpringCloud微服务实战 · 看云">docker-compose搭建Skywalking · SpringCloud微服务实战 · 看云</div></a><div class="tree-item-children"><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#1\._创建Elasticsearch的挂载目录和配置文件_0" data-path="#1\._创建Elasticsearch的挂载目录和配置文件_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="1\. 创建Elasticsearch的挂载目录和配置文件">1. 创建Elasticsearch的挂载目录和配置文件</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#1.1_创建Elasticsearch的挂载目录_0" data-path="#1.1_创建Elasticsearch的挂载目录_0"><div class="tree-item-inner heading-link" heading-name="1.1 创建Elasticsearch的挂载目录">1.1 创建Elasticsearch的挂载目录</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#1.2_创建Elasticsearch的配置文件elasticsearch.yml_0" data-path="#1.2_创建Elasticsearch的配置文件elasticsearch.yml_0"><div class="tree-item-inner heading-link" heading-name="1.2 创建Elasticsearch的配置文件elasticsearch.yml">1.2 创建Elasticsearch的配置文件elasticsearch.yml</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#1.3_配置文件elasticsearch.yml_0" data-path="#1.3_配置文件elasticsearch.yml_0"><div class="tree-item-inner heading-link" heading-name="1.3 配置文件elasticsearch.yml">1.3 配置文件elasticsearch.yml</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#1.4_授予最高权限_0" data-path="#1.4_授予最高权限_0"><div class="tree-item-inner heading-link" heading-name="1.4 授予最高权限">1.4 授予最高权限</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-item-self is-clickable mod-collapsible" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#2\._创建_Skywalking_的挂载目录和配置文件_0" data-path="#2\._创建_Skywalking_的挂载目录和配置文件_0"><div class="tree-item-icon collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><div class="tree-item-inner heading-link" heading-name="2\. 创建 Skywalking 的挂载目录和配置文件">2. 创建 Skywalking 的挂载目录和配置文件</div></a><div class="tree-item-children"><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#2.1_创建skywalking-oap的挂载目录_0" data-path="#2.1_创建skywalking-oap的挂载目录_0"><div class="tree-item-inner heading-link" heading-name="2.1 创建skywalking-oap的挂载目录">2.1 创建skywalking-oap的挂载目录</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#2.2_创建skywalking-oap的配置文件application.yml_0" data-path="#2.2_创建skywalking-oap的配置文件application.yml_0"><div class="tree-item-inner heading-link" heading-name="2.2 创建skywalking-oap的配置文件application.yml">2.2 创建skywalking-oap的配置文件application.yml</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="3"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#2.3_配置文件application.yml_0" data-path="#2.3_配置文件application.yml_0"><div class="tree-item-inner heading-link" heading-name="2.3 配置文件application.yml">2.3 配置文件application.yml</div></a><div class="tree-item-children"></div></div></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#3\._完整docker-compose.yml配置_0" data-path="#3\._完整docker-compose.yml配置_0"><div class="tree-item-inner heading-link" heading-name="3\. 完整docker-compose.yml配置">3. 完整docker-compose.yml配置</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#4\._与SpringCloud_的整合_0" data-path="#4\._与SpringCloud_的整合_0"><div class="tree-item-inner heading-link" heading-name="4\. 与SpringCloud 的整合">4. 与SpringCloud 的整合</div></a><div class="tree-item-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-item-self is-clickable" href="专栏/springcloud微服务实战/4容器化/1docker/8docker-compose-使用/docker-compose搭建skywalking-·-springcloud微服务实战-·-看云.html#注意_0" data-path="#注意_0"><div class="tree-item-inner heading-link" heading-name="注意">注意</div></a><div class="tree-item-children"></div></div></div></div></div></div></div><script defer="">let rs = document.querySelector("#right-sidebar"); rs.classList.toggle("is-collapsed", window.innerWidth < 768); rs.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-right-width"));</script></div></div></div></div></body></html>
